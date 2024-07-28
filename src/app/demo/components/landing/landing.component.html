@@ -1,0 +1,248 @@
+<div class="surface-ground min-h-screen w-screen">
+    <div class="landing-wrapper">
+        <div [ngStyle]="backgroundStyle" class="bg-no-repeat bg-cover bg-bottom">
+            <div class="flex align-items-center justify-content-between px-5 sm:px-8 py-6">
+                <a [routerLink]="['/']">
+                    <span class="text-2xl font-bold text-color">VERONA</span>
+                </a>
+                <div class="relative">
+                    <button pRipple class="cursor-pointer block lg:hidden select-none p-link w-3rem h-3rem inline-flex align-items-center justify-content-center border-circle" pStyleClass="@next" enterClass="hidden" enterActiveClass="scalein" leaveActiveClass="fadeout" leaveToClass="hidden" [hideOnOutsideClick]="true">
+                        <i class="pi pi-bars text-4xl"></i>
+                    </button>
+                    <div id="landing-menu" class="hidden lg:block absolute right-0 top-auto lg:static z-1 shadow-2 lg:shadow-none w-15rem lg:w-auto surface-overlay lg:surface-ground origin-top p-3 lg:p-0" style="border-radius:14px">
+                        <ul class="flex flex-column lg:flex-row m-0 p-0 list-none text-2xl lg:text-base">
+                            <li>
+                                <a class="block p-3 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300" (click)="scrollTo(stats)" pStyleClass="#landing-menu" leaveActiveClass="fadeout" leaveToClass="hidden">STATS</a>
+                            </li>
+                            <li>
+                                <a class="block p-3 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300" (click)="scrollTo(features)" pStyleClass="#landing-menu" leaveActiveClass="fadeout" leaveToClass="hidden">FEATURES</a>
+                            </li>
+                            <li>
+                                <a class="block p-3 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300" (click)="scrollTo(pricing)" pStyleClass="#landing-menu" leaveActiveClass="fadeout" leaveToClass="hidden">PRICING</a>
+                            </li>
+                            <li>
+                                <a class="block p-3 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300" [routerLink]="['/auth/login']">SIGN IN</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-column lg:flex-row gap-5 align-items-center justify-content-between px-5 sm:px-8 py-8 overflow-hidden">
+                <div class="flex-1 fadein animation-duration-1000">
+                    <h1 class="font-bold text-7xl mt-0 mb-5">PrimeTek Presents Verona</h1>
+                    <p class="text-3xl mb-5 line-height-3">Minimal layout inspired by a beautiful city</p>
+                    <button pButton pRipple label="TRY NOW"></button>
+                </div>
+                <div class="flex-1">
+                    <img alt="intro image" src="assets/demo/images/landing/screen.jpg" class="fadeinright animation-ease-in-out animation-duration-1000 w-full border-round-2xl shadow-2">
+                </div>
+            </div>
+            <div #stats class="p-8">
+                <div class="flex flex-column align-items-center mb-7">
+                    <span class="font-bold text-color-secondary text-2xl mb-3">Ecosystem</span>
+                    <h2 class="font-bold text-6xl my-0">All You Need Is Here</h2>
+                </div>
+                <div class="flex flex-column xl:flex-row justify-content-center gap-5">
+                    <div class="surface-card text-center py-7 px-5 shadow-2" style="border-radius: 14px">
+                        <div class="text-xl text-color-secondary mb-3">Easy to use</div>
+                        <h3 class="mt-0 mb-3 font-bold text-4xl">Play like a toy</h3>
+                        <p class="line-height-3 mb-5 text-color-secondary">More than <strong>80</strong> UI components.</p>
+                        <button pButton icon="pi pi-arrow-right" label="Get Started" class="p-button-text" iconPos="right"></button>
+                        <div class="mt-8 xl:pt-8">
+                            <img alt="intro image" src="assets/demo/images/landing/feature-components.svg" class="w-9 md:w-4 xl:w-9">
+                        </div>
+                    </div>
+                    <div class="flex flex-column md:flex-row xl:flex-column gap-5">
+                        <div class="flex-1 surface-card flex flex-column xl:flex-row xl:align-items-center justify-content-between py-7 px-5 shadow-2 gap-5" style="border-radius: 14px">
+                            <div class="flex-1 flex-order-1 xl:flex-order-0 text-center xl:text-left">
+                                <img alt="intro image" src="assets/demo/images/landing/feature-blocks.svg" class="w-9">
+                            </div>
+                            <div class="text-center xl:text-right flex-1">
+                                <div class="text-xl text-color-secondary mb-3">PrimeBlocks</div>
+                                <h3 class="mt-0 mb-3 font-bold text-4xl">Save your time</h3>
+                                <p class="line-height-3 mb-5 text-color-secondary">PrimeBlocks have <strong>370+</strong> blocks: hero sections, pricing, footers and more....</p>
+                                <button pButton icon="pi pi-arrow-right" label="Browse Blocks" class="p-button-text" iconPos="right"></button>
+                            </div>
+                        </div>
+                        <div class="flex-1 surface-card flex flex-column xl:flex-row xl:align-items-center justify-content-between py-7 px-5 shadow-2 gap-5" style="border-radius: 14px">
+                            <div class="text-center xl:text-left flex-1">
+                                <div class="text-xl text-color-secondary mb-3">PrimeIcons</div>
+                                <h3 class="mt-0 mb-3 font-bold text-4xl">Enjoy 300+ Icons</h3>
+                                <p class="line-height-3 mb-5 text-color-secondary">What you need in your app, you find any icon in PrimeIcons.</p>
+                                <button pButton icon="pi pi-arrow-right" label="Explore Icons" class="p-button-text" iconPos="right"></button>
+                            </div>
+                            <div class="flex-1 text-center xl:text-right">
+                                <img alt="intro image" src="assets/demo/images/landing/feature-icons.svg" class="w-9">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="surface-card text-center py-7 px-5 shadow-2" style="border-radius: 14px">
+                        <div class="text-xl text-color-secondary mb-3">Theme Designer</div>
+                        <h3 class="mt-0 mb-3 font-bold text-4xl">Design Your Own</h3>
+                        <p class="line-height-3 mb-5 text-color-secondary">Limitless customization.</p>
+                        <button pButton icon="pi pi-arrow-right" label="View Designer" class="p-button-text" iconPos="right"></button>
+                        <div class="mt-8 xl:pt-8">
+                            <img alt="intro image" src="assets/demo/images/landing/feature-designer.svg" class="w-9 md:w-4 xl:w-9">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div #features class="px-5 sm:px-8 py-8 surface-card">
+            <div class="flex flex-column lg:flex-row justify-content-center gap-5">
+                <div>
+                    <div class="bg-orange-50 p-6 flex align-items-center justify-content-center mb-5" style="border-radius: 14px; border-top-left-radius: 5rem">
+                        <img alt="intro image" src="assets/demo/images/landing/icon-modern-responsive.svg" class="h-6rem sm:h-12rem">
+                    </div>
+                    <h3 class="mt-0 mb-5 font-bold text-4xl">Responsive Design</h3>
+                    <p class="line-height-3 text-color-secondary">Nam non ligula sed urna malesuada lacinia. Aliquam sed viverra ipsum.</p>
+                </div>
+                <div>
+                    <div class="bg-green-50 p-6 flex align-items-center justify-content-center mb-5" style="border-radius: 14px">
+                        <img alt="intro image" src="assets/demo/images/landing/icon-modern-design.svg" class="h-6rem sm:h-12rem">
+                    </div>
+                    <h3 class="mt-0 mb-5 font-bold text-4xl">Modern Design</h3>
+                    <p class="line-height-3 text-color-secondary">Nam non ligula sed urna malesuada lacinia. Aliquam sed viverra ipsum.</p>
+                </div>
+                <div>
+                    <div class="bg-red-50 p-6 flex align-items-center justify-content-center mb-5" style="border-radius: 14px; border-bottom-right-radius: 5rem">
+                        <img alt="intro image" src="assets/demo/images/landing/icon-clean-code.svg" class="h-6rem sm:h-12rem">
+                    </div>
+                    <h3 class="mt-0 mb-5 font-bold text-4xl">Clean Code</h3>
+                    <p class="line-height-3 text-color-secondary">Nam non ligula sed urna malesuada lacinia. Aliquam sed viverra ipsum.</p>
+                </div>
+            </div>
+        </div>
+        <div class="px-5 sm:px-8 py-8 surface-ground flex flex-wrap gap-5 align-items-center justify-content-between">
+            <div class="text-4xl font-bold">Join the Prime Community</div>
+            <button pButton pRipple label="Join Now" class="p-button-raised"></button>
+        </div>
+        <div #pricing class="px-5 sm:px-8 py-8 surface-card flex flex-column lg:flex-row justify-content-center gap-5">
+            <div class="shadow-2 surface-card p-5 text-center border-round-2xl">
+                <img alt="intro image" src="assets/demo/images/landing/asset-free.svg" class="w-full sm:w-6 lg:w-full block mx-auto mb-5">
+                <div class="text-2xl font-bold mb-3">Free</div>
+                <div class="mb-5">
+                    <span class="text-6xl font-bold">$0 </span>
+                    <span class="text-xl text-color-secondary">/month</span>
+                </div>
+                <a class="p-2 mb-5 font-bold block text-center cursor-pointer hover:surface-hover transition-colors transition-duration-300" style="border-radius:2rem; box-shadow:0px 3px 4px rgba(0, 0, 0, 0.1), 0px 24px 36px rgba(0, 0, 0, 0.04);">TRY NOW</a>
+                <ul class="list-none p-0 m-0">
+                    <li class="flex align-items-center">
+                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
+                        <span>Responsive Layout</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="shadow-2 surface-card p-5 text-center border-round-2xl">
+                <img alt="intro image" src="assets/demo/images/landing/asset-premium.svg" class="w-full sm:w-6 lg:w-full block mx-auto mb-5">
+                <div class="text-2xl font-bold mb-3">Premium</div>
+                <div class="mb-5">
+                    <span class="text-6xl font-bold">$9 </span>
+                    <span class="text-xl text-color-secondary">/month</span>
+                </div>
+                <a class="p-2 mb-5 font-bold block text-center cursor-pointer hover:surface-hover transition-colors transition-duration-300" style="border-radius:2rem; box-shadow:0px 3px 4px rgba(0, 0, 0, 0.1), 0px 24px 36px rgba(0, 0, 0, 0.04);">TRY NOW</a>
+                <ul class="list-none p-0 m-0">
+                    <li class="flex align-items-center mb-3">
+                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
+                        <span>Responsive Layout</span>
+                    </li>
+                    <li class="flex align-items-center mb-3">
+                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
+                        <span>10000 Push Messages</span>
+                    </li>
+                    <li class="flex align-items-center">
+                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
+                        <span>50 Support Tickets</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="shadow-2 surface-card p-5 text-center border-round-2xl">
+                <img alt="intro image" src="assets/demo/images/landing/asset-enterprise.svg" class="w-full sm:w-6 lg:w-full block mx-auto mb-5">
+                <div class="text-2xl font-bold mb-3">Enterprise</div>
+                <div class="mb-5">
+                    <span class="text-6xl font-bold">$19 </span>
+                    <span class="text-xl text-color-secondary">/month</span>
+                </div>
+                <a class="p-2 mb-5 font-bold block text-center cursor-pointer hover:surface-hover transition-colors transition-duration-300" style="border-radius:2rem; box-shadow:0px 3px 4px rgba(0, 0, 0, 0.1), 0px 24px 36px rgba(0, 0, 0, 0.04);">TRY NOW</a>
+                <ul class="list-none p-0 m-0">
+                    <li class="flex align-items-center mb-3">
+                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
+                        <span>Responsive Layout</span>
+                    </li>
+                    <li class="flex align-items-center mb-3">
+                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
+                        <span>Unlimited Push Messages</span>
+                    </li>
+                    <li class="flex align-items-center mb-3">
+                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
+                        <span>1000 Support Tickets</span>
+                    </li>
+                    <li class="flex align-items-center mb-3">
+                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
+                        <span>Free Shipping</span>
+                    </li>
+                    <li class="flex align-items-center">
+                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
+                        <span>Unlimited Storage</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="px-5 sm:px-8 py-8 bg-gray-900 flex flex-column md:flex-row md:align-items-start gap-5" style="border-top-left-radius:14px; border-top-right-radius:14px">
+            <div class="flex align-items-center flex-1">
+                <img alt="intro image" src="assets/demo/images/landing/logo-v.svg" class="w-4rem">
+                <span class="text-white text-5xl font-bold ml-2">Verona</span>
+            </div>
+            <div class="flex-1">
+                <div class="text-xl text-gray-600 mb-4">LATEST</div>
+                <ul class="list-none p-0 m-0">
+                    <li class="mb-3">
+                        <a class="cursor-pointer text-white text-xl">Ultima</a>
+                    </li>
+                    <li class="mb-3">
+                        <a class="cursor-pointer text-white text-xl">Apollo</a>
+                    </li>
+                    <li class="mb-3">
+                        <a class="cursor-pointer text-white text-xl">Sakai</a>
+                    </li>
+                    <li class="mb-3">
+                        <a class="cursor-pointer text-white text-xl">Diamond</a>
+                    </li>
+                    <li>
+                        <a class="cursor-pointer text-white text-xl">Poseidon</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="flex-1">
+                <div class="text-xl text-gray-600 mb-4">DEMOS</div>
+                <ul class="list-none p-0 m-0">
+                    <li class="mb-3">
+                        <a href="https://www.primefaces.org/primeng" class="cursor-pointer text-white text-xl">PrimeNG</a>
+                    </li>
+                    <li class="mb-3">
+                        <a href="https://www.primefaces.org/showcase" class="cursor-pointer text-white text-xl">PrimeFaces</a>
+                    </li>
+                    <li class="mb-3">
+                        <a href="https://www.primefaces.org/primereact" class="cursor-pointer text-white text-xl">PrimeReact</a>
+                    </li>
+                    <li>
+                        <a href="https://www.primefaces.org/primevue" class="cursor-pointer text-white text-xl">PrimeVue</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="flex flex-1 gap-4">
+                <a href="http://github.com/primefaces">
+                    <i class="pi pi-github text-white text-5xl"></i>
+                </a>
+                <a href="https://discord.gg/gzKFYnpmCY">
+                    <i class="pi pi-discord text-white text-5xl"></i>
+                </a>
+                <a href="http://twitter/primeng">
+                    <i class="pi pi-twitter text-white text-5xl"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-config [minimal]="true"></app-config>

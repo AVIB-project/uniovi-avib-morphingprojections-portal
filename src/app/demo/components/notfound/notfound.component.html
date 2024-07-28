@@ -1,0 +1,37 @@
+<div class="surface-ground h-screen w-screen flex align-items-center justify-content-center">
+    <div class="surface-card py-7 px-5 sm:px-7 shadow-2 flex flex-column w-11 sm:w-30rem" style="border-radius:14px">
+        <h1 class="font-bold text-2xl mt-0 mb-2">NOT FOUND</h1>
+        <p class="text-color-secondary mb-4">Looks like you are lost. You may try these or go back to <a [routerLink]="['/']" class="font-bold text-primary hover:underline">dashboard</a>.</p>
+
+        <ul class="list-none p-0 m-0">
+            <li>
+                <a [routerLink]="['/pages/help']" class="flex align-items-center py-2 px-3 hover:surface-hover transition-colors transition-duration-150">
+                    <span class="inline-flex align-items-center justify-content-center flex-shrink-0 border-round bg-yellow-500 text-white w-3rem h-3rem">
+                        <i class="pi pi-compass text-2xl"></i>
+                    </span>
+                    <span class="ml-3">
+                        <span class="mb-2 font-bold text-color">Help Center</span>
+                        <p class="m-0 text-color-secondary">Access knowledge base</p>
+                    </span>
+                    <i class="ml-auto pi pi-chevron-right text-color"></i>
+                </a>
+            </li>
+            <li>
+                <a [routerLink]="['/pages/help']" class="flex align-items-center py-2 px-3 hover:surface-hover transition-colors transition-duration-150">
+                    <span class="inline-flex align-items-center justify-content-center flex-shrink-0 border-round bg-teal-500 text-white w-3rem h-3rem">
+                        <i class="pi pi-user text-2xl"></i>
+                    </span>
+                    <span class="ml-3">
+                        <span class="mb-2 font-bold text-color">Customer Services</span>
+                        <p class="m-0 text-color-secondary">Get instant answers</p>
+                    </span>
+                    <i class="ml-auto pi pi-chevron-right text-color"></i>
+                </a>
+            </li>
+        </ul>
+
+        <button [routerLink]="['/']" pButton pRipple label="Go to Dashboard" class="mt-4"></button>
+    </div>
+</div>
+
+<app-config [minimal]="true"></app-config>

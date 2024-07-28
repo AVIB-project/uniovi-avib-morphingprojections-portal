@@ -1,0 +1,28 @@
+<div class="surface-ground h-screen w-screen flex align-items-center justify-content-center"
+    [ngClass]="{'p-input-filled': filledInput}">
+    <div class="surface-card py-7 px-5 sm:px-7 shadow-2 flex flex-column w-11 sm:w-30rem" style="border-radius:14px">
+        <h1 class="font-bold text-2xl mt-0 mb-2">VERONA</h1>
+        <p class="text-color-secondary mb-4">Welcome back!</p>
+
+        <div class="flex align-items-center justify-content-between mb-4">
+            <div class="flex">
+                <img src="assets/layout/images/avatar.png" class="mr-3" style="width: 52px; height: 52px" />
+                <div class="flex flex-column justify-content-center  gap-1">
+                    <span class="font-bold text-color">Wade Warren</span>
+                    <span class="text-color-secondary">Designer</span>
+                </div>
+            </div>
+            <button pButton pRipple icon="pi pi-sign-out" label="Log out" class="p-button-text" iconPos="right"></button>
+        </div>
+
+        <span class="p-input-icon-left mb-4">
+            <i class="pi pi-key"></i>
+            <input type="password" pInputText placeholder="Password" class="w-full">
+        </span>
+
+        <button [routerLink]="['/']" pButton pRipple label="Unlock"></button>
+
+    </div>
+</div>
+
+<app-config [minimal]="true"></app-config>

@@ -1,0 +1,68 @@
+<div class="layout-topbar">
+    <a class="app-logo" routerLink="/">
+        <img alt="app logo" [src]="logo">
+        <span class="app-name">Verona</span>
+    </a>
+    
+    <button #menubutton class="topbar-menubutton p-link" type="button" (click)="onMenuButtonClick()">
+        <span></span>
+    </button>
+
+    <ul class="topbar-menu">
+        <li *ngFor="let item of tabs; let i = index">
+            <a [routerLink]="item.routerLink" routerLinkActive="active-route" [routerLinkActiveOptions]="item.routerLinkActiveOptions||{paths: 'exact', queryParams: 'ignored', fragment: 'ignored', matrixParams: 'ignored'}"
+                [fragment]="item.fragment" [queryParamsHandling]="item.queryParamsHandling" [preserveFragment]="item.preserveFragment!" 
+                [skipLocationChange]="item.skipLocationChange!" [replaceUrl]="item.replaceUrl!" [state]="item.state" [queryParams]="item.queryParams">
+                <span>{{item.label}}</span>
+            </a>
+            <i class="pi pi-times" (click)="removeTab($event, item, i)"></i>
+        </li>
+        <li *ngIf="!tabs || tabs.length === 0" class="topbar-menu-empty">
+            Use (cmd + click) to open a tab
+        </li>
+    </ul>
+
+    <div class="topbar-search" [ngClass]="{'topbar-search-active': searchActive}">
+        <button class="topbar-searchbutton p-link" type="button" (click)="activateSearch()">
+            <i class="pi pi-search"></i>
+        </button>
+
+        <div class="search-input-wrapper">
+            <span class="p-input-icon-right">
+                <input #searchinput type="text" pInputText placeholder="Search" (blur)="deactivateSearch()" (keydown.escape)="deactivateSearch()"/>
+                <i class="pi pi-search"></i>
+            </span>
+        </div>
+    </div>
+    
+    <div class="topbar-profile">
+        <button class="topbar-profile-button p-link" type="button" pStyleClass="@next" enterClass="hidden" enterActiveClass="scalein" leaveToClass="hidden" leaveActiveClass="fadeout" [hideOnOutsideClick]="true">
+            <img alt="avatar" src="assets/layout/images/avatar.png">
+            <span class="profile-details">
+                <span class="profile-name">Gene Russell</span>
+                <span class="profile-job">Developer</span>
+            </span>
+            <i class="pi pi-angle-down"></i>
+        </button>
+        <ul class="list-none p-3 m-0 border-round shadow-2 hidden absolute surface-overlay origin-top w-full sm:w-12rem mt-2 right-0 top-auto">
+            <li>
+                <a pRipple class="flex p-2 border-round align-items-center hover:surface-hover transition-colors transition-duration-150 cursor-pointer">
+                    <i class="pi pi-user mr-3"></i>
+                    <span>Profile</span>
+                </a>
+                <a pRipple class="flex p-2 border-round align-items-center hover:surface-hover transition-colors transition-duration-150 cursor-pointer">
+                    <i class="pi pi-inbox mr-3"></i>
+                    <span>Inbox</span>
+                </a>
+                <a pRipple class="flex p-2 border-round align-items-center hover:surface-hover transition-colors transition-duration-150 cursor-pointer">
+                    <i class="pi pi-cog mr-3"></i>
+                    <span>Settings</span>
+                </a>
+                <a pRipple class="flex p-2 border-round align-items-center hover:surface-hover transition-colors transition-duration-150 cursor-pointer">
+                    <i class="pi pi-power-off mr-3"></i>
+                    <span>Sign Out</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,604 @@
+<div class="grid">
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card p-0 overflow-hidden flex flex-column">
+            <div class="flex align-items-center p-3">
+                <i class="pi pi-users text-6xl text-blue-500"></i>
+                <div class="ml-3">
+                    <span class="text-blue-500 block white-space-nowrap">USERS SIGNED UP</span>
+                    <span class="text-blue-500 block text-4xl font-bold">3882</span>
+                </div>
+            </div>
+            <img [src]="'assets/demo/images/dashboard/users' + (colorScheme === 'light' ? '' : '-dark') + '.svg'" class="w-full" alt="users">
+        </div>
+    </div>
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card p-0 overflow-hidden flex flex-column">
+            <div class="flex align-items-center p-3">
+                <i class="pi pi-map text-6xl text-orange-500"></i>
+                <div class="ml-3">
+                    <span class="text-orange-500 block white-space-nowrap">LIFETIME VALUE</span>
+                    <span class="text-orange-500 block text-4xl font-bold">532</span>
+                </div>
+            </div>
+            <img [src]="'assets/demo/images/dashboard/locations' + (colorScheme === 'light' ? '' : '-dark') + '.svg'" class="w-full" alt="locations">
+        </div>
+    </div>
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card p-0 overflow-hidden flex flex-column">
+            <div class="flex align-items-center p-3">
+                <i class="pi pi-directions text-6xl text-green-500"></i>
+                <div class="ml-3">
+                    <span class="text-green-500 block white-space-nowrap">CONVERSION RATE</span>
+                    <span class="text-green-500 block text-4xl font-bold">12.6%</span>
+                </div>
+            </div>
+            <img [src]="'assets/demo/images/dashboard/rate' + (colorScheme === 'light' ? '' : '-dark') + '.svg'" class="w-full" alt="conversion">
+        </div>
+    </div>
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card h-full p-0 overflow-hidden flex flex-column">
+            <div class="flex align-items-center p-3">
+                <i class="pi pi-comments text-6xl text-purple-500"></i>
+                <div class="ml-3">
+                    <span class="text-purple-500 block white-space-nowrap">ACTIVE TRIALS</span>
+                    <span class="text-purple-500 block text-4xl font-bold">440</span>
+                </div>
+            </div>
+            <img [src]="'assets/demo/images/dashboard/interactions' + (colorScheme === 'light' ? '' : '-dark') + '.svg'" class="w-full mt-auto" alt="interactions">
+        </div>
+    </div>
+
+    <div class="col-12 xl:col-6">
+        <div class="card h-full">
+            <div class="flex justify-content-between align-items-center mb-3">
+                <h5>Acquisition Overview</h5>
+                <p-dropdown [options]="overviewWeeks" [(ngModel)]="selectedOverviewWeek" optionLabel="name" (onChange)="changeOverviewWeek()"></p-dropdown>
+            </div>
+            <div class="graph">
+                <p-chart #overviewchart type="bar" [data]="overviewChartData" [options]="overviewChartOptions" height="400px"></p-chart>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card h-full">
+            <h5>Latest Customers</h5>
+            <ul class="list-none p-0 m-0">
+                <li class="mb-4 flex align-items-center">
+                    <p-avatar label="BS" size="large" shape="circle" styleClass="text-base font-bold"
+                              [style]="{'background-color':'rgba(101, 214, 173, 0.1)', 'color': '#27AB83', 'border': '1px solid #65D6AD'}"></p-avatar>
+                    <div class="ml-3">
+                        <span class="block">Brooklyn Simmons</span>
+                        <span class="text-color-secondary block">Manager at Mitsubishi</span>
+                    </div>
+                </li>
+                <li class="mb-4 flex align-items-center">
+                    <p-avatar label="LA" size="large" shape="circle" styleClass="text-base font-bold"
+                              [style]="{'background-color':'rgba(250, 219, 95, 0.1)', 'color': '#DE911D', 'border': '1px solid #FADB5F'}"></p-avatar>
+                    <div class="ml-3">
+                        <span class="block">Leslie Alexander</span>
+                        <span class="text-color-secondary  block">Customer Success at General Electric</span>
+                    </div>
+                </li>
+                <li class="mb-4 flex align-items-center">
+                    <p-avatar label="JB" size="large" shape="circle" styleClass="text-base font-bold"
+                              [style]="{'background-color':'rgba(94, 208, 250, 0.1)', 'color': '#1992D4', 'border': '1px solid #5ED0FA'}"></p-avatar>
+                    <div class="ml-3">
+                        <span class="block">Jerome Bell</span>
+                        <span class="text-color-secondary  block">Mario Carrier at Nintendo</span>
+                    </div>
+                </li>
+                <li class="mb-4 flex align-items-center">
+                    <p-avatar label="JJ" size="large" shape="circle" styleClass="text-base font-bold"
+                              [style]="{'background-color':'rgba(43, 176, 237, 0.1)', 'color': '#127FBF', 'border': '1px solid #2BB0ED'}"></p-avatar>
+                    <div class="ml-3">
+                        <span class="block">Jim Jones</span>
+                        <span class="text-color-secondary  block">Reliability Engineer at eBay</span>
+                    </div>
+                </li>
+                <li class="mb-4 flex align-items-center">
+                    <p-avatar label="AB" size="large" shape="circle" styleClass="text-base font-bold"
+                              [style]="{'background-color':'rgba(255, 155, 155, 0.1)', 'color': '#CF1124', 'border': '1px solid #FF9B9B'}"></p-avatar>
+                    <div class="ml-3">
+                        <span class="block">Annette Black</span>
+                        <span class="text-color-secondary  block">Delivery Woman at Pizza Hut</span>
+                    </div>
+                </li>
+                <li class="mb-4 flex align-items-center">
+                    <p-avatar label="AF" size="large" shape="circle" styleClass="text-base font-bold"
+                              [style]="{'background-color':'rgba(250, 219, 95, 0.1)', 'color': '#DE911D', 'border': '1px solid #FADB5F'}"></p-avatar>
+                    <div class="ml-3">
+                        <span class="block">Albert Flores</span>
+                        <span class="text-color-secondary  block">Team Leader at Insomniac Games</span>
+                    </div>
+                </li>
+            </ul>
+            <button type="button" pButton pRipple class="w-full mt-3 " label="View All" icon="pi pi-arrow-right" iconPos="right"></button>
+        </div>
+    </div>
+
+    <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card">
+            <div class="text-center mb-5">
+                <img [src]="'assets/demo/images/dashboard/completion-graph-' + (colorScheme === 'light' ? 'light' : 'dark') + '.svg'" alt="graph" class="w-full">
+            </div>
+
+            <ul class="list-none p-0 m-0">
+                <li class="mb-4 flex align-items-center justify-content-start">
+                    <p-avatar icon="pi pi-user-edit" size="large" shape="circle" styleClass="text-base font-bold"
+                              [style]="{'background-color':'rgba(250, 219, 95, 0.1)', 'color': '#DE911D', 'border': '1px solid #FADB5F'}"></p-avatar>
+                    <div class="ml-3">
+                        <span class="block">Add your personal information</span>
+                        <span class="text-blue-500 hover:underline cursor-pointer block font-bold">Go Profile Edit</span>
+                    </div>
+                </li>
+    
+                <li class="mb-4 flex align-items-center justify-content-start">
+                    <p-avatar icon="pi pi-send" size="large" shape="circle" styleClass="text-base font-bold"
+                              [style]="{'background-color':'rgba(250, 219, 95, 0.1)', 'color': '#DE911D', 'border': '1px solid #FADB5F'}"></p-avatar>
+                    <div class="ml-3">
+                        <span class="block">Verify your phone</span>
+                        <span class="text-blue-500 hover:underline cursor-pointer block font-bold">Send Verification SMS</span>
+                    </div>
+                </li>
+    
+                <li class="mb-4 flex align-items-center justify-content-start">
+                    <p-avatar icon="pi pi-video" size="large" shape="circle" styleClass="text-base font-bold"
+                              [style]="{'background-color':'rgba(250, 219, 95, 0.1)', 'color': '#DE911D', 'border': '1px solid #FADB5F'}"></p-avatar>
+                    <div class="ml-3">
+                        <span class="block">Verify your Face ID</span>
+                        <span class="text-blue-500 hover:underline cursor-pointer block font-bold">Upload Pictures</span>
+                    </div>
+                </li>
+    
+                <li class="mb-4 flex align-items-center justify-content-start">
+                    <p-avatar icon="pi pi-briefcase" size="large" shape="circle" styleClass="text-base font-bold"
+                              [style]="{'background-color':'rgba(250, 219, 95, 0.1)', 'color': '#DE911D', 'border': '1px solid #FADB5F'}"></p-avatar>
+                    <div class="ml-3">
+                        <span class="block">Give permissions for personal data</span>
+                        <span class="text-blue-500 hover:underline cursor-pointer block font-bold">View Agreement</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-12 lg:col-6 xl:col-4">
+        <div class="card h-full">
+            <h5>Trials Leads By Role</h5>
+            <div class="flex align-items-center justify-content-between pb-2 mb-1 border-bottom-1 surface-border">
+                <span class="font-bold">Role</span>
+                <span class="font-bold">Leads</span>
+            </div>
+            <ul class="list-none p-0 m-0">
+                <li class="flex flex-wrap align-items-center justify-content-between py-1">
+                    <span>Finance</span>
+                    <p-avatarGroup styleClass="w-8rem justify-content-evenly">
+                        <p-avatar image="assets/demo/images/avatar/amyelsner.png" shape="circle"></p-avatar>
+                        <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" shape="circle"></p-avatar>
+                        <p-avatar image="assets/demo/images/avatar/onyamalimba.png" shape="circle"></p-avatar>
+                        <p-avatar image="assets/demo/images/avatar/ionibowcher.png" shape="circle"></p-avatar>
+                    </p-avatarGroup>
+                </li>
+                <li class="flex flex-wrap align-items-center justify-content-between py-1">
+                    <span>Management</span>
+                    <p-avatarGroup styleClass="w-6rem justify-content-evenly">
+                        <p-avatar image="assets/demo/images/avatar/annafali.png" shape="circle"></p-avatar>
+                        <p-avatar image="assets/demo/images/avatar/bernardodominic.png" shape="circle"></p-avatar>
+                        <p-avatar image="assets/demo/images/avatar/elwinsharvill.png" shape="circle"></p-avatar>
+                    </p-avatarGroup>
+                </li>
+                <li class="flex flex-wrap align-items-center justify-content-between py-1">
+                    <span>Human Resources</span>
+                    <p-avatarGroup styleClass="w-4rem justify-content-evenly">
+                        <p-avatar image="assets/demo/images/avatar/ivanmagalhaes.png" shape="circle"></p-avatar>
+                        <p-avatar image="assets/demo/images/avatar/onyamalimba.png" shape="circle"></p-avatar>
+                    </p-avatarGroup>
+                </li>
+                <li class="flex flex-wrap align-items-center justify-content-between py-2">
+                    <span>Development</span>
+                    <p-avatarGroup styleClass="w-8rem justify-content-evenly">
+                        <p-avatar image="assets/demo/images/avatar/amyelsner.png" shape="circle"></p-avatar>
+                        <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" shape="circle"></p-avatar>
+                        <p-avatar image="assets/demo/images/avatar/onyamalimba.png" shape="circle"></p-avatar>
+                        <p-avatar image="assets/demo/images/avatar/ionibowcher.png" shape="circle"></p-avatar>
+                    </p-avatarGroup>
+                </li>
+                <li class="flex flex-wrap align-items-center justify-content-between py-2">
+                    <span>Design</span>
+                    <p-avatarGroup styleClass="w-4rem justify-content-evenly">
+                        <p-avatar image="assets/demo/images/avatar/amyelsner.png" shape="circle"></p-avatar>
+                        <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" shape="circle"></p-avatar>
+                    </p-avatarGroup>
+                </li>
+                <li class="flex flex-wrap align-items-center justify-content-between py-2">
+                    <span>R&D</span>
+                    <p-avatarGroup styleClass="w-6rem justify-content-evenly">
+                        <p-avatar image="assets/demo/images/avatar/amyelsner.png" shape="circle"></p-avatar>
+                        <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" shape="circle"></p-avatar>
+                        <p-avatar image="assets/demo/images/avatar/onyamalimba.png" shape="circle"></p-avatar>
+                    </p-avatarGroup>
+                </li>
+                <li class="flex flex-wrap align-items-center justify-content-between py-2">
+                    <span>Reliability</span>
+                    <p-avatarGroup styleClass="w-4rem justify-content-evenly">
+                        <p-avatar image="assets/demo/images/avatar/amyelsner.png" shape="circle"></p-avatar>
+                        <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" shape="circle"></p-avatar>
+                    </p-avatarGroup>
+                </li>
+                <li class="flex flex-wrap align-items-center justify-content-between py-2">
+                    <span>Social Media</span>
+                    <p-avatarGroup styleClass="w-8rem justify-content-evenly">
+                        <p-avatar image="assets/demo/images/avatar/amyelsner.png" shape="circle"></p-avatar>
+                        <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" shape="circle"></p-avatar>
+                        <p-avatar image="assets/demo/images/avatar/onyamalimba.png" shape="circle"></p-avatar>
+                        <p-avatar image="assets/demo/images/avatar/ionibowcher.png" shape="circle"></p-avatar>
+                    </p-avatarGroup>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-12 lg:col-6 xl:col-4">
+        <div class="card h-full">
+            <h5>Leads By Region</h5>
+            <p-tabView>
+                <p-tabPanel header="Europe" styleClass="p-0">
+                    <table class="w-full">
+                        <tbody>
+                            <tr>
+                                <td class="py-1">🇮🇹 Italy</td>
+                                <td><span class="font-bold">90</span></td>
+                                <td class="text-right">
+                                    <div class="inline-flex align-items-center justify-content-between px-2 py-1 bg-green-100 text-green-900 border-round" style="min-width:3.5rem">
+                                        <i class="pi pi-arrow-up"></i>
+                                        <span class="font-bold ml-1">12</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="inline-flex p-1 align-items-center justify-content-center surface-100 text-700 p-1 border-round text-sm" style="min-width:4rem">
+                                        <span class="font-bold">LOW</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">🇫🇷 France</td>
+                                <td><span class="font-bold">61</span></td>
+                                <td class="text-right">
+                                    <div class="inline-flex align-items-center justify-content-between px-2 py-1 bg-green-100 text-green-900 border-round" style="min-width:3.5rem">
+                                        <i class="pi pi-arrow-up"></i>
+                                        <span class="font-bold ml-1">8</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="inline-flex p-1 align-items-center justify-content-center surface-700 text-100 p-1 border-round text-sm" style="min-width:4rem">
+                                        <span class="font-bold">HIGH</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">🇩🇪 Germany</td>
+                                <td><span class="font-bold">46</span></td>
+                                <td class="text-right">
+                                    <div class="inline-flex align-items-center justify-content-between px-2 py-1 bg-green-100 text-green-900 border-round" style="min-width:3.5rem">
+                                        <i class="pi pi-arrow-up"></i>
+                                        <span class="font-bold ml-1">5</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="inline-flex p-1 align-items-center justify-content-center surface-700 text-100 p-1 border-round text-sm" style="min-width:4rem">
+                                        <span class="font-bold">HIGH</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">🇳🇱 Netherlands</td>
+                                <td><span class="font-bold">28</span></td>
+                                <td class="text-right">
+                                    <div class="inline-flex align-items-center justify-content-between px-2 py-1 bg-red-100 text-red-900 border-round" style="min-width:3.5rem">
+                                        <i class="pi pi-arrow-down"></i>
+                                        <span class="font-bold ml-1">19</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="inline-flex p-1 align-items-center justify-content-center surface-100 text-700 p-1 border-round text-sm" style="min-width:4rem">
+                                        <span class="font-bold">LOW</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">🇪🇸 Spain</td>
+                                <td><span class="font-bold">17</span></td>
+                                <td class="text-right">
+                                    <div class="inline-flex align-items-center justify-content-between px-2 py-1 bg-red-100 text-red-900 border-round" style="min-width:3.5rem">
+                                        <i class="pi pi-arrow-down"></i>
+                                        <span class="font-bold ml-1">7</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="inline-flex p-1 align-items-center justify-content-center surface-700 text-100 p-1 border-round text-sm" style="min-width:4rem">
+                                        <span class="font-bold">HIGH</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">🇧🇷 Brazil</td>
+                                <td><span class="font-bold">37</span></td>
+                                <td class="text-right">
+                                    <div class="inline-flex align-items-center justify-content-between px-2 py-1 bg-red-100 text-red-900 border-round" style="min-width:3.5rem">
+                                        <i class="pi pi-arrow-down"></i>
+                                        <span class="font-bold ml-1">7</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="inline-flex p-1 align-items-center justify-content-center surface-700 text-100 p-1 border-round text-sm" style="min-width:4rem">
+                                        <span class="font-bold">HIGH</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">🇲🇽 Mexico</td>
+                                <td><span class="font-bold">27</span></td>
+                                <td class="text-right">
+                                    <div class="inline-flex align-items-center justify-content-between px-2 py-1 bg-green-100 text-green-900 border-round" style="min-width:3.5rem">
+                                        <i class="pi pi-arrow-up"></i>
+                                        <span class="font-bold ml-1">4</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="inline-flex p-1 align-items-center justify-content-center surface-700 text-100 p-1 border-round text-sm" style="min-width:4rem">
+                                        <span class="font-bold">HIGH</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </p-tabPanel>
+                <p-tabPanel header="United States">
+                    <table class="w-full">
+                        <tbody>
+                            <tr>
+                                <td class="py-1">California</td>
+                                <td><span class="font-bold">79</span></td>
+                                <td class="text-right">
+                                    <div class="inline-flex align-items-center justify-content-between px-2 py-1 bg-green-100 text-green-900 border-round" style="min-width:3.5rem">
+                                        <i class="pi pi-arrow-up"></i>
+                                        <span class="font-bold ml-1">11</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="inline-flex p-1 align-items-center justify-content-center surface-700 text-100 p-1 border-round text-sm" style="min-width:4rem">
+                                        <span class="font-bold">HIGH</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">Texas</td>
+                                <td><span class="font-bold">71</span></td>
+                                <td class="text-right">
+                                    <div class="inline-flex align-items-center justify-content-between px-2 py-1 bg-green-100 text-green-900 border-round" style="min-width:3.5rem">
+                                        <i class="pi pi-arrow-up"></i>
+                                        <span class="font-bold ml-1">9</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="inline-flex p-1 align-items-center justify-content-center surface-100 text-700 p-1 border-round text-sm" style="min-width:4rem">
+                                        <span class="font-bold">LOW</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">Florida</td>
+                                <td><span class="font-bold">55</span></td>
+                                <td class="text-right">
+                                    <div class="inline-flex align-items-center justify-content-between px-2 py-1 bg-red-100 text-red-900 border-round" style="min-width:3.5rem">
+                                        <i class="pi pi-arrow-down"></i>
+                                        <span class="font-bold ml-1">15</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="inline-flex p-1 align-items-center justify-content-center surface-100 text-700 p-1 border-round text-sm" style="min-width:4rem">
+                                        <span class="font-bold">LOW</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">New York</td>
+                                <td><span class="font-bold">48</span></td>
+                                <td class="text-right">
+                                    <div class="inline-flex align-items-center justify-content-between px-2 py-1 bg-red-100 text-red-900 border-round" style="min-width:3.5rem">
+                                        <i class="pi pi-arrow-down"></i>
+                                        <span class="font-bold ml-1">10</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="inline-flex p-1 align-items-center justify-content-center surface-700 text-100 p-1 border-round text-sm" style="min-width:4rem">
+                                        <span class="font-bold">HIGH</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">Ohio</td>
+                                <td><span class="font-bold">26</span></td>
+                                <td class="text-right">
+                                    <div class="inline-flex align-items-center justify-content-between px-2 py-1 bg-red-100 text-red-900 border-round" style="min-width:3.5rem">
+                                        <i class="pi pi-arrow-down"></i>
+                                        <span class="font-bold ml-1">6</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="inline-flex p-1 align-items-center justify-content-center surface-700 text-100 p-1 border-round text-sm" style="min-width:4rem">
+                                        <span class="font-bold">HIGH</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">New York</td>
+                                <td><span class="font-bold">48</span></td>
+                                <td class="text-right">
+                                    <div class="inline-flex align-items-center justify-content-between px-2 py-1 bg-red-100 text-red-900 border-round" style="min-width:3.5rem">
+                                        <i class="pi pi-arrow-down"></i>
+                                        <span class="font-bold ml-1">10</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="inline-flex p-1 align-items-center justify-content-center surface-700 text-100 p-1 border-round text-sm" style="min-width:4rem">
+                                        <span class="font-bold">HIGH</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-1">Ohio</td>
+                                <td><span class="font-bold">26</span></td>
+                                <td class="text-right">
+                                    <div class="inline-flex align-items-center justify-content-between px-2 py-1 bg-red-100 text-red-900 border-round" style="min-width:3.5rem">
+                                        <i class="pi pi-arrow-down"></i>
+                                        <span class="font-bold ml-1">6</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="inline-flex p-1 align-items-center justify-content-center surface-700 text-100 p-1 border-round text-sm" style="min-width:4rem">
+                                        <span class="font-bold">HIGH</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </p-tabPanel>
+            </p-tabView>
+        </div>
+    </div>
+    
+    <div class="col-12 lg:col-6 xl:col-4">
+        <div class="card h-full">
+            <h5>Recent Blog Posts</h5>
+            <div class="flex flex-column mb-3">
+                <span class="text-lg mb-3">What is the Customer Journey?</span>
+                <p-tag value="Conversion" styleClass="mb-3"></p-tag>
+                
+                <span class="inline-flex align-items-center">
+                    <i class="pi pi-clock mr-1 text-color-secondary"></i>
+                    <span class="text-color-secondary">Jan 15.</span> 
+                    <span class="font-bold ml-2">4 days 36 mins</span>
+                </span>
+            </div>
+            <p class="line-height-3 mt-0 mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+            <p class="line-height-3 mt-0 mb-5">Sit amet nulla facilisi morbi tempus iaculis. Dolor magna eget est lorem ipsum
+                dolor sit. Turpis egestas pretium aenean pharetra magna ac placerat vestibulum lectus.</p>
+
+            <div class="flex flex-wrap align-items-center justify-content-between">
+                <div class="flex align-items-center">
+                    <button pButton type="button" icon="pi pi-angle-left"  class="p-button-outlined p-button-rounded p-button-plain p-button-sm mr-2 p-2 w-2rem h-2rem"></button>
+                    <button pButton type="button" icon="pi pi-angle-right" class="p-button-outlined p-button-rounded p-button-plain p-button-sm p-2 w-2rem h-2rem"></button>
+                    <span class="font-bold ml-3">4</span>
+                    <span>/8</span>
+                </div>
+                <p-avatarGroup>
+                    <p-avatar image="assets/demo/images/avatar/amyelsner.png" shape="circle"></p-avatar>
+                    <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" shape="circle"></p-avatar>
+                    <p-avatar image="assets/demo/images/avatar/onyamalimba.png" shape="circle"></p-avatar>
+                    <p-avatar image="assets/demo/images/avatar/ionibowcher.png" shape="circle"></p-avatar>
+                    <p-avatar image="assets/demo/images/avatar/xuxuefeng.png" shape="circle"></p-avatar>
+                </p-avatarGroup>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-12 lg:col-6">
+        <div class="card widget-timeline">
+            <h5>Timeline</h5>
+            <ul class="list-none p-0 m-0">
+                <li class="flex mb-3">
+                    <div class="flex flex-column align-items-center">
+                        <span
+                            class="flex align-items-center justify-content-center border-circle p-2 timeline-icon bg-blue-100 text-blue-500">
+                            <i class="pi pi-twitter"></i>
+                        </span>
+                        <div class="h-full bg-blue-100" style="width: 2px; min-height: 4rem"></div>
+                    </div>
+    
+                    <div class="ml-3 flex-1">
+                        <div class="flex align-items-center justify-content-between mb-3">
+                            <span>
+                                <strong>Tom Mathias</strong> retweeted a tweet about your following keyword.
+                            </span>
+                            <span class="font-bold text-color-secondary">46m</span>
+                        </div>
+                        <div class="p-3 border-round" [style]="{'background-color':colorScheme === 'dark' ? 'rgba(227, 248, 255, 0.1)' :'rgba(227, 248, 255, 0.5)'}">
+                            <div class="flex align-items-center justify-content-between mb-2">
+                                <img src="assets/demo/images/avatar/xuxuefeng.png" alt="avatar" class="w-2rem">
+                                <p-avatarGroup>
+                                    <p-avatar image="assets/demo/images/avatar/amyelsner.png" shape="circle"></p-avatar>
+                                    <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" shape="circle"></p-avatar>
+                                    <p-avatar image="assets/demo/images/avatar/onyamalimba.png" shape="circle"></p-avatar>
+                                </p-avatarGroup>
+                            </div>
+                            <div class="font-bold mb-2">Jeff Atwood</div>
+                            <p class="text-color-secondary text-sm line-height-3 mb-3" style="max-width: 28rem">Hooray! I suck at
+                                hardware but I was able to get the pi zero W, plus usb case, plus two color e-ink hat,
+                                to work!</p>
+    
+                            <p-progressBar [value]="50" [showValue]="false" styleClass="w-full md:w-6" [style]="{height:'.5rem'}"></p-progressBar>
+                        </div>
+                    </div>
+                </li>
+                <li class="flex mb-3">
+                    <div class="flex flex-column align-items-center">
+                        <span
+                            class="flex align-items-center justify-content-center border-circle p-2 timeline-icon bg-yellow-100 text-yellow-500">
+                            <i class="pi pi-star"></i>
+                        </span>
+                        <div class="h-full bg-yellow-100" style="width: 2px; min-height: 4rem"></div>
+                    </div>
+
+                    <div class="ml-3 flex-1">
+                        <div class="flex align-items-center justify-content-between">
+                            <span><strong>Scott Wesley</strong> starred NS0021 on customer list.</span>
+                            <span class="font-bold text-color-secondary">1h 51m</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="flex mb-3">
+                    <div class="flex flex-column align-items-center">
+                        <span
+                            class="flex align-items-center justify-content-center border-circle p-2 timeline-icon bg-green-100 text-green-500">
+                            <i class="pi pi-link"></i>
+                        </span>
+                        <div class="h-full bg-green-100" style="width: 2px; min-height: 4rem"></div>
+                    </div>
+
+                    <div class="ml-3 flex-1">
+                        <div class="flex align-items-center justify-content-between mb-3">
+                            <span>
+                                <strong>Jorge Gomez</strong> shared design files on cloud.
+                            </span>
+                            <span class="font-bold text-color-secondary">12h</span>
+                        </div>
+                        <ul class="list-none p-0 m-0">
+                            <li class="flex align-items-center justify-content-start mb-2">
+                                <img src="assets/demo/images/dashboard/bg-detail.svg" alt="bg" class="w-2rem">
+                                <span class="font-bold ml-2">01.Verona-Remastered.fig</span>
+                            </li>
+                            <li class="flex align-items-center justify-content-start">
+                                <img src="assets/demo/images/dashboard/bg-detail.svg" alt="bg" class="w-2rem">
+                                <span class="font-bold ml-2">02.Verona-Marketing.fig</span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="text-center">
+                    <p-button pRipple styleClass="p-button-text" icon="pi pi-chevron-down" label="View More"></p-button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-12 xl:col-6">
+        <div class="card">
+            <h5>Monthly Recurring Revenue Growth</h5>
+
+            <p-chart type="line" [data]="revenueChartData" [options]="revenueChartOptions" id="nasdaq-chart" height="348"></p-chart>
+        </div>
+    </div>
+</div>

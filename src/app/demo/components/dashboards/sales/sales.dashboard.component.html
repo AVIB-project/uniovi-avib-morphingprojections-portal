@@ -1,0 +1,516 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="flex flex-column md:flex-row md:align-items-center md:justify-content-between mb-3 gap-3">
+            <div class="flex align-items-center">
+                <img src="assets/demo/images/avatar/profile.jpg" width="64" alt="profile" class="border-circle border-2 border-primary flex-shrink-0"/>
+                <div class="ml-3">
+                    <span class="text-4xl font-light">Bonjour, <span class="font-normal">Hermione</span></span>
+                    <div class="text-color-secondary">26 January 2023, Thu</div>
+                </div>
+            </div>
+            <div class="flex align-items-center justify-content-between gap-3">
+                <p-dropdown [options]="analytics" [(ngModel)]="selectedDrop" placeholder="Category" styleClass="w-full sm:w-10rem"></p-dropdown>
+                <p-calendar [showIcon]="true" selectionMode="range" styleClass="w-full sm:w-14rem" placeholder="Select Range"></p-calendar>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="card p-0 grid grid-nogutter">
+            <div class="col-12 md:col-6 lg:col-3 py-5 px-6 border-none md:border-right-1 surface-border">
+                <div class="flex align-items-center mb-3">
+                    <p-avatar icon="pi pi-shopping-cart" size="large" shape="circle" styleClass="text-base bg-indigo-100 text-indigo-700"></p-avatar>
+                    <span class="text-xl ml-2">Orders</span>
+                </div>
+                <div class="flex align-items-center justify-content-between mb-3">
+                    <span class="block font-bold text-6xl mb-3">1420</span>
+                    <div class="flex align-items-center justify-content-between h-2rem px-2 py-1 bg-green-100 text-green-900 border-round">
+                        <i class="pi pi-arrow-up-right"></i>
+                        <span class="font-bold ml-1">551</span>
+                    </div>
+                </div>
+                <div class="border-round overflow-hidden surface-200" style="height:.5rem">
+                    <div class="h-full bg-indigo-500" style="width:40%"></div>
+                </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-3 py-5 px-6 border-none md:border-right-1 surface-border">
+                <div class="flex align-items-center mb-3">
+                    <p-avatar icon="pi pi-money-bill" size="large" shape="circle" styleClass="text-base bg-green-100 text-green-700"></p-avatar>
+                    <span class="text-xl ml-2">Revenue</span>
+                </div>
+                <div class="flex align-items-center justify-content-between mb-3">
+                    <span class="block font-bold text-6xl mb-3">1420</span>
+                    <div class="flex align-items-center justify-content-between h-2rem px-2 py-1 bg-green-100 text-green-900 border-round">
+                        <i class="pi pi-arrow-up-right"></i>
+                        <span class="font-bold ml-1">2.7K</span>
+                    </div>
+                </div>
+                <div class="border-round overflow-hidden surface-200" style="height:.5rem">
+                    <div class="h-full bg-green-500" style="width:60%"></div>
+                </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-3 py-5 px-6 border-none md:border-right-1 surface-border">
+                <div class="flex align-items-center mb-3">
+                    <p-avatar icon="pi pi-users" size="large" shape="circle" styleClass="text-base bg-yellow-100 text-yellow-700"></p-avatar>
+                    <span class="text-xl ml-2">Customers</span>
+                </div>
+                <div class="flex align-items-center justify-content-between mb-3">
+                    <span class="block font-bold text-6xl mb-3">1420</span>
+                    <div class="flex align-items-center justify-content-between h-2rem px-2 py-1 bg-green-100 text-green-900 border-round">
+                        <i class="pi pi-arrow-up-right"></i>
+                        <span class="font-bold ml-1">254</span>
+                    </div>
+                </div>
+                <div class="border-round overflow-hidden surface-200" style="height:.5rem">
+                    <div class="h-full bg-yellow-500" style="width:80%"></div>
+                </div>
+            </div>
+            <div class="col-12 md:col-6 lg:col-3 py-5 px-6">
+                <div class="flex align-items-center mb-3">
+                    <p-avatar icon="pi pi-comments" size="large" shape="circle" styleClass="text-base bg-purple-100 text-purple-700"></p-avatar>
+                    <span class="text-xl ml-2">Comments</span>
+                </div>
+                <div class="flex align-items-center justify-content-between mb-3">
+                    <span class="block font-bold text-6xl mb-3">1420</span>
+                    <div class="flex align-items-center justify-content-between h-2rem px-2 py-1 bg-green-100 text-green-900 border-round">
+                        <i class="pi pi-arrow-up-right"></i>
+                        <span class="font-bold ml-1">85</span>
+                    </div>
+                </div>
+                <div class="border-round overflow-hidden surface-200" style="height:.5rem">
+                    <div class="h-full bg-purple-500" style="width:30%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 lg:col-6">
+        <div class="card h-full">
+            <h5>Store Overview</h5>
+            <div class="flex flex-wrap gap-5">
+                <ul class="flex-1 list-none p-0 m-0">
+                    <li *ngFor="let item of listItems; let i = index" (click)="activeListItemIndex = i; activeListItem = item"
+                        class="border-round p-3 flex cursor-pointer border-1 border-transparent" [ngClass]="{'border-primary-500': activeListItemIndex === i, 'hover:surface-hover': activeListItemIndex !== i}">
+                        <img [src]="item.image" width="64" class="mr-3 border-round">
+                        <div class="flex-1 flex align-items-center justify-content-between">
+                            <div class="flex flex-column">
+                                <span class="font-bold">{{item.text}}</span>
+                                <span class="text-primary-700 mb-1">{{item.subtext}}</span>
+                                <p-badge [value]="item.ratio"></p-badge>
+                            </div>
+                            <i class="pi pi-chevron-right text-color-secondary ml-3"></i>
+                        </div>
+                    </li>
+                </ul>
+                <div class="flex-1 flex flex-column align-items-center justify-content-center">
+                    <div class="bars flex align-items-end mb-4">
+                        <div class="w-1rem h-2rem mr-2 surface-200 border-round" [ngClass]="{'h-3rem bg-primary-500': activeListItemIndex === 2 && activeTab === 0}"></div>
+                        <div class="w-1rem h-3rem mr-2 surface-200 border-round" [ngClass]="{'h-5rem bg-primary-500': activeListItemIndex === 1 && activeTab !== 2}"></div>
+                        <div class="w-1rem h-4rem mr-2 surface-200 border-round"></div>
+                        <div class="w-1rem h-6rem mr-2 surface-200 border-round" [ngClass]="{'h-4rem bg-primary-500': activeListItemIndex === 2 && activeTab !== 0}"></div>
+                        <div class="w-1rem h-2rem mr-2 surface-200 border-round" [ngClass]="{'h-4rem bg-primary-500': activeListItemIndex === 1 && activeTab === 2}"></div>
+                        <div class="w-1rem h-5rem mr-2 surface-200 border-round" [ngClass]="{'h-4rem bg-primary-500': activeListItemIndex === 0 && activeTab === 1}"></div>
+                        <div class="w-1rem h-3rem mr-2 surface-200 border-round" [ngClass]="{'h-4rem bg-primary-500': activeListItemIndex === 0 && activeTab !== 1}"></div>
+                        <div class="w-1rem h-1rem mr-2 surface-200 border-round"></div>
+                    </div>
+                    <span class="font-bold">{{activeListItem.text}}</span>
+                    <span class="text-color-secondary">{{activeListItem.subtext}}</span>
+                </div>
+            </div>
+            <div class="flex align-items-center mt-7 border-round">
+                <div class="flex flex-column align-items-center flex-1 py-3 cursor-pointer border-top-1 hover:surface-hover" [ngClass]="{'border-primary-500': activeTab === 0, 'surface-border': activeTab !== 0}" (click)="onTabClick(0)">
+                    <i class="pi pi-sort-amount-down text-2xl mb-2"></i>
+                    <span class="font-bold">Latest</span>
+                </div>
+                <div class="flex flex-column align-items-center flex-1 py-3 cursor-pointer border-top-1 hover:surface-hover" [ngClass]="{'border-primary-500': activeTab === 1, 'surface-border': activeTab !== 1}" (click)="onTabClick(1)">
+                    <i class="pi pi-chart-line text-2xl mb-2"></i>
+                    <span class="font-bold">Trending</span>
+                </div>
+                <div class="flex flex-column align-items-center flex-1 py-3 cursor-pointer border-top-1 hover:surface-hover" [ngClass]="{'border-primary-500': activeTab === 2, 'surface-border': activeTab !== 2}" (click)="onTabClick(2)">
+                    <i class="pi pi-star text-2xl mb-2"></i>
+                    <span class="font-bold">Starred</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 lg:col-6">
+        <div class="card h-full">
+            <div class="flex flex-wrap align-items-center justify-content-between mb-3 gap-3">
+                <h5 class="m-0">Recent Sales</h5>
+                <p-dropdown [options]="orderWeek" [(ngModel)]="selectedOrderWeek" optionLabel="name" (onChange)="recentSales($event.value.code)" styleClass="w-10rem"></p-dropdown>
+            </div>
+
+            <p-table [value]="products" [rows]="5">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>
+                            Image
+                        </th>
+                        <th pSortableColumn="name">Name
+                            <p-sortIcon field="name"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="category">Category
+                            <p-sortIcon field="category"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="price">Price
+                            <p-sortIcon field="price"></p-sortIcon>
+                        </th>
+                        <th style="width: 5rem"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td>
+                            <span class="p-column-title">Image</span>
+                            <img src="assets/demo/images/product/{{product.image}}" width="50px" [alt]="product.image" /></td>
+                        <td>
+                            <span class="p-column-title">Name</span>
+                            {{product.name}}
+                        </td>
+                        <td>
+                            <span class="p-column-title">Category</span>
+                            {{product.category}}
+                        </td>
+                        <td>
+                            <span class="p-column-title">Price</span>
+                            {{product.price | currency:'USD'}}
+                        </td>
+                        <td class="text-center">
+                            <button pButton type="button" icon="pi pi-search" class="p-button-text"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+
+    <div class="col-12 md:col-6 xl:col-6">
+        <div class="card h-full">
+            <h5>Live Support</h5>
+            <div>
+                <ul #chatcontainer class="list-none p-0 px-3 mt-4 mb-6 h-21rem overflow-y-auto">
+                    <li *ngFor="let chartMessage of chatMessages; let last = last;" class="flex align-items-start mb-3" [ngClass]="{'justify-content-start': !chartMessage.self, 'justify-content-end': chartMessage.self}">
+                        <img *ngIf="!chartMessage.self" [src]="chartMessage.url" width="36" height="36" class="border-circle">
+                        <div class="ml-2 flex flex-column align-items-start" *ngIf="!chartMessage.self">
+                            <div>
+                                <span class="font-bold mr-3">{{chartMessage.from}}</span>
+                                <span class="text-color-secondary">2m ago</span>
+                            </div>
+                            <div class="inline-block text-left surface-100 border-round px-5 py-3 mt-3" *ngFor="let message of chartMessage.messages; let first = first">{{message}}</div>
+                        </div>
+                        <div class="mr-3 flex flex-column align-items-end" *ngIf="chartMessage.self">
+                            <div>
+                                <span class="text-color-secondary">2m ago</span>
+                                <span class="font-bold ml-3">{{chartMessage.from}}</span>
+                            </div>
+                            <div class="inline-block text-right bg-primary-500 text-primary-50 border-round px-5 py-3 mt-3" *ngFor="let message of chartMessage.messages; let first = first">{{message}}</div>
+                        </div>
+                        <img *ngIf="chartMessage.self" [src]="chartMessage.url" width="36" height="36" class="border-circle">
+                    </li>
+                </ul>
+                <p-inputGroup class="mt-3">
+                    <input type="text" pInputText placeholder="Write your message (Hint: 'PrimeNG')" (keydown)="onChatKeydown($event)">
+                </p-inputGroup>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 md:col-6 xl:col-3">
+        <div class="card h-full">
+            <div class="flex align-items-center justify-content-between mb-3">
+                <h5 class="m-0">Revenue Stream</h5>
+                <div class="flex align-items-center gap-2">
+                    <button pButton type="button" icon="pi pi-angle-left" class="p-button-outlined p-button-rounded p-button-plain h-2rem w-2rem p-0"></button>
+                    <button pButton type="button" icon="pi pi-angle-right" class="p-button-outlined p-button-rounded p-button-plain h-2rem w-2rem p-0"></button>
+                </div>
+            </div>
+            <div class="flex flex-column align-items-center justify-content-center">
+                <p-chart type="doughnut" [data]="revenueChart" [options]="revenueOptions" width="180px" height="180px" class="mb-5"></p-chart>
+                <span class="font-bold mb-2">Total Revenue This Week</span>
+                <span class="font-bold text-6xl mb-2">88k</span>
+                <span class="font-bold mb-4 text-green-500">+21%<span class="text-color-secondary"> higher than last week</span></span>
+                <div class="flex align-items-center justify-content-center gap-3">
+                    <div class="flex align-items-center">
+                        <i class="pi pi-circle-on text-indigo-500"></i>
+                        <span class="text-color-secondary ml-2">Online</span>
+                    </div>
+                    <div class="flex align-items-center">
+                        <i class="pi pi-circle-on text-teal-500"></i>
+                        <span class="text-color-secondary ml-2">Retail</span>
+                    </div>
+                    <div class="flex align-items-center">
+                        <i class="pi pi-circle-on text-purple-500"></i>
+                        <span class="text-color-secondary ml-2">Partner</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 md:col-6 lg:col-3">
+        <div class="card h-full">
+            <h5>Sales Channels</h5>
+            
+            <ul class="list-none m-0 p-0">
+                <li class="mb-4">
+                    <div class="flex align-items-center justify-content-between mb-2">
+                        <span class="font-bold">Online Marketplaces</span>
+                        <span>%40</span>
+                    </div>
+                    <div class="border-round overflow-hidden surface-200" style="height:.5rem">
+                        <div class="h-full bg-orange-500" style="width:40%"></div>
+                    </div>
+                </li>
+                <li class="mb-4">
+                    <div class="flex align-items-center justify-content-between mb-2">
+                        <span class="font-bold">Resellers</span>
+                        <span>%60</span>
+                    </div>
+                    <div class="border-round overflow-hidden surface-200" style="height:.5rem">
+                        <div class="h-full bg-indigo-500" style="width:60%"></div>
+                    </div>
+                </li>
+                <li class="mb-4">
+                    <div class="flex align-items-center justify-content-between mb-2">
+                        <span class="font-bold">Affiliate</span>
+                        <span>%90</span>
+                    </div>
+                    <div class="border-round overflow-hidden surface-200" style="height:.5rem">
+                        <div class="h-full bg-blue-500" style="width:90%"></div>
+                    </div>
+                </li>
+                <li class="mb-4">
+                    <div class="flex align-items-center justify-content-between mb-2">
+                        <span class="font-bold">Organic</span>
+                        <span>%50</span>
+                    </div>
+                    <div class="border-round overflow-hidden surface-200" style="height:.5rem">
+                        <div class="h-full bg-green-500" style="width:50%"></div>
+                    </div>
+                </li>
+                <li class="mb-4">
+                    <div class="flex align-items-center justify-content-between mb-2">
+                        <span class="font-bold">Referral</span>
+                        <span>%30</span>
+                    </div>
+                    <div class="border-round overflow-hidden surface-200" style="height:.5rem">
+                        <div class="h-full bg-purple-500" style="width:30%"></div>
+                    </div>
+                </li>
+                <li class="mb-4">
+                    <div class="flex align-items-center justify-content-between mb-2">
+                        <span class="font-bold">Ads</span>
+                        <span>%30</span>
+                    </div>
+                    <div class="border-round overflow-hidden surface-200" style="height:.5rem">
+                        <div class="h-full bg-yellow-500" style="width:45%"></div>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex align-items-center justify-content-between mb-2">
+                        <span class="font-bold">Partners</span>
+                        <span>%30</span>
+                    </div>
+                    <div class="border-round overflow-hidden surface-200" style="height:.5rem">
+                        <div class="h-full bg-teal-500" style="width:70%"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="col-12 md:col-6 xl:col-3">
+        <div class="card p-0">
+            <img src="assets/demo/images/dashboard/bg-product.jpg" alt="blog-bg" class="w-full border-round-top-2xl">
+            <div class="p-4">
+                <div class="flex align-items-center justify-content-between mb-3">
+                    <div class="inline-flex align-items-center">
+                        <span class="font-bold">Optimizing Logistics with AI</span>
+                        <i class="pi pi-check-circle ml-3 text-xl text-green-500"></i>
+                    </div>
+                    <i class="pi pi-bookmark ml-3 text-xl text-color-secondary"></i>
+                </div>
+                <p class="mb-5 line-height-3">Sit amet nulla facilisi morbi tempus iaculis. Dolor magna eget est lorem ipsum dolor sit. Turpis egestas pretium aenean pharetra magna ac placerat vestibulum lectus.</p>
+                <div class="flex align-items-center justify-content-between">
+                    <img src="assets/demo/images/avatar/amyelsner.png" alt="avatar" class="flex-shrink-0 w-2rem h-2rem">
+                    <div class="text-color-secondary flex align-items-center">
+                        <i class="pi pi-heart mr-1"></i>
+                        <span>888</span>
+                        <i class="pi pi-eye ml-4 mr-1"></i>
+                        <span>8888</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 md:col-6 xl:col-3">
+        <div class="card h-full">
+            <h5>Best Sellers</h5>
+            <ul class="list-none p-0 m-0">
+                <li class="flex align-items-center justify-content-between pb-2">
+                    <div class="flex align-items-center justify-content-between">
+                        <img src="assets/demo/images/product/bamboo-watch.png" alt="verona-layout" class="w-3rem h-3rem border-round"/>
+                        <div class="ml-2 flex flex-column">
+                            <span class="font-bold">Bamboo Watch</span>
+                            <span class="text-color-secondary text-sm">Accessories</span>
+                        </div>
+                    </div>
+                    <p-knob [ngModel]="75" [size]="40" styleClass="ml-auto" [showValue]="false"></p-knob>
+                </li>
+                <li class="flex align-items-center justify-content-between py-2">
+                    <div class="flex align-items-center justify-content-between">
+                        <img src="assets/demo/images/product/black-watch.png" alt="verona-layout" width="42" height="42" class="border-round"/>
+                        <div class="ml-2 flex flex-column">
+                            <span class="font-bold">Black Watch</span>
+                            <span class="text-color-secondary text-sm">Accessories</span>
+                        </div>
+                    </div>
+                    <p-knob [ngModel]="20" [size]="40" styleClass="ml-auto" [showValue]="false"></p-knob>
+                </li>
+                <li class="flex align-items-center justify-content-between py-2">
+                    <div class="flex align-items-center justify-content-between">
+                        <img src="assets/demo/images/product/blue-band.png" alt="verona-layout" width="42" height="42" class="border-round"/>
+                        <div class="ml-2 flex flex-column">
+                            <span class="font-bold">Blue Band</span>
+                            <span class="text-color-secondary text-sm">Fitness</span>
+                        </div>
+                    </div>
+                    <p-knob [ngModel]="42" [size]="40" styleClass="ml-auto" [showValue]="false"></p-knob>
+                </li>
+                <li class="flex align-items-center justify-content-between py-2">
+                    <div class="flex align-items-center justify-content-between">
+                        <img src="assets/demo/images/product/blue-t-shirt.png" alt="verona-layout" width="42" height="42" class="border-round"/>
+                        <div class="ml-2 flex flex-column">
+                            <span class="font-bold">Blue T-Shirt</span>
+                            <span class="text-color-secondary text-sm">Clothing</span>
+                        </div>
+                    </div>
+                    <p-knob [ngModel]="26" [size]="40" styleClass="ml-auto" [showValue]="false"></p-knob>
+                </li>
+                <li class="flex align-items-center justify-content-between py-2">
+                    <div class="flex align-items-center justify-content-between">
+                        <img src="assets/demo/images/product/black-watch.png" alt="verona-layout" width="42" height="42" class="border-round"/>
+                        <div class="ml-2 flex flex-column">
+                            <span class="font-bold">Black Watch</span>
+                            <span class="text-color-secondary text-sm">Accessories</span>
+                        </div>
+                    </div>
+                    <p-knob [ngModel]="10" [size]="40" styleClass="ml-auto" [showValue]="false"></p-knob>
+                </li>
+                <li class="flex align-items-center justify-content-between py-2">
+                    <div class="flex align-items-center justify-content-between">
+                        <img src="assets/demo/images/product/sneakers.jpg" alt="verona-layout" width="42" height="42" class="border-round"/>
+                        <div class="ml-2 flex flex-column">
+                            <span class="font-bold">Sneakers</span>
+                            <span class="text-color-secondary text-sm">Clothing</span>
+                        </div>
+                    </div>
+                    <p-knob [ngModel]="60" [size]="40" styleClass="ml-auto" [showValue]="false"></p-knob>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-12 md:col-6 lg:col-6">
+        <div class="card">
+            <h5>Customer Stories</h5>
+            <div class="flex flex-wrap align-items-center justify-content-around gap-2">
+                <div class="flex flex-column align-items-center justify-content-center">
+                    <button pButton pRipple href="#" icon="pi pi-plus text-2xl" class="w-4rem h-4rem p-button-outlined p-button-rounded mb-2"></button>
+                    <span class="font-bold text-sm">Add New</span>
+                </div>
+                <div class="flex flex-column align-items-center justify-content-center">
+                    <div class="flex align-items-center justify-content-center w-4rem h-4rem bg-transparent border-3 surface-border border-circle relative">
+                        <img src="assets/demo/images/avatar/amyelsner.png" class="border-circle h-3rem w-3rem">
+                        <span class="absolute top-0 surface-card border-circle flex align-items-center justify-content-center" style="right: -.75rem; width: 1.5rem; height: 1.5rem">
+                            <i class="pi pi-globe text-sm"></i>
+                        </span>
+                    </div>
+                    <span class="font-bold">Darlene Robertson</span>
+                    <span class="text-color-secondary text-sm">2m ago</span>
+                </div>
+                <div class="flex flex-column align-items-center justify-content-center">
+                    <div class="flex align-items-center justify-content-center w-4rem h-4rem bg-transparent border-3 surface-border border-circle relative">
+                        <img src="assets/demo/images/avatar/annafali.png" class="border-circle h-3rem w-3rem">
+                        <span class="absolute top-0 surface-card border-circle flex align-items-center justify-content-center" style="right: -.75rem; width: 1.5rem; height: 1.5rem">
+                            <i class="pi pi-globe text-sm"></i>
+                        </span>
+                    </div>
+                    <span class="font-bold">Albert Flores</span>
+                    <span class="text-color-secondary text-sm">1h ago</span>
+                </div>
+                <div class="flex flex-column align-items-center justify-content-center">
+                    <div class="flex align-items-center justify-content-center w-4rem h-4rem bg-transparent border-3 surface-border border-circle relative">
+                        <img src="assets/demo/images/avatar/asiyajavayant.png" class="border-circle h-3rem w-3rem">
+                        <span class="absolute top-0 surface-card border-circle flex align-items-center justify-content-center" style="right: -.75rem; width: 1.5rem; height: 1.5rem">
+                            <i class="pi pi-globe text-sm"></i>
+                        </span>
+                    </div>
+                    <span class="font-bold">Annette Black</span>
+                    <span class="text-color-secondary text-sm">6m ago</span>
+                </div>
+                <div class="flex flex-column align-items-center justify-content-center">
+                    <div class="flex align-items-center justify-content-center w-4rem h-4rem bg-transparent border-3 surface-border border-circle relative">
+                        <img src="assets/demo/images/avatar/bernardodominic.png" class="border-circle h-3rem w-3rem">
+                        <span class="absolute top-0 surface-card border-circle flex align-items-center justify-content-center" style="right: -.75rem; width: 1.5rem; height: 1.5rem">
+                            <i class="pi pi-globe text-sm"></i>
+                        </span>
+                    </div>
+                    <span class="font-bold">Ralph Edwards</span>
+                    <span class="text-color-secondary text-sm">4m ago</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h5>Potential Influencers</h5>
+            <div class="flex flex-wrap align-items-center justify-content-around gap-2">
+                <div class="flex flex-column align-items-center justify-content-center">
+                    <button pButton pRipple href="#" icon="pi pi-plus text-2xl" class="w-4rem h-4rem p-button-outlined p-button-rounded mb-2"></button>
+                    <span class="font-bold text-sm">Add New</span>
+                </div>
+                <div class="flex flex-column align-items-center justify-content-center">
+                    <div class="flex align-items-center justify-content-center w-4rem h-4rem bg-transparent border-3 surface-border border-circle relative">
+                        <img src="assets/demo/images/avatar/ionibowcher.png" class="border-circle h-3rem w-3rem">
+                        <span class="absolute top-0 surface-card border-circle flex align-items-center justify-content-center" style="right: -.75rem; width: 1.5rem; height: 1.5rem">
+                            <i class="pi pi-globe text-sm"></i>
+                        </span>
+                    </div>
+                    <span class="font-bold">Jenna Watson</span>
+                    <span class="text-color-secondary text-sm">2m ago</span>
+                </div>
+                <div class="flex flex-column align-items-center justify-content-center">
+                    <div class="flex align-items-center justify-content-center w-4rem h-4rem bg-transparent border-3 surface-border border-circle relative">
+                        <img src="assets/demo/images/avatar/onyamalimba.png" class="border-circle h-3rem w-3rem">
+                        <span class="absolute top-0 surface-card border-circle flex align-items-center justify-content-center" style="right: -.75rem; width: 1.5rem; height: 1.5rem">
+                            <i class="pi pi-globe text-sm"></i>
+                        </span>
+                    </div>
+                    <span class="font-bold">Dan Cooper</span>
+                    <span class="text-color-secondary text-sm">10m ago</span>
+                </div>
+                <div class="flex flex-column align-items-center justify-content-center">
+                    <div class="flex align-items-center justify-content-center w-4rem h-4rem bg-transparent border-3 surface-border border-circle relative">
+                        <img src="assets/demo/images/avatar/elwinsharvill.png" class="border-circle h-3rem w-3rem">
+                        <span class="absolute top-0 surface-card border-circle flex align-items-center justify-content-center" style="right: -.75rem; width: 1.5rem; height: 1.5rem">
+                            <i class="pi pi-globe text-sm"></i>
+                        </span>
+                    </div>
+                    <span class="font-bold">Kathryn Murphy</span>
+                    <span class="text-color-secondary text-sm">50m ago</span>
+                </div>
+                <div class="flex flex-column align-items-center justify-content-center">
+                    <div class="flex align-items-center justify-content-center w-4rem h-4rem bg-transparent border-3 surface-border border-circle relative">
+                        <img src="assets/demo/images/avatar/stephenshaw.png" class="border-circle h-3rem w-3rem">
+                        <span class="absolute top-0 surface-card border-circle flex align-items-center justify-content-center" style="right: -.75rem; width: 1.5rem; height: 1.5rem">
+                            <i class="pi pi-globe text-sm"></i>
+                        </span>
+                    </div>
+                    <span class="font-bold">Smith Wilson</span>
+                    <span class="text-color-secondary text-sm">40m ago</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

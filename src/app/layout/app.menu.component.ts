@@ -15,13 +15,13 @@ export class AppMenuComponent implements OnInit {
     ngOnInit() {
         this.model = [
             {
-                label: 'Dashboard', icon: 'pi pi-home',
-                items: [
+                label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/']
+                /*items: [
                     { label: 'SaaS', icon: 'pi pi-desktop', routerLink: ['/'] },
                     { label: 'Sales', icon: 'pi pi-chart-bar', routerLink: ['/dashboard-sales'] }
-                ]
+                ]*/
             },
-            {
+            /*{
                 label: 'UI Kit', icon: 'pi pi-star', routerLink: ['/uikit'],
                 items: [
                     { label: 'Form Layout', icon: 'pi pi-id-card', routerLink: ['/uikit/formlayout'] },
@@ -41,11 +41,12 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Chart', icon: 'pi pi-chart-bar', routerLink: ['/uikit/charts'] },
                     { label: 'Misc', icon: 'pi pi-circle-off', routerLink: ['/uikit/misc'] }
                 ]
-            },
+            },*/
             {
-                label: 'Apps',
-                icon: 'pi pi-th-large',
-                items: [
+                label: 'Organization Management',
+                icon: 'pi pi-sitemap',
+                routerLink: ['/apps/blog/list']
+                /*items: [
                     {
                         label: 'Blog',
                         icon: 'pi pi-fw pi-comment',
@@ -113,25 +114,25 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-check-square',
                         routerLink: ['/apps/tasklist']
                     }
-                ]
+                ]*/
             },
             {
-                label: 'Prime Blocks', icon: 'pi pi-fw pi-prime', routerLink: ['/blocks'],
-                items: [
+                label: 'Ingestion', icon: 'pi pi-fw pi-database', routerLink: ['/blocks'],
+                /*items: [
                     { label: 'Free Blocks', icon: 'pi pi-fw pi-eye', routerLink: ['/blocks'] },
                     { label: 'All Blocks', icon: 'pi pi-fw pi-globe', url: 'https://www.primefaces.org/primeblocks-ng', target: '_blank' },
-                ]
+                ]*/
             },
             {
-                label: 'Utilities', icon: 'pi pi-fw pi-compass', routerLink: ['/utilities'],
-                items: [
+                label: 'Projection', icon: 'pi pi-fw pi-sliders-v', routerLink: ['/utilities/icons'],
+                /*items: [
                     { label: 'PrimeIcons', icon: 'pi pi-fw pi-prime', routerLink: ['utilities/icons'] },
                     { label: 'Colors', icon: 'pi pi-fw pi-palette', routerLink: ['utilities/colors'] },
                     { label: 'PrimeFlex', icon: 'pi pi-fw pi-desktop', url: 'https://www.primefaces.org/primeflex/', target: '_blank' },
                     { label: 'Figma', icon: 'pi pi-fw pi-pencil', url: 'https://www.figma.com/file/PgQXX4HXMPeCkT74tGajod/Preview-%7C-Verona-2022?node-id=1303%3A750', target: '_blank' }
-                ]
+                ]*/
             },
-            {
+            /*{
                 label: 'Pages',
                 icon: 'pi pi-fw pi-briefcase',
                 items: [
@@ -241,11 +242,12 @@ export class AppMenuComponent implements OnInit {
                         routerLink: ['/pages/contact']
                     }
                 ]
-            },
+            },*/
             {
-                label: 'E-Commerce',
-                icon: 'pi pi-fw pi-wallet',
-                items: [
+                label: 'Analysis',
+                icon: 'pi pi-fw pi-eye',
+                routerLink: ['ecommerce/product-overview']
+                /*items: [
                     {
                         label: 'Product Overview',
                         icon: 'pi pi-fw pi-image',
@@ -281,7 +283,7 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-file',
                         routerLink: ['ecommerce/order-summary']
                     }
-                ]
+                ]*/
             },
             {
                 label: 'User Management',
@@ -299,7 +301,7 @@ export class AppMenuComponent implements OnInit {
                     }
                 ]
             },
-            {
+            /*{
                 label: 'Hierarchy', icon: 'pi pi-align-left',
                 items: [
                     {
@@ -340,8 +342,8 @@ export class AppMenuComponent implements OnInit {
                         ]
                     }
                 ]
-            },
-            {
+            },*/
+            /*{
                 label: 'Start', icon: 'pi pi-download',
                 items: [
                     {
@@ -351,7 +353,7 @@ export class AppMenuComponent implements OnInit {
                         label: 'Documentation', icon: 'pi pi-info-circle', routerLink: ['/documentation']
                     }
                 ]
-            }
+            }*/
         ];
     }
 }

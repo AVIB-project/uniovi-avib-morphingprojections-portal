@@ -17,9 +17,9 @@
             </a>
             <i class="pi pi-times" (click)="removeTab($event, item, i)"></i>
         </li>
-        <li *ngIf="!tabs || tabs.length === 0" class="topbar-menu-empty">
+        <!--<li *ngIf="!tabs || tabs.length === 0" class="topbar-menu-empty">
             Use (cmd + click) to open a tab
-        </li>
+        </li>-->
     </ul>
 
     <div class="topbar-search" [ngClass]="{'topbar-search-active': searchActive}">

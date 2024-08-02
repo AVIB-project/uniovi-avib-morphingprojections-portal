@@ -4,7 +4,7 @@ import { AppLayoutComponent } from './layout/app.layout.component';
 
 const routes: Routes = [
     {
-        path: '', component: AppLayoutComponent,
+        path: 'app', component: AppLayoutComponent,
         children: [
             { path: '', loadChildren: () => import('./demo/components/dashboards/dashboards.module').then(m => m.DashboardsModule) },
             { path: 'uikit', data: { breadcrumb: 'UI Kit' }, loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
@@ -18,7 +18,7 @@ const routes: Routes = [
             { path: 'organization', data: { breadcrumb: 'Organization' }, loadChildren: () => import('./views/organization/organization.module').then(m => m.OrganizationModule) },
         ]
     },
-    { path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
+    { path: '', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
     { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
     { path: 'notfound', loadChildren: () => import('./demo/components/notfound/notfound.module').then(m => m.NotfoundModule) },
     { path: '**', redirectTo: '/notfound' }

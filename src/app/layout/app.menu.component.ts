@@ -15,15 +15,15 @@ export class AppMenuComponent implements OnInit {
     ngOnInit() {
         this.model = [
             {
-                label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/']
+                label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/app/dashboard']
                 /*items: [
                     { label: 'SaaS', icon: 'pi pi-desktop', routerLink: ['/'] },
                     { label: 'Sales', icon: 'pi pi-chart-bar', routerLink: ['/dashboard-sales'] }
                 ]*/
             },
-            /*{
-                label: 'UI Kit', icon: 'pi pi-star', routerLink: ['/uikit'],
-                items: [
+            {
+                label: 'Configuration', icon: 'pi pi-star', routerLink: ['/app/profile/list'],
+                /*items: [
                     { label: 'Form Layout', icon: 'pi pi-id-card', routerLink: ['/uikit/formlayout'] },
                     { label: 'Input', icon: 'pi pi-check-square', routerLink: ['/uikit/input'] },
                     { label: 'Float Label', icon: 'pi pi-bookmark', routerLink: ['/uikit/floatlabel'] },
@@ -40,12 +40,12 @@ export class AppMenuComponent implements OnInit {
                     { label: 'File', icon: 'pi pi-file', routerLink: ['/uikit/file'] },
                     { label: 'Chart', icon: 'pi pi-chart-bar', routerLink: ['/uikit/charts'] },
                     { label: 'Misc', icon: 'pi pi-circle-off', routerLink: ['/uikit/misc'] }
-                ]
-            },*/
+                ]*/
+            },
             {
                 label: 'Case Management',
                 icon: 'pi pi-sitemap',
-                routerLink: ['/organization']
+                routerLink: ['/app/organization']
                 /*items: [
                     {
                         label: 'Blog',
@@ -117,14 +117,14 @@ export class AppMenuComponent implements OnInit {
                 ]*/
             },
             {
-                label: 'Ingestion', icon: 'pi pi-fw pi-database', routerLink: ['utilities/colors'],
+                label: 'Ingestion', icon: 'pi pi-fw pi-database', routerLink: ['/app/utilities/colors'],
                 /*items: [
                     { label: 'Free Blocks', icon: 'pi pi-fw pi-eye', routerLink: ['/blocks'] },
                     { label: 'All Blocks', icon: 'pi pi-fw pi-globe', url: 'https://www.primefaces.org/primeblocks-ng', target: '_blank' },
                 ]*/
             },
             {
-                label: 'Encodings', icon: 'pi pi-fw pi-sliders-v', routerLink: ['/utilities/icons'],
+                label: 'Encodings', icon: 'pi pi-fw pi-sliders-v', routerLink: ['/app/utilities/icons'],
                 /*items: [
                     { label: 'PrimeIcons', icon: 'pi pi-fw pi-prime', routerLink: ['utilities/icons'] },
                     { label: 'Colors', icon: 'pi pi-fw pi-palette', routerLink: ['utilities/colors'] },

@@ -4,6 +4,27 @@
         <span class="app-name">Verona</span>
     </a>
     
+    <div class="topbar-organization">        
+        <div>
+            <span class="topbar-organization-label">Organization:</span>
+            <p-dropdown [options]="organizations" [(ngModel)]="selectedOrganization" optionLabel="name" styleClass="ml-1"
+                (onChange)="onChangeOrganization()">
+            </p-dropdown>        
+        </div>
+
+        <div>
+            <span class="topbar-organization-label">Case:</span>
+            <p-dropdown [options]="projectList" [(ngModel)]="selectedCase" placeholder="Select a Case" [group]="true"
+                (onChange)="onChangeCase()">
+                <ng-template let-case pTemplate="group">
+                    <div class="flex align-items-center">
+                        <span>{{ case.label }}</span>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </div>
+    </div>
+
     <button #menubutton class="topbar-menubutton p-link" type="button" (click)="onMenuButtonClick()">
         <span></span>
     </button>

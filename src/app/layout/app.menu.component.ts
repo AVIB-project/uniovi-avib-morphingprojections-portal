@@ -43,9 +43,9 @@ export class AppMenuComponent implements OnInit {
                 ]
             },*/
             {
-                label: 'Organization Management',
+                label: 'Case Management',
                 icon: 'pi pi-sitemap',
-                routerLink: ['/apps/blog/list']
+                routerLink: ['/organization']
                 /*items: [
                     {
                         label: 'Blog',
@@ -117,14 +117,14 @@ export class AppMenuComponent implements OnInit {
                 ]*/
             },
             {
-                label: 'Ingestion', icon: 'pi pi-fw pi-database', routerLink: ['/blocks'],
+                label: 'Ingestion', icon: 'pi pi-fw pi-database', routerLink: ['utilities/colors'],
                 /*items: [
                     { label: 'Free Blocks', icon: 'pi pi-fw pi-eye', routerLink: ['/blocks'] },
                     { label: 'All Blocks', icon: 'pi pi-fw pi-globe', url: 'https://www.primefaces.org/primeblocks-ng', target: '_blank' },
                 ]*/
             },
             {
-                label: 'Projection', icon: 'pi pi-fw pi-sliders-v', routerLink: ['/utilities/icons'],
+                label: 'Encodings', icon: 'pi pi-fw pi-sliders-v', routerLink: ['/utilities/icons'],
                 /*items: [
                     { label: 'PrimeIcons', icon: 'pi pi-fw pi-prime', routerLink: ['utilities/icons'] },
                     { label: 'Colors', icon: 'pi pi-fw pi-palette', routerLink: ['utilities/colors'] },
@@ -244,7 +244,7 @@ export class AppMenuComponent implements OnInit {
                 ]
             },*/
             {
-                label: 'Analysis',
+                label: 'Morphing Projections',
                 icon: 'pi pi-fw pi-eye',
                 routerLink: ['ecommerce/product-overview']
                 /*items: [

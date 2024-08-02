@@ -142,6 +142,17 @@
         }
     }
 
+    .topbar-organization {    
+        padding-left: 20px;
+        display: flex;
+        flex-direction: row;
+        gap: 10px;   
+        
+        .topbar-organization-label {
+            padding-right: 5px;
+        }
+    }
+
     .topbar-search {
         display: flex;
         align-items: center;

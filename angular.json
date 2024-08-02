@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "verona-ng": {
+        "uniovi-avib-morphingprojections-portal": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -17,7 +17,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/verona-ng",
+                        "outputPath": "dist/uniovi-avib-morphingprojections-portal",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": [
@@ -65,10 +65,16 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "buildTarget": "verona-ng:build:production"
+                            "buildTarget": "uniovi-avib-morphingprojections-portal:build:production"
                         },
+                        "minikube": {
+                            "buildTarget": "uniovi-avib-morphingprojections-frontend:build:minikube"
+                        }, 
+                        "avib-local": {
+                            "buildTarget": "uniovi-avib-morphingprojections-frontend:build:avib-local"
+                        },                             
                         "development": {
-                            "buildTarget": "verona-ng:build:development"
+                            "buildTarget": "uniovi-avib-morphingprojections-portal:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -76,7 +82,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "buildTarget": "verona-ng:build"
+                        "buildTarget": "uniovi-avib-morphingprojections-portal:build"
                     }
                 },
                 "test": {

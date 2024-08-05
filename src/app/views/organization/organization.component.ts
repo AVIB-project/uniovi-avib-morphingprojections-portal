@@ -31,6 +31,6 @@ export class OrganizationComponent implements OnInit {
     }
 
     onAddCase(){
-        this.router.navigate(['profile/create'])
+        this.router.navigate(['app/case'])
     }
 }

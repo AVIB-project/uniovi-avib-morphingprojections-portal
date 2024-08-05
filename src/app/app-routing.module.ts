@@ -16,6 +16,7 @@ const routes: Routes = [
             { path: 'ecommerce', data: { breadcrumb: 'E-Commerce' }, loadChildren: () => import('./demo/components/ecommerce/ecommerce.module').then(m => m.EcommerceModule) },
             { path: 'apps', data: { breadcrumb: 'Apps' }, loadChildren: () => import('./demo/components/apps/apps.module').then(m => m.AppsModule) },
             { path: 'organization', data: { breadcrumb: 'Organization' }, loadChildren: () => import('./views/organization/organization.module').then(m => m.OrganizationModule) },
+            { path: 'case', data: { breadcrumb: 'Case Management' }, loadChildren: () => import('./views/case/case.module').then(m => m.CaseModule) },
         ]
     },
     { path: '', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },

@@ -8,13 +8,13 @@ import { TableModule } from 'primeng/table';
 import { TreeTableModule } from 'primeng/treetable';
 import { ProgressBarModule } from 'primeng/progressbar';
 
-import { CaseComponent } from './case.component';
-import { CaseRoutingModule } from './case-routing.module';
+import { ProjectionComponent } from './projection.component';
+import { ProjectionRoutingModule } from './projection-routing.module';
 
 @NgModule({
 	imports: [
 		CommonModule,
-		CaseRoutingModule,
+		ProjectionRoutingModule,
 		RippleModule,
 		ButtonModule,
 		InputTextModule,
@@ -22,6 +22,6 @@ import { CaseRoutingModule } from './case-routing.module';
 		TreeTableModule,
 		ProgressBarModule
 	],
-	declarations: [CaseComponent]
+	declarations: [ProjectionComponent]
 })
-export class CaseModule { }
+export class ProjectionModule { }

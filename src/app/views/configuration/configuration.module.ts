@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
@@ -8,20 +9,22 @@ import { TableModule } from 'primeng/table';
 import { TreeTableModule } from 'primeng/treetable';
 import { ProgressBarModule } from 'primeng/progressbar';
 
-import { CaseComponent } from './case.component';
-import { CaseRoutingModule } from './case-routing.module';
+import { ConfigurationComponent } from './configuration.component';
+import { ConfigurationRoutingModule } from './configuration-routing.module';
+
 
 @NgModule({
 	imports: [
 		CommonModule,
-		CaseRoutingModule,
-		RippleModule,
+		FormsModule,
 		ButtonModule,
+		RippleModule,
 		InputTextModule,
 		TableModule,
 		TreeTableModule,
-		ProgressBarModule
+		ProgressBarModule,
+		ConfigurationRoutingModule,
 	],
-	declarations: [CaseComponent]
+	declarations: [ConfigurationComponent]
 })
-export class CaseModule { }
+export class ConfigurationModule { }

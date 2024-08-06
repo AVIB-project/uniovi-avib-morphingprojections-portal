@@ -1,26 +1,25 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+
 import { AppLayoutComponent } from './layout/app.layout.component';
 
 const routes: Routes = [
     {
         path: 'app', component: AppLayoutComponent,
         children: [
-            { path: '', loadChildren: () => import('./demo/components/dashboards/dashboards.module').then(m => m.DashboardsModule) },
-            { path: 'uikit', data: { breadcrumb: 'UI Kit' }, loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
-            { path: 'utilities', data: { breadcrumb: 'Utilities' }, loadChildren: () => import('./demo/components/utilities/utilities.module').then(m => m.UtilitiesModule) },
-            { path: 'pages', data: { breadcrumb: 'Pages' }, loadChildren: () => import('./demo/components/pages/pages.module').then(m => m.PagesModule) },
-            { path: 'profile', data: { breadcrumb: 'User Management' }, loadChildren: () => import('./demo/components/profile/profile.module').then(m => m.ProfileModule) },
-            { path: 'documentation', data: { breadcrumb: 'Documentation' }, loadChildren: () => import('./demo/components/documentation/documentation.module').then(m => m.DocumentationModule) },
-            { path: 'blocks', data: { breadcrumb: 'Prime Blocks' }, loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then(m => m.PrimeBlocksModule) },
-            { path: 'ecommerce', data: { breadcrumb: 'E-Commerce' }, loadChildren: () => import('./demo/components/ecommerce/ecommerce.module').then(m => m.EcommerceModule) },
-            { path: 'apps', data: { breadcrumb: 'Apps' }, loadChildren: () => import('./demo/components/apps/apps.module').then(m => m.AppsModule) },
-            { path: 'organization', data: { breadcrumb: 'Organization' }, loadChildren: () => import('./views/organization/organization.module').then(m => m.OrganizationModule) },
-            { path: 'case', data: { breadcrumb: 'Case Management' }, loadChildren: () => import('./views/case/case.module').then(m => m.CaseModule) },
+            { path: 'dashboard', loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule) },
+            { path: 'case', data: { breadcrumb: 'Case' }, loadChildren: () => import('./views/case/case.module').then(m => m.CaseModule) },
+            { path: 'case-form', data: { breadcrumb: 'Case Form' }, loadChildren: () => import('./views/case-form/case-form-.module').then(m => m.CaseFormModule) },
+            { path: 'configuration', data: { breadcrumb: 'Configuration' }, loadChildren: () => import('./views/configuration/configuration.module').then(m => m.ConfigurationModule) },
+            { path: 'configuration-form', data: { breadcrumb: 'Configuration Form' }, loadChildren: () => import('./views/configuration-form/configuration-form.module').then(m => m.ConfigurationFormModule) },
+            { path: 'encoding', data: { breadcrumb: 'Encoding' }, loadChildren: () => import('./views/encoding/encoding.module').then(m => m.EncodingModule) },
+            { path: 'ingestion', data: { breadcrumb: 'Ingestion' }, loadChildren: () => import('./views/ingestion/ingestion.module').then(m => m.IngestiongModule) },
+            { path: 'projection', data: { breadcrumb: 'Projection' }, loadChildren: () => import('./views/projection/projection.module').then(m => m.ProjectionModule) },
+            { path: 'user', data: { breadcrumb: 'User' }, loadChildren: () => import('./views/user/user.module').then(m => m.UserModule) },
+            { path: 'user-form', data: { breadcrumb: 'User Form' }, loadChildren: () => import('./views/user-form/user-form.module').then(m => m.UserFormModule) },
         ]
     },
     { path: '', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
-    { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
     { path: 'notfound', loadChildren: () => import('./demo/components/notfound/notfound.module').then(m => m.NotfoundModule) },
     { path: '**', redirectTo: '/notfound' }
 ];

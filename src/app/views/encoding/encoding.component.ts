@@ -7,9 +7,9 @@ import { OrganizationService } from '../../shared/services/organization.service'
 import { OrganizationCase } from '../../shared/models/organization-case';
 
 @Component({
-    templateUrl: './case.component.html'
+    templateUrl: './encoding.component.html'
 })
-export class CaseComponent implements OnInit {
+export class EncodingComponent implements OnInit {
     organizationCases: OrganizationCase[];
     
     constructor(private organizationService: OrganizationService, private router: Router) { }

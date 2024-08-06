@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
 
 import { OrganizationService } from '../../shared/services/organization.service';
-import { OrganizationCase } from '../../shared/models/organization-case';
+import { OrganizationCase } from '../../shared/models/organization-case.model';
 
 @Component({
     templateUrl: './case.component.html'

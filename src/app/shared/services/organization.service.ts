@@ -6,7 +6,7 @@ import { Observable, throwError, map } from 'rxjs'
 import { environment } from '../../../environments/environment';
 
 import { UserCaseService } from '../services/user-case.service';
-import { OrganizationCase } from '../models/organization-case';
+import { OrganizationCase } from '../models/organization-case.model';
 
 @Injectable({
     providedIn: 'root'

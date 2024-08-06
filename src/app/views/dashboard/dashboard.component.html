@@ -8,7 +8,6 @@
                     <span class="text-blue-500 block text-4xl font-bold">3882</span>
                 </div>
             </div>
-            <img [src]="'assets/demo/images/dashboard/users' + (colorScheme === 'light' ? '' : '-dark') + '.svg'" class="w-full" alt="users">
         </div>
     </div>
     <div class="col-12 lg:col-6 xl:col-3">
@@ -20,7 +19,6 @@
                     <span class="text-orange-500 block text-4xl font-bold">532</span>
                 </div>
             </div>
-            <img [src]="'assets/demo/images/dashboard/locations' + (colorScheme === 'light' ? '' : '-dark') + '.svg'" class="w-full" alt="locations">
         </div>
     </div>
     <div class="col-12 lg:col-6 xl:col-3">
@@ -32,7 +30,6 @@
                     <span class="text-green-500 block text-4xl font-bold">12.6%</span>
                 </div>
             </div>
-            <img [src]="'assets/demo/images/dashboard/rate' + (colorScheme === 'light' ? '' : '-dark') + '.svg'" class="w-full" alt="conversion">
         </div>
     </div>
     <div class="col-12 lg:col-6 xl:col-3">
@@ -44,7 +41,6 @@
                     <span class="text-purple-500 block text-4xl font-bold">440</span>
                 </div>
             </div>
-            <img [src]="'assets/demo/images/dashboard/interactions' + (colorScheme === 'light' ? '' : '-dark') + '.svg'" class="w-full mt-auto" alt="interactions">
         </div>
     </div>
 
@@ -119,10 +115,6 @@
 
     <div class="col-12 lg:col-6 xl:col-3">
         <div class="card">
-            <div class="text-center mb-5">
-                <img [src]="'assets/demo/images/dashboard/completion-graph-' + (colorScheme === 'light' ? 'light' : 'dark') + '.svg'" alt="graph" class="w-full">
-            </div>
-
             <ul class="list-none p-0 m-0">
                 <li class="mb-4 flex align-items-center justify-content-start">
                     <p-avatar icon="pi pi-user-edit" size="large" shape="circle" styleClass="text-base font-bold"
@@ -163,81 +155,7 @@
         </div>
     </div>
 
-    <div class="col-12 lg:col-6 xl:col-4">
-        <div class="card h-full">
-            <h5>Trials Leads By Role</h5>
-            <div class="flex align-items-center justify-content-between pb-2 mb-1 border-bottom-1 surface-border">
-                <span class="font-bold">Role</span>
-                <span class="font-bold">Leads</span>
-            </div>
-            <ul class="list-none p-0 m-0">
-                <li class="flex flex-wrap align-items-center justify-content-between py-1">
-                    <span>Finance</span>
-                    <p-avatarGroup styleClass="w-8rem justify-content-evenly">
-                        <p-avatar image="assets/demo/images/avatar/amyelsner.png" shape="circle"></p-avatar>
-                        <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" shape="circle"></p-avatar>
-                        <p-avatar image="assets/demo/images/avatar/onyamalimba.png" shape="circle"></p-avatar>
-                        <p-avatar image="assets/demo/images/avatar/ionibowcher.png" shape="circle"></p-avatar>
-                    </p-avatarGroup>
-                </li>
-                <li class="flex flex-wrap align-items-center justify-content-between py-1">
-                    <span>Management</span>
-                    <p-avatarGroup styleClass="w-6rem justify-content-evenly">
-                        <p-avatar image="assets/demo/images/avatar/annafali.png" shape="circle"></p-avatar>
-                        <p-avatar image="assets/demo/images/avatar/bernardodominic.png" shape="circle"></p-avatar>
-                        <p-avatar image="assets/demo/images/avatar/elwinsharvill.png" shape="circle"></p-avatar>
-                    </p-avatarGroup>
-                </li>
-                <li class="flex flex-wrap align-items-center justify-content-between py-1">
-                    <span>Human Resources</span>
-                    <p-avatarGroup styleClass="w-4rem justify-content-evenly">
-                        <p-avatar image="assets/demo/images/avatar/ivanmagalhaes.png" shape="circle"></p-avatar>
-                        <p-avatar image="assets/demo/images/avatar/onyamalimba.png" shape="circle"></p-avatar>
-                    </p-avatarGroup>
-                </li>
-                <li class="flex flex-wrap align-items-center justify-content-between py-2">
-                    <span>Development</span>
-                    <p-avatarGroup styleClass="w-8rem justify-content-evenly">
-                        <p-avatar image="assets/demo/images/avatar/amyelsner.png" shape="circle"></p-avatar>
-                        <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" shape="circle"></p-avatar>
-                        <p-avatar image="assets/demo/images/avatar/onyamalimba.png" shape="circle"></p-avatar>
-                        <p-avatar image="assets/demo/images/avatar/ionibowcher.png" shape="circle"></p-avatar>
-                    </p-avatarGroup>
-                </li>
-                <li class="flex flex-wrap align-items-center justify-content-between py-2">
-                    <span>Design</span>
-                    <p-avatarGroup styleClass="w-4rem justify-content-evenly">
-                        <p-avatar image="assets/demo/images/avatar/amyelsner.png" shape="circle"></p-avatar>
-                        <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" shape="circle"></p-avatar>
-                    </p-avatarGroup>
-                </li>
-                <li class="flex flex-wrap align-items-center justify-content-between py-2">
-                    <span>R&D</span>
-                    <p-avatarGroup styleClass="w-6rem justify-content-evenly">
-                        <p-avatar image="assets/demo/images/avatar/amyelsner.png" shape="circle"></p-avatar>
-                        <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" shape="circle"></p-avatar>
-                        <p-avatar image="assets/demo/images/avatar/onyamalimba.png" shape="circle"></p-avatar>
-                    </p-avatarGroup>
-                </li>
-                <li class="flex flex-wrap align-items-center justify-content-between py-2">
-                    <span>Reliability</span>
-                    <p-avatarGroup styleClass="w-4rem justify-content-evenly">
-                        <p-avatar image="assets/demo/images/avatar/amyelsner.png" shape="circle"></p-avatar>
-                        <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" shape="circle"></p-avatar>
-                    </p-avatarGroup>
-                </li>
-                <li class="flex flex-wrap align-items-center justify-content-between py-2">
-                    <span>Social Media</span>
-                    <p-avatarGroup styleClass="w-8rem justify-content-evenly">
-                        <p-avatar image="assets/demo/images/avatar/amyelsner.png" shape="circle"></p-avatar>
-                        <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" shape="circle"></p-avatar>
-                        <p-avatar image="assets/demo/images/avatar/onyamalimba.png" shape="circle"></p-avatar>
-                        <p-avatar image="assets/demo/images/avatar/ionibowcher.png" shape="circle"></p-avatar>
-                    </p-avatarGroup>
-                </li>
-            </ul>
-        </div>
-    </div>
+
 
     <div class="col-12 lg:col-6 xl:col-4">
         <div class="card h-full">
@@ -495,105 +413,11 @@
                     <span class="font-bold ml-3">4</span>
                     <span>/8</span>
                 </div>
-                <p-avatarGroup>
-                    <p-avatar image="assets/demo/images/avatar/amyelsner.png" shape="circle"></p-avatar>
-                    <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" shape="circle"></p-avatar>
-                    <p-avatar image="assets/demo/images/avatar/onyamalimba.png" shape="circle"></p-avatar>
-                    <p-avatar image="assets/demo/images/avatar/ionibowcher.png" shape="circle"></p-avatar>
-                    <p-avatar image="assets/demo/images/avatar/xuxuefeng.png" shape="circle"></p-avatar>
-                </p-avatarGroup>
             </div>
         </div>
     </div>
     
-    <div class="col-12 lg:col-6">
-        <div class="card widget-timeline">
-            <h5>Timeline</h5>
-            <ul class="list-none p-0 m-0">
-                <li class="flex mb-3">
-                    <div class="flex flex-column align-items-center">
-                        <span
-                            class="flex align-items-center justify-content-center border-circle p-2 timeline-icon bg-blue-100 text-blue-500">
-                            <i class="pi pi-twitter"></i>
-                        </span>
-                        <div class="h-full bg-blue-100" style="width: 2px; min-height: 4rem"></div>
-                    </div>
-    
-                    <div class="ml-3 flex-1">
-                        <div class="flex align-items-center justify-content-between mb-3">
-                            <span>
-                                <strong>Tom Mathias</strong> retweeted a tweet about your following keyword.
-                            </span>
-                            <span class="font-bold text-color-secondary">46m</span>
-                        </div>
-                        <div class="p-3 border-round" [style]="{'background-color':colorScheme === 'dark' ? 'rgba(227, 248, 255, 0.1)' :'rgba(227, 248, 255, 0.5)'}">
-                            <div class="flex align-items-center justify-content-between mb-2">
-                                <img src="assets/demo/images/avatar/xuxuefeng.png" alt="avatar" class="w-2rem">
-                                <p-avatarGroup>
-                                    <p-avatar image="assets/demo/images/avatar/amyelsner.png" shape="circle"></p-avatar>
-                                    <p-avatar image="assets/demo/images/avatar/asiyajavayant.png" shape="circle"></p-avatar>
-                                    <p-avatar image="assets/demo/images/avatar/onyamalimba.png" shape="circle"></p-avatar>
-                                </p-avatarGroup>
-                            </div>
-                            <div class="font-bold mb-2">Jeff Atwood</div>
-                            <p class="text-color-secondary text-sm line-height-3 mb-3" style="max-width: 28rem">Hooray! I suck at
-                                hardware but I was able to get the pi zero W, plus usb case, plus two color e-ink hat,
-                                to work!</p>
-    
-                            <p-progressBar [value]="50" [showValue]="false" styleClass="w-full md:w-6" [style]="{height:'.5rem'}"></p-progressBar>
-                        </div>
-                    </div>
-                </li>
-                <li class="flex mb-3">
-                    <div class="flex flex-column align-items-center">
-                        <span
-                            class="flex align-items-center justify-content-center border-circle p-2 timeline-icon bg-yellow-100 text-yellow-500">
-                            <i class="pi pi-star"></i>
-                        </span>
-                        <div class="h-full bg-yellow-100" style="width: 2px; min-height: 4rem"></div>
-                    </div>
 
-                    <div class="ml-3 flex-1">
-                        <div class="flex align-items-center justify-content-between">
-                            <span><strong>Scott Wesley</strong> starred NS0021 on customer list.</span>
-                            <span class="font-bold text-color-secondary">1h 51m</span>
-                        </div>
-                    </div>
-                </li>
-                <li class="flex mb-3">
-                    <div class="flex flex-column align-items-center">
-                        <span
-                            class="flex align-items-center justify-content-center border-circle p-2 timeline-icon bg-green-100 text-green-500">
-                            <i class="pi pi-link"></i>
-                        </span>
-                        <div class="h-full bg-green-100" style="width: 2px; min-height: 4rem"></div>
-                    </div>
-
-                    <div class="ml-3 flex-1">
-                        <div class="flex align-items-center justify-content-between mb-3">
-                            <span>
-                                <strong>Jorge Gomez</strong> shared design files on cloud.
-                            </span>
-                            <span class="font-bold text-color-secondary">12h</span>
-                        </div>
-                        <ul class="list-none p-0 m-0">
-                            <li class="flex align-items-center justify-content-start mb-2">
-                                <img src="assets/demo/images/dashboard/bg-detail.svg" alt="bg" class="w-2rem">
-                                <span class="font-bold ml-2">01.Verona-Remastered.fig</span>
-                            </li>
-                            <li class="flex align-items-center justify-content-start">
-                                <img src="assets/demo/images/dashboard/bg-detail.svg" alt="bg" class="w-2rem">
-                                <span class="font-bold ml-2">02.Verona-Marketing.fig</span>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="text-center">
-                    <p-button pRipple styleClass="p-button-text" icon="pi pi-chevron-down" label="View More"></p-button>
-                </li>
-            </ul>
-        </div>
-    </div>
     <div class="col-12 xl:col-6">
         <div class="card">
             <h5>Monthly Recurring Revenue Growth</h5>

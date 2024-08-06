@@ -30,7 +30,7 @@ export class UserComponent implements OnInit {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains')
     }
 
-    onAddUser(){
+    onAddUser() {
         this.router.navigate(['app/user-form'])
     }
 }

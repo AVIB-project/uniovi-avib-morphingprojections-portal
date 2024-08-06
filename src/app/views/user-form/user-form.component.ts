@@ -5,14 +5,19 @@ import { Router } from '@angular/router';
     templateUrl: './user-form.component.html'
 })
 export class UserFormComponent implements OnInit { 
+    languages: any[] = [];
     projects: any[] = [];
 
     constructor(private router: Router) { }
 
     ngOnInit() {
+        this.languages = [
+            {name: 'Spanish', code: 'ES'},
+            {name: 'English', code: 'US'}
+        ]; 
     }
 
-    onSaveUser() {
-        this.router.navigate(['app/user-form'])
+    onCreateUser() {
+        this.router.navigate(['app/user'])
     }
 }

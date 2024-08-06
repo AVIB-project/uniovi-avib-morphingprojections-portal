@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-    templateUrl: './case-form-.component.html'
+    templateUrl: './case-form.component.html'
 })
 export class CaseFormComponent implements OnInit { 
     projects: any[] = [];
@@ -13,7 +13,7 @@ export class CaseFormComponent implements OnInit {
         console.log("Case View");
     }
 
-    onSaveCase() {
-        this.router.navigate(['app/organization'])
+    onCreateCase() {
+        this.router.navigate(['app/case'])
     }
 }

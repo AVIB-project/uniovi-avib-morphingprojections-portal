@@ -11,7 +11,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
-import { CaseFormComponent } from './case-form-.component';
+import { CaseFormComponent } from './case-form.component';
 import { CaseFormRoutingModule } from './case-form-routing.module';
 
 @NgModule({

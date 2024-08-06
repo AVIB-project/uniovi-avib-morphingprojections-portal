@@ -12,7 +12,7 @@ export class ConfigurationFormComponent implements OnInit {
     ngOnInit() {        
     }
 
-    onSaveCase() {
-        this.router.navigate(['app/case-form'])
+    onCreateConfiguration() {
+        this.router.navigate(['app/configuration'])
     }
 }

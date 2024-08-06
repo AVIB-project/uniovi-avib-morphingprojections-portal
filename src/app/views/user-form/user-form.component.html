@@ -3,33 +3,66 @@
     <div class="grid">
         <div class="col-12 lg:col-2">
             <div class="text-900 font-medium text-xl mb-3">User</div>
-            <p class="m-0 p-0 text-600 line-height-3 mr-3">Represent the identity and authorization policies who is using the portal</p>
+            <p class="m-0 p-0 text-600 line-height-3 mr-3">Is the Actor who use the Portal with his roles.</p>
         </div>
         <div class="col-12 lg:col-10">
             <div class="grid formgrid p-fluid">
                 <div class="field mb-4 col-12 md:col-6">
-                    <label for="project" class="font-medium text-900">Project</label>
-                    <p-dropdown inputId="project" [options]="projects" optionLabel="name" [filter]="true" filterBy="name"
-                        [showClear]="true" placeholder="Select a Project or create one">
-                        <ng-template let-project pTemplate="item">
+                    <label for="firstname" class="font-medium text-900">Firstname *</label>
+                    <input id="firstname" type="text" pInputText>
+                </div>
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="lastname" class="font-medium text-900">Lastname *</label>
+                    <input id="lastname" type="text" pInputText>
+                </div>
+                <!--<div class="field mb-4 col-12">
+                    <label for="avatar" class="font-medium text-900">Avatar</label>
+                    <p-fileUpload mode="basic" name="avatar" url="./upload.php" accept="image/*" [maxFileSize]="1000000"
+                        styleClass="p-button-outlined p-button-plain" chooseLabel="Upload Image"></p-fileUpload>
+                </div>-->
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="email" class="font-medium text-900">Email *</label>
+                    <input id="email" type="text" pInputText>
+                </div>
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="nickname" class="font-medium text-900">Nickname</label>
+                    <input id="nickname" type="text" pInputText>
+                </div>
+                <div class="field mb-4 col-12">
+                    <label for="address" class="font-medium text-900">Address</label>
+                    <input id="address" type="text" pInputText>
+                </div>
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="city" class="font-medium text-900">City</label>
+                    <input id="city" type="text" pInputText>
+                </div>
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="country" class="font-medium text-900">Country</label>
+                    <input id="country" type="text" pInputText>
+                </div>
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="phone" class="font-medium text-900">Phone</label>
+                    <input id="phone" type="text" pInputText>
+                </div>
+                <div class="field mb-4 col-12 md:col-6">
+                    <label for="language" class="font-medium text-900">Language *</label>
+                    <p-dropdown inputId="language" [options]="languages" optionLabel="name" [filter]="true" filterBy="name"
+                        [showClear]="true" placeholder="Select a Language">
+                        <ng-template let-language pTemplate="item">
                             <div class="flex align-items-center">
-                                <img src="assets/demo/images/flag/flag_placeholder.png"
-                                    [class]="'mr-2 flag flag-' + project.code.toLowerCase()" style="width:18px" />
-                                <div>{{project.name}}</div>
+                                <img src="assets/layout/images/flag/flag_placeholder.png"
+                                    [class]="'mr-2 flag flag-' + language.code.toLowerCase()" style="width:18px" />
+                                <div>{{language.name}}</div>
                             </div>
                         </ng-template>
                     </p-dropdown>
                 </div>
                 <div class="field mb-4 col-12">
-                    <label for="name" class="font-medium text-900">Name</label>
-                    <input id="name" type="text" pInputText>
+                    <label for="notes" class="font-medium text-900">Notes</label>
+                    <textarea id="notes" type="text" pInputTextarea rows="5" [autoResize]="true"></textarea>
                 </div>
-                <div class="field mb-4 col-12">
-                    <label for="description" class="font-medium text-900">Description</label>
-                    <textarea id="description" type="text" pInputTextarea rows="5" [autoResize]="true"></textarea>
-                </div>                
                 <div class="col-12">
-                    <button  (click)="onSaveUser()" pButton pRipple label="Create Case" class="w-auto mt-3"></button>
+                    <button (click)="onCreateUser()" pButton pRipple label="Create User" class="w-auto mt-3"></button>
                 </div>
             </div>
         </div>

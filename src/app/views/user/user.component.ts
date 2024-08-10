@@ -3,26 +3,20 @@ import { Router } from '@angular/router';
 
 import { Table } from 'primeng/table';
 
-import { OrganizationService } from '../../shared/services/organization.service';
-import { OrganizationCase } from '../../shared/models/organization-case.model';
-
+import { UserService } from '../../shared/services/user.service';
+import { User } from '../../shared/models/user.model';
 @Component({
     templateUrl: './user.component.html'
 })
 export class UserComponent implements OnInit {
-    organizationCases: OrganizationCase[];
-    
-    constructor(private organizationService: OrganizationService, private router: Router) { }
+    users: User[];
+
+    constructor(private userService: UserService, private router: Router) { }
 
     ngOnInit() {
-        this.organizationService.getCasesByUser("66a90828bfb5b24be6ab8210")
-            .subscribe({
-                next: (organizationCases: OrganizationCase[]) => {
-                    this.organizationCases = organizationCases;      
-                },
-                error: error => {
-                    console.error(error.message);
-                }
+        this.userService.loadUsersByOrganizationId("65cd021098d02623c46da92d")
+            .subscribe(users => {
+                this.users = users;
             });
     }
 

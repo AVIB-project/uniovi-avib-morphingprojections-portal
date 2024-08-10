@@ -1,7 +1,7 @@
 <div class="card">
-    <p-table #dt [value]="organizationCases" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+    <p-table #dt [value]="users" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
-        [globalFilterFields]="['organizationName','projectName','caseName','caseDescription']">
+        [globalFilterFields]="['firstName','lastName','email','active']">
         <ng-template pTemplate="caption">
             <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
                 <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
@@ -13,18 +13,20 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="organizationName" class="white-space-nowrap" style="width:25%">Organization<p-sortIcon field="organizationName"></p-sortIcon></th>
-                <th pSortableColumn="projectName" class="white-space-nowrap" style="width:25%">Project <p-sortIcon field="projectName"></p-sortIcon></th>
-                <th pSortableColumn="caseName" class="white-space-nowrap" style="width:25%">Case <p-sortIcon field="caseName"></p-sortIcon></th>
-                <th pSortableColumn="caseDescription" class="white-space-nowrap" style="width:25%">Case Description <p-sortIcon field="caseDescription"></p-sortIcon></th>
+                <th pSortableColumn="firstName" class="white-space-nowrap" style="width:25%">Firstname<p-sortIcon field="firstName"></p-sortIcon></th>
+                <th pSortableColumn="lastName" class="white-space-nowrap" style="width:25%">Lastname<p-sortIcon field="lastName"></p-sortIcon></th>
+                <th pSortableColumn="email" class="white-space-nowrap" style="width:25%">Email<p-sortIcon field="email"></p-sortIcon></th>
+                <th pSortableColumn="active" class="white-space-nowrap" style="width:25%">Active<p-sortIcon field="active"></p-sortIcon></th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-organizationCase>
+        <ng-template pTemplate="body" let-user>
             <tr>
-                <td>{{organizationCase.organizationName}}</td>
-                <td>{{organizationCase.projectName}}</td>
-                <td>{{organizationCase.caseName}}</td>
-                <td>{{organizationCase.caseDescription}}</td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.email}}</td>
+                <td>
+                    <i class="pi" [ngClass]="{ 'text-green-500 pi-check-circle': user.active, 'text-red-500 pi-times-circle': !user.active }"></i>
+                </td>
             </tr>
         </ng-template>
     </p-table>

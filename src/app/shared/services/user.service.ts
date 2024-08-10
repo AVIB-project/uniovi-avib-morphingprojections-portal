@@ -37,16 +37,16 @@ export class UserService {
     
     constructor(private http: HttpClient) { }     
 
-    loadUser(userId: string): Observable<User> {
-        return this.http.get<User>(`${this.baseUrl}` + "/" + userId)
-            .pipe(
-                map((user: User) => {
-                    return user;
-                }),
-                catchError(error =>
-                    this.handleError(error)
-                )
-        );  
+    loadUsers(): Observable<User[]> {
+        return this.http.get<User[]>(`${this.baseUrl}`);  
+    } 
+    
+    loadUsersByOrganizationId(organizationId: string): Observable<User[]> {
+        return this.http.get<User[]>(`${this.baseUrl}` + "/organizations/" + organizationId);  
+    } 
+    
+    loadUserById(userId: string): Observable<User> {
+        return this.http.get<User>(`${this.baseUrl}` + "/" + userId);  
     } 
     
     loadUserCases(userId: string): Observable<UserCase> {
@@ -59,9 +59,5 @@ export class UserService {
                 }),
                 catchError(error => this.handleError(error))
         );  
-    }
-    
-    getUserCases(): UserCase {
-        return this.userCase;     
-    }    
+    }   
 }

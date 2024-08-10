@@ -12,15 +12,13 @@ import { OrganizationCase } from '../models/organization-case.model';
     providedIn: 'root'
 })
 export class OrganizationService {
-    readonly baseUrl: string = environment.URL + "/users";
+    readonly baseUrl: string = environment.URL + "/organizations";
 
     readonly httpOptions = {
         headers: new HttpHeaders({
             'Content-Type':  'application/json'
         })
     };    
-
-    constructor(private userService: UserService, private http: HttpClient) { }
 
     private handleError(error: HttpErrorResponse) {
         if (error.status === 0) {
@@ -37,7 +35,7 @@ export class OrganizationService {
         return throwError(() => new Error('Something bad happened; please try again later.'));
     }
 
-    private createCasesByUser(configuration: any) {
+    private mapCasesByUser(configuration: any) {
         let organizationCases: any[] = []
         let organizationItem: any = {};        
         
@@ -84,12 +82,14 @@ export class OrganizationService {
         } 
         
         return organizationCases;
-    }    
+    }
+    
+    constructor(private http: HttpClient, private userService: UserService) { }
     
     getCasesByUser(userId: string): Observable<OrganizationCase[]> { 
         return this.userService.loadUserCases(userId)
             .pipe(map((userCase: any) => {                    
-                return this.createCasesByUser(userCase.organizations);
+                return this.mapCasesByUser(userCase.organizations);
             }
         ))
     }      

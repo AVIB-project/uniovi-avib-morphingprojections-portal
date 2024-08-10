@@ -8,7 +8,7 @@
         <div class="col-12 lg:col-10">
             <div class="grid formgrid p-fluid">
                 <div class="field mb-4 col-12 md:col-6">
-                    <label for="project" class="font-medium text-900">Project</label>
+                    <label for="project" class="font-medium text-900">Project *</label>
                     <p-dropdown inputId="project" [options]="projects" optionLabel="name" [filter]="true" filterBy="name"
                         [showClear]="true" placeholder="Select a Project or create one">
                         <ng-template let-project pTemplate="item">
@@ -21,11 +21,11 @@
                     </p-dropdown>
                 </div>
                 <div class="field mb-4 col-12">
-                    <label for="name" class="font-medium text-900">Name</label>
+                    <label for="name" class="font-medium text-900">Name *</label>
                     <input id="name" type="text" pInputText>
                 </div>
                 <div class="field mb-4 col-12">
-                    <label for="description" class="font-medium text-900">Description</label>
+                    <label for="description" class="font-medium text-900">Description *</label>
                     <textarea id="description" type="text" pInputTextarea rows="5" [autoResize]="true"></textarea>
                 </div>                
                 <div class="col-12">

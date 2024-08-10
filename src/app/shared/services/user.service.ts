@@ -6,24 +6,20 @@ import { map, catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 
-import { UserCase } from '../models/user-case.model';
+import { User } from '../models/user.model';
 
 @Injectable({
     providedIn: 'root'
 })
-export class UserCaseService {
-    readonly baseUrl: string = environment.URL + "/organizations";
+export class UserService {
+    readonly baseUrl: string = environment.URL + "/users";
 
     readonly httpOptions = {
         headers: new HttpHeaders({
-        'Content-Type':  'application/json'
+            'Content-Type':  'application/json'
         })
-    };    
+    }; 
 
-    private userCase!: UserCase;
-    
-    constructor(private http: HttpClient) { }  
-    
     private handleError(error: HttpErrorResponse) {
         if (error.status === 0) {
         // A client-side or network error occurred. Handle it accordingly.
@@ -39,19 +35,17 @@ export class UserCaseService {
         return throwError(() => new Error('Something bad happened; please try again later.'));
     }
     
-    loadUserCases(userId: string): Observable<UserCase> {
-        return this.http.get<UserCase>(`${this.baseUrl}` + "/users/" + userId + "/aggregate")
-            .pipe(                
-                map((userCase: UserCase) => {
-                    this.userCase = userCase;
+    constructor(private http: HttpClient) { }     
 
-                    return this.userCase;
+    loadUser(userId: string): Observable<User> {
+        return this.http.get<User>(`${this.baseUrl}` + "/users/" + userId)
+            .pipe(
+                map((user: User) => {
+                    return user;
                 }),
-                catchError(error => this.handleError(error))
+                catchError(error =>
+                    this.handleError(error)
+                )
         );  
-    }
-    
-    getUserCases(): UserCase {
-        return this.userCase;     
-    }
+    }    
 }

@@ -34,9 +34,10 @@ export class AppTopBarComponent implements AfterViewInit {
     searchActive: boolean = false;
     menu: MenuItem[] = [];
 
-    //readonly USER_ID = '66a90828bfb5b24be6ab8210';   // Administrator
-    readonly USER_ID = '66a908d7bfb5b24be6ab8211'; // Miguel Salinas User
+    readonly USER_ID = '66a90828bfb5b24be6ab8210';   // Administrator
+    //readonly USER_ID = '66a908d7bfb5b24be6ab8211'; // Miguel Salinas User
     //readonly USER_ID = '66a90a0dbfb5b24be6ab8215'; // Abel Cuadrado User
+    //readonly USER_ID = '66b63046bbf7692064417fd7'; // YYY User
     
     userCase: UserCase; 
     organizations: Organization[];

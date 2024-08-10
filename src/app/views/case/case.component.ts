@@ -30,7 +30,7 @@ export class CaseComponent implements OnInit {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains')
     }
 
-    onAddCase(){
+    onAddCase() {
         this.router.navigate(['app/case-form'])
     }
 }

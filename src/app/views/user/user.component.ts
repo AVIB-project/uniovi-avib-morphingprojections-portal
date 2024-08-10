@@ -15,7 +15,7 @@ export class UserComponent implements OnInit {
 
     ngOnInit() {
         this.userService.loadUsersByOrganizationId("65cd021098d02623c46da92d")
-            .subscribe(users => {
+            .subscribe((users: User[]) => {
                 this.users = users;
             });
     }
@@ -26,5 +26,9 @@ export class UserComponent implements OnInit {
 
     onAddUser() {
         this.router.navigate(['app/user-form'])
+    }
+
+    onUpdateUser() {
+        this.router.navigate(['app/user-form', { id: "66a908d7bfb5b24be6ab8211" }])
     }
 }

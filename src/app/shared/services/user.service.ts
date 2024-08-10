@@ -10,7 +10,7 @@ import { User } from '../models/user.model';
 import { UserCase } from '../models/user-case.model';
 @Injectable({ providedIn: 'root' })
 export class UserService {
-    readonly baseUrl: string = environment.URL + "/users";
+    readonly baseUrl: String = environment.URL + "/users";
 
     private userCase!: UserCase;
 
@@ -41,15 +41,15 @@ export class UserService {
         return this.http.get<User[]>(`${this.baseUrl}`);  
     } 
     
-    loadUsersByOrganizationId(organizationId: string): Observable<User[]> {
+    loadUsersByOrganizationId(organizationId: String): Observable<User[]> {
         return this.http.get<User[]>(`${this.baseUrl}` + "/organizations/" + organizationId);  
     } 
     
-    loadUserById(userId: string): Observable<User> {
+    loadUserById(userId: String): Observable<User> {
         return this.http.get<User>(`${this.baseUrl}` + "/" + userId);  
     } 
     
-    loadUserCases(userId: string): Observable<UserCase> {
+    loadUserCases(userId: String): Observable<UserCase> {
         return this.http.get<UserCase>(`${this.baseUrl}` + "/" + userId + "/cases")
             .pipe(                
                 map((userCase: UserCase) => {
@@ -60,4 +60,8 @@ export class UserService {
                 catchError(error => this.handleError(error))
         );  
     }   
+
+    saveUser(user: User): Observable<String> {
+        return this.http.post<String>(`${this.baseUrl}`, user);  
+    }
 }

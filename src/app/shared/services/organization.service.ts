@@ -5,7 +5,7 @@ import { Observable, throwError, map } from 'rxjs'
 
 import { environment } from '../../../environments/environment';
 
-import { UserCaseService } from '../services/user-case.service';
+import { UserService } from '../services/user.service';
 import { OrganizationCase } from '../models/organization-case.model';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class OrganizationService {
         })
     };    
 
-    constructor(private userCaseService: UserCaseService, private http: HttpClient) { }
+    constructor(private userService: UserService, private http: HttpClient) { }
 
     private handleError(error: HttpErrorResponse) {
         if (error.status === 0) {
@@ -87,8 +87,8 @@ export class OrganizationService {
     }    
     
     getCasesByUser(userId: string): Observable<OrganizationCase[]> { 
-        return this.userCaseService.loadUserCases(userId)
-            .pipe(map(userCase => {                    
+        return this.userService.loadUserCases(userId)
+            .pipe(map((userCase: any) => {                    
                 return this.createCasesByUser(userCase.organizations);
             }
         ))

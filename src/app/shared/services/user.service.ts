@@ -7,12 +7,12 @@ import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 import { User } from '../models/user.model';
-
-@Injectable({
-    providedIn: 'root'
-})
+import { UserCase } from '../models/user-case.model';
+@Injectable({ providedIn: 'root' })
 export class UserService {
     readonly baseUrl: string = environment.URL + "/users";
+
+    private userCase!: UserCase;
 
     readonly httpOptions = {
         headers: new HttpHeaders({
@@ -38,7 +38,7 @@ export class UserService {
     constructor(private http: HttpClient) { }     
 
     loadUser(userId: string): Observable<User> {
-        return this.http.get<User>(`${this.baseUrl}` + "/users/" + userId)
+        return this.http.get<User>(`${this.baseUrl}` + "/" + userId)
             .pipe(
                 map((user: User) => {
                     return user;
@@ -47,5 +47,21 @@ export class UserService {
                     this.handleError(error)
                 )
         );  
+    } 
+    
+    loadUserCases(userId: string): Observable<UserCase> {
+        return this.http.get<UserCase>(`${this.baseUrl}` + "/" + userId + "/cases")
+            .pipe(                
+                map((userCase: UserCase) => {
+                    this.userCase = userCase;
+
+                    return this.userCase;
+                }),
+                catchError(error => this.handleError(error))
+        );  
+    }
+    
+    getUserCases(): UserCase {
+        return this.userCase;     
     }    
 }

@@ -7,7 +7,7 @@ import { NgEventBus } from 'ng-event-bus';
 // app services, models and enumerations
 import { ContextService } from '../shared/services/context.service';
 
-import { UserCaseService } from '../shared/services/user-case.service';
+import { UserService } from '../shared/services/user.service';
 import { Organization } from '../shared/models/organization.model';
 import { Project } from '../shared/models/project.model';
 import { Case } from '../shared/models/case.model';
@@ -51,7 +51,7 @@ export class AppTopBarComponent implements AfterViewInit {
     resourceTypeEnum = ResourceTypeEnum;
     eventType = EventType;
 
-    constructor(private contextService: ContextService, private userCaseService: UserCaseService,
+    constructor(private contextService: ContextService, private userService: UserService,
                 private eventBus: NgEventBus, public layoutService: LayoutService) {
     }
 
@@ -81,7 +81,7 @@ export class AppTopBarComponent implements AfterViewInit {
     }
     
     private loadUserCases() {
-        this.userCaseService.loadUserCases(this.USER_ID)
+        this.userService.loadUserCases(this.USER_ID)
             .subscribe({
                 next: userCase => {
                     this.userCase = userCase;

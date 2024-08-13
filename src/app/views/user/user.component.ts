@@ -86,7 +86,12 @@ export class UserComponent implements OnInit {
             rejectButtonStyleClass:"p-button-text",
             accept: () => {
                 if (user.userId) {
-                    this.userService.deleteUser(user.userId);
+                    this.userService.deleteUser(user.userId)
+                        .subscribe(() => {
+                            if (this.contextService.getContext().organizationId) {
+                                this.loadUsersByOrganizationId(this.contextService.getContext().organizationId);
+                            }                            
+                        });
                 }
             }
         });

@@ -18,11 +18,12 @@ export class RolePipe implements PipeTransform {
         this.roleList = [];
         
         for (const [propertyKey, propertyValue] of Object.entries(RoleEnum)) {
-        if (!Number.isNaN(Number(propertyKey))) {
-            continue;
-        }
+            if (!Number.isNaN(Number(propertyKey))) {
+                continue;
+            }
 
-        this.roleList.push({id: propertyValue, name: propertyKey});
+            if (propertyValue != "ADMIN")
+                this.roleList.push({id: propertyValue, name: propertyKey});
         }
 
         return this.roleList;
@@ -30,8 +31,8 @@ export class RolePipe implements PipeTransform {
 
     getNameById(Id: any) {
         for (const [propertyKey, propertyValue] of Object.entries(RoleEnum)) {
-        if (propertyValue == Id)
-            return propertyKey;
+            if (propertyValue == Id)
+                return propertyKey;
         }
 
         return null;

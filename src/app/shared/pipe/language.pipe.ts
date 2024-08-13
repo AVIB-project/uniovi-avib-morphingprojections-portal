@@ -18,11 +18,11 @@ export class LanguagePipe implements PipeTransform {
         this.languageList = [];
         
         for (const [propertyKey, propertyValue] of Object.entries(LanguageEnum)) {
-        if (!Number.isNaN(Number(propertyKey))) {
-            continue;
-        }
+            if (!Number.isNaN(Number(propertyKey))) {
+                continue;
+            }
 
-        this.languageList.push({id: propertyValue, name: propertyKey});
+            this.languageList.push({id: propertyValue, name: propertyKey});
         }
 
         return this.languageList;
@@ -30,8 +30,8 @@ export class LanguagePipe implements PipeTransform {
 
     getNameById(Id: any) {
         for (const [propertyKey, propertyValue] of Object.entries(LanguageEnum)) {
-        if (propertyValue == Id)
-            return propertyKey;
+            if (propertyValue == Id)
+                return propertyKey;
         }
 
         return null;

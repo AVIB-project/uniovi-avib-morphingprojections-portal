@@ -57,7 +57,9 @@ export class UserService {
 
                     return this.userCase;
                 }),
-                catchError(error => this.handleError(error))
+                catchError(error =>
+                    this.handleError(error)
+            )
         );  
     }   
 
@@ -65,7 +67,7 @@ export class UserService {
         return this.http.post<String>(`${this.baseUrl}`, user);  
     }
 
-    deleteUser(userId: String): void {
-        this.http.delete<void>(`${this.baseUrl}` + "/" + userId);  
+    deleteUser(userId: String): Observable<void> {
+        return this.http.delete<void>(`${this.baseUrl}` + "/" + userId);  
     }
 }

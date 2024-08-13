@@ -20,6 +20,7 @@
                 <th pSortableColumn="firstName" class="white-space-nowrap" style="width:25%">First name<p-sortIcon field="firstName"></p-sortIcon></th>
                 <th pSortableColumn="lastName" class="white-space-nowrap" style="width:25%">Last name<p-sortIcon field="lastName"></p-sortIcon></th>
                 <th pSortableColumn="email" class="white-space-nowrap" style="width:25%">Email<p-sortIcon field="email"></p-sortIcon></th>
+                <th pSortableColumn="role" class="white-space-nowrap" style="width:25%">Email<p-sortIcon field="role"></p-sortIcon></th>
                 <th pSortableColumn="active" class="white-space-nowrap" style="width:25%">Active<p-sortIcon field="active"></p-sortIcon></th>
             </tr>
         </ng-template>
@@ -28,6 +29,7 @@
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>{{user.email}}</td>
+                <td>{{user.role}}</td>
                 <td style="min-width: 10rem;">
                     <div class="flex justify-content-start w-full px-0">
                         <span #active class="text-700 font-semibold white-space-nowrap">

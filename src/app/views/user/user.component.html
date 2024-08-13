@@ -1,6 +1,7 @@
 <div class="card">
-    <p-table #dt [value]="users" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+    <p-table #dt [value]="users" [rowHover]="true"
+        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+        [paginator]="true" [rows]="10" [showCurrentPageReport]="true"  [rowsPerPageOptions]="[10,25,50]"
         [globalFilterFields]="['firstName','lastName','email','active']">
         <ng-template pTemplate="caption">
             <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
@@ -8,24 +9,40 @@
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="onGlobalFilterCase(dt, $event)" placeholder="Global Search" class="w-full" />
                 </span>
-                <button (click)="onAddUser()" pButton class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-user-plus" label="Add User"></button>
+                <button pButton class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-user-plus" label="Add User"
+                    (click)="onAddUser($event)">
+                </button>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="firstName" class="white-space-nowrap" style="width:25%">Firstname<p-sortIcon field="firstName"></p-sortIcon></th>
-                <th pSortableColumn="lastName" class="white-space-nowrap" style="width:25%">Lastname<p-sortIcon field="lastName"></p-sortIcon></th>
+                <th pSortableColumn="firstName" class="white-space-nowrap" style="width:25%">First name<p-sortIcon field="firstName"></p-sortIcon></th>
+                <th pSortableColumn="lastName" class="white-space-nowrap" style="width:25%">Last name<p-sortIcon field="lastName"></p-sortIcon></th>
                 <th pSortableColumn="email" class="white-space-nowrap" style="width:25%">Email<p-sortIcon field="email"></p-sortIcon></th>
                 <th pSortableColumn="active" class="white-space-nowrap" style="width:25%">Active<p-sortIcon field="active"></p-sortIcon></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-user>
-            <tr>
+            <tr (mouseenter)="toggleOptions($event, options, active)" (mouseleave)="toggleOptions($event, options, active)" class="cursor-pointer">
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>{{user.email}}</td>
-                <td>
-                    <i class="pi" [ngClass]="{ 'text-green-500 pi-check-circle': user.active, 'text-red-500 pi-times-circle': !user.active }"></i>
+                <td style="min-width: 10rem;">
+                    <div class="flex justify-content-start w-full px-0">
+                        <span #active class="text-700 font-semibold white-space-nowrap">
+                            <i class="pi"
+                                [ngClass]="{ 'text-green-500 pi-check-circle': user.active, 'text-red-500 pi-times-circle': !user.active }">
+                            </i>
+                        </span>
+                        <div style="display: none" #options>
+                            <button pButton class="h-2rem w-2rem mr-2" icon="pi pi-inbox"
+                                pTooltip="Update" tooltipPosition="top"
+                                (click)="onUpdateUser($event, user)"></button>
+                            <button pButton class="p-button-danger h-2rem w-2rem" icon="pi pi-trash"
+                                pTooltip="Remove" tooltipPosition="top"
+                                (click)="onRemoveUser($event, user)"></button>
+                        </div>
+                    </div>
                 </td>
             </tr>
         </ng-template>

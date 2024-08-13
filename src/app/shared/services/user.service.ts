@@ -61,7 +61,7 @@ export class UserService {
         );  
     }   
 
-    saveUser(user: User): Observable<String> {
+    saveUser(user: any): Observable<String> {
         return this.http.post<String>(`${this.baseUrl}`, user);  
     }
 }

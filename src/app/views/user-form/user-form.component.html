@@ -4,67 +4,90 @@
         <div class="col-12 lg:col-2">
             <div class="text-900 font-medium text-xl mb-3">User</div>
             <p class="m-0 p-0 text-600 line-height-3 mr-3">Is the Actor who use the Portal with his roles.</p>
-        </div>
-        <div class="col-12 lg:col-10">
-            <div class="grid formgrid p-fluid">
-                <div class="field mb-4 col-12 md:col-6">
-                    <label for="firstname" class="font-medium text-900">Firstname *</label>
-                    <input id="firstname" type="text" pInputText>
-                </div>
-                <div class="field mb-4 col-12 md:col-6">
-                    <label for="lastname" class="font-medium text-900">Lastname *</label>
-                    <input id="lastname" type="text" pInputText>
-                </div>
-                <!--<div class="field mb-4 col-12">
-                    <label for="avatar" class="font-medium text-900">Avatar</label>
-                    <p-fileUpload mode="basic" name="avatar" url="./upload.php" accept="image/*" [maxFileSize]="1000000"
-                        styleClass="p-button-outlined p-button-plain" chooseLabel="Upload Image"></p-fileUpload>
-                </div>-->
-                <div class="field mb-4 col-12 md:col-6">
-                    <label for="email" class="font-medium text-900">Email *</label>
-                    <input id="email" type="text" pInputText>
-                </div>
-                <div class="field mb-4 col-12 md:col-6">
-                    <label for="username" class="font-medium text-900">Username *</label>
-                    <input id="username" type="text" pInputText>
-                </div>
-                <div class="field mb-4 col-12">
-                    <label for="address" class="font-medium text-900">Address</label>
-                    <input id="address" type="text" pInputText>
-                </div>
-                <div class="field mb-4 col-12 md:col-6">
-                    <label for="city" class="font-medium text-900">City</label>
-                    <input id="city" type="text" pInputText>
-                </div>
-                <div class="field mb-4 col-12 md:col-6">
-                    <label for="country" class="font-medium text-900">Country</label>
-                    <input id="country" type="text" pInputText>
-                </div>
-                <div class="field mb-4 col-12 md:col-6">
-                    <label for="phone" class="font-medium text-900">Phone</label>
-                    <input id="phone" type="text" pInputText>
-                </div>
-                <div class="field mb-4 col-12 md:col-6">
-                    <label for="language" class="font-medium text-900">Language *</label>
-                    <p-dropdown inputId="language" [options]="languages" optionLabel="name" [filter]="true" filterBy="name"
-                        [showClear]="true" placeholder="Select a Language">
-                        <ng-template let-language pTemplate="item">
-                            <div class="flex align-items-center">
-                                <img src="assets/layout/images/flag/flag_placeholder.png"
-                                    [class]="'mr-2 flag flag-' + language.code.toLowerCase()" style="width:18px" />
-                                <div>{{language.name}}</div>
+        </div>        
+            <div class="col-12 lg:col-10">
+                <form novalidate [formGroup]="userFormGroup">
+                    <div class="grid formgrid p-fluid">
+                        <div class="field mb-4 col-12 md:col-6">
+                            <label for="firstName" class="font-medium text-900">First name *</label>
+                            <input id="firstName" type="text" pInputText formControlName="firstName">
+                            <div *ngIf="userFormGroup.controls.firstName.errors && !userFormGroup.controls.firstName.pristine">
+                                <small *ngIf="userFormGroup.controls.firstName.errors['required']" class="p-error">First name is mandatory</small>
                             </div>
-                        </ng-template>
-                    </p-dropdown>
-                </div>
-                <div class="field mb-4 col-12">
-                    <label for="notes" class="font-medium text-900">Notes</label>
-                    <textarea id="notes" type="text" pInputTextarea rows="5" [autoResize]="true"></textarea>
-                </div>
-                <div class="col-12">
-                    <button (click)="onCreateUser()" pButton pRipple label="Create User" class="w-auto mt-3"></button>
-                </div>
+                        </div>
+                        <div class="field mb-4 col-12 md:col-6">
+                            <label for="lastName" class="font-medium text-900">Last name *</label>
+                            <input id="lastName" type="text" pInputText formControlName="lastName">
+                            <div *ngIf="userFormGroup.controls.lastName.errors && !userFormGroup.controls.lastName.pristine">
+                                <small *ngIf="userFormGroup.controls.lastName.errors['required']" class="p-error">Last name is mandatory</small>
+                            </div>
+                        </div>
+                        <!--<div class="field mb-4 col-12">
+                            <label for="avatar" class="font-medium text-900">Avatar</label>
+                            <p-fileUpload mode="basic" name="avatar" url="./upload.php" accept="image/*" [maxFileSize]="1000000"
+                                styleClass="p-button-outlined p-button-plain" chooseLabel="Upload Image"></p-fileUpload>
+                        </div>-->
+                        <div class="field mb-4 col-12 md:col-6">
+                            <label for="email" class="font-medium text-900">Email *</label>
+                            <input id="email" type="text" pInputText formControlName="email">
+                            <div *ngIf="userFormGroup.controls.email.errors && !userFormGroup.controls.email.pristine">
+                                <small *ngIf="userFormGroup.controls.email.errors['required']" class="p-error">Email is mandatory</small>
+                                <small *ngIf="userFormGroup.controls.email.errors['email']" class="p-error">Email is not correct</small>
+                            </div>
+                        </div>
+                        <div class="field mb-4 col-12 md:col-3">
+                            <label for="username" class="font-medium text-900">Username *</label>
+                            <input id="username" type="text" pInputText formControlName="username">
+                            <div *ngIf="userFormGroup.controls.username.errors && !userFormGroup.controls.username.pristine">
+                                <small *ngIf="userFormGroup.controls.username.errors['required']" class="p-error">Username is mandatory</small>
+                            </div>
+                        </div>
+                        <div class="field mb-4 col-12 md:col-3">
+                            <label for="role" class="font-medium text-900">Role *</label>
+                            <p-dropdown inputId="role" [options]="roles" placeholder="Select a Role" 
+                                optionLabel="name" optionValue="id" formControlName="role">
+                            </p-dropdown>
+                        </div>
+                        <div class="field mb-4 col-12">
+                            <label for="address" class="font-medium text-900">Address</label>
+                            <input id="address" type="text" pInputText formControlName="address">
+                        </div>
+                        <div class="field mb-4 col-12 md:col-6">
+                            <label for="city" class="font-medium text-900">City</label>
+                            <input id="city" type="text" pInputText formControlName="city">
+                        </div>
+                        <div class="field mb-4 col-12 md:col-6">
+                            <label for="country" class="font-medium text-900">Country</label>
+                            <input id="country" type="text" pInputText formControlName="country">
+                        </div>
+                        <div class="field mb-4 col-12 md:col-6">
+                            <label for="phone" class="font-medium text-900">Phone</label>
+                            <input id="phone" type="text" pInputText formControlName="phone">
+                        </div>
+                        <div class="field mb-4 col-12 md:col-6">
+                            <label for="language" class="font-medium text-900">Language *</label>
+                            <p-dropdown inputId="language" [options]="languages" placeholder="Select a Language" 
+                                optionLabel="name" optionValue="id" formControlName="language">
+                                <ng-template let-language pTemplate="item">
+                                    <div class="flex align-items-center">
+                                        <img src="assets/layout/images/flag/flag_placeholder.png"
+                                            [class]="'mr-2 flag flag-' + language.id.toLowerCase()" style="width:18px" />
+                                        <div>{{language.name}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                        <div class="field mb-4 col-12">
+                            <label for="notes" class="font-medium text-900">Notes</label>
+                            <textarea id="notes" type="text" pInputTextarea rows="5" [autoResize]="true" formControlName="notes"></textarea>
+                        </div>
+                    </div>
+                        <div class="flex flex-wrap justify-content-end gap-3">
+                            <button (click)="onCancelUser()" pButton pRipple label="Cancel" class="p-button-outlined w-auto mt-3"></button>
+                            <button (click)="onCreateUser()" pButton pRipple label="Create User" class="w-auto mt-3"
+                                [disabled]="!userFormGroup.valid"></button>
+                        </div>
+                </form>
             </div>
-        </div>
     </div>
 </div>

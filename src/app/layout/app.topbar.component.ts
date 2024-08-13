@@ -25,8 +25,7 @@ interface ProjectItem {
         
 @Component({
     selector: 'app-topbar',
-    templateUrl: './app.topbar.component.html',
-    providers: [ NgEventBus ]
+    templateUrl: './app.topbar.component.html'
 })
 export class AppTopBarComponent implements AfterViewInit {
     @ViewChild('searchinput') searchInput!: ElementRef;
@@ -93,6 +92,11 @@ export class AppTopBarComponent implements AfterViewInit {
                         
                         // parse projects list to bind to component
                         this.loadCasesByOrganization();
+
+                        // initialize context service with default organization and case selected
+                        this.selectedOrganization = this.organizations[0];
+                        
+                        this.onChangeCase();                                    
                     }       
                 },
                 error: error => {
@@ -103,7 +107,7 @@ export class AppTopBarComponent implements AfterViewInit {
     
     ngAfterViewInit() {
         // get user cases grouped by organization/project
-        this.loadUserCases();
+        this.loadUserCases();      
     }
 
     onMenuButtonClick() {

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
@@ -18,6 +19,7 @@ import { UserFormRoutingModule } from './user-form-routing.module';
 	imports: [
 		CommonModule,
 		FormsModule,
+		ReactiveFormsModule,
 		ButtonModule,
 		RippleModule,
 		InputTextModule,

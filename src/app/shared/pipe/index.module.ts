@@ -6,6 +6,8 @@ import { AnnotationTypePipe } from './annotation-type.pipe';
 import { AnnotationEncodingPipe } from './annotation-encoding.pipe';
 import { AnnotationProjectionPipe } from './annotation-projection.pipe';
 import { ResourceTypePipe } from './resource-type.pipe';
+import { RolePipe } from './role.pipe';
+import { LanguagePipe } from './language.pipe';
 
 @NgModule({
   imports: [],
@@ -16,6 +18,8 @@ import { ResourceTypePipe } from './resource-type.pipe';
     AnnotationEncodingPipe,
     AnnotationProjectionPipe,
     ResourceTypePipe,
+    RolePipe,
+    LanguagePipe,
   ],
   exports: [
     AnnotationGroupPipe,
@@ -24,6 +28,8 @@ import { ResourceTypePipe } from './resource-type.pipe';
     AnnotationEncodingPipe,
     AnnotationProjectionPipe,
     ResourceTypePipe,
+    RolePipe,
+    LanguagePipe,
   ]
 })
 export class PipesModule { }

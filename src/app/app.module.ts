@@ -4,6 +4,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppLayoutModule } from './layout/app.layout.module';
 
+import { NgEventBus } from 'ng-event-bus'
+
 @NgModule({
     imports: [
         AppLayoutModule,
@@ -13,7 +15,8 @@ import { AppLayoutModule } from './layout/app.layout.module';
         AppComponent,
     ],
     providers: [
-        {provide: LocationStrategy, useClass: HashLocationStrategy}
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
+        NgEventBus
     ],
     bootstrap: [AppComponent]
 })

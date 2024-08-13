@@ -24,11 +24,33 @@ export class UserComponent implements OnInit {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains')
     }
 
-    onAddUser() {
+    toggleOptions(event: Event, opt: HTMLElement, date: HTMLElement) {
+        if (event.type === 'mouseenter') {
+            opt.style.display = 'flex';
+            date.style.display = 'none';
+        } else {
+            opt.style.display = 'none';
+            date.style.display = 'flex';
+        }
+    }
+ 
+    onAddUser(event: Event) {
         this.router.navigate(['app/user-form'])
     }
 
-    onUpdateUser() {
-        this.router.navigate(['app/user-form', { id: "66a908d7bfb5b24be6ab8211" }])
+    onUpdateUser(event: Event, user: User) {
+        event.preventDefault();
+
+        console.log(user.userId);
+
+        //this.router.navigate(['app/user-form', { id: user.userId }])
+    }
+
+    onRemoveUser(event: Event, user: User) {
+        event.preventDefault();
+        
+        console.log(user.userId);
+
+        //this.router.navigate(['app/user-form', { id: this.selectedUser.userId }])
     }
 }

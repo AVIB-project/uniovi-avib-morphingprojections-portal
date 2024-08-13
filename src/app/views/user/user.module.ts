@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TreeTableModule } from 'primeng/treetable';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { TooltipModule } from 'primeng/tooltip';
 
 import { UserComponent } from './user.component';
 import { UserRoutingModule } from './user-routing.module';
@@ -20,7 +21,8 @@ import { UserRoutingModule } from './user-routing.module';
 		InputTextModule,
 		TableModule,
 		TreeTableModule,
-		ProgressBarModule
+		ProgressBarModule,
+		TooltipModule
 	],
 	declarations: [UserComponent]
 })

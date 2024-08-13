@@ -31,6 +31,6 @@ export class IngestionComponent implements OnInit {
     }
 
     onAddCase(){
-        this.router.navigate(['app/case-form'])
+        this.router.navigate(['/case-form'])
     }
 }

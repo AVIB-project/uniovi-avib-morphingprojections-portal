@@ -60,7 +60,7 @@ export class UserComponent implements OnInit {
     }
  
     onAddUser(event: Event) {
-        this.router.navigate(['app/user-form'])
+        this.router.navigate(['/user-form'])
     }
 
     onUpdateUser(event: Event, user: User) {
@@ -68,7 +68,7 @@ export class UserComponent implements OnInit {
 
         console.log(user.userId);
 
-        this.router.navigate(['app/user-form', { id: user.userId }])
+        this.router.navigate(['/user-form', { id: user.userId }])
     }
 
     onRemoveUser(event: Event, user: User) {

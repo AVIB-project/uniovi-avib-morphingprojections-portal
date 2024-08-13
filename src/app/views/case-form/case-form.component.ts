@@ -14,6 +14,6 @@ export class CaseFormComponent implements OnInit {
     }
 
     onCreateCase() {
-        this.router.navigate(['app/case'])
+        this.router.navigate(['/case'])
     }
 }

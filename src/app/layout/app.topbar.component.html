@@ -67,20 +67,13 @@
         </button>
         <ul class="list-none p-3 m-0 border-round shadow-2 hidden absolute surface-overlay origin-top w-full sm:w-12rem mt-2 right-0 top-auto">
             <li>
-                <a pRipple class="flex p-2 border-round align-items-center hover:surface-hover transition-colors transition-duration-150 cursor-pointer">
+                <a pRipple class="flex p-2 border-round align-items-center hover:surface-hover transition-colors transition-duration-150 cursor-pointer"
+                    (click)="onProfile($event)">
                     <i class="pi pi-user mr-3"></i>
                     <span>Profile</span>
                 </a>
-                <a pRipple class="flex p-2 border-round align-items-center hover:surface-hover transition-colors transition-duration-150 cursor-pointer">
-                    <i class="pi pi-inbox mr-3"></i>
-                    <span>Inbox</span>
-                </a>
-                <a pRipple class="flex p-2 border-round align-items-center hover:surface-hover transition-colors transition-duration-150 cursor-pointer">
-                    <i class="pi pi-cog mr-3"></i>
-                    <span>Settings</span>
-                </a>
                 <a pRipple class="flex p-2 border-round align-items-center hover:surface-hover transition-colors transition-duration-150 cursor-pointer"
-                    [routerLink]="['/']">
+                    (click)="onLogout($event)">
                     <i class="pi pi-power-off mr-3"></i>
                     <span>Sign Out</span>
                 </a>

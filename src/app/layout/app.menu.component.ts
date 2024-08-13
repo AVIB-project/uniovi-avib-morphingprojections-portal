@@ -18,37 +18,37 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Dashboard',
                 icon: 'pi pi-home',
-                routerLink: ['/app/dashboard']
+                routerLink: ['/dashboard']
             },
             {
                 label: 'Case Management',
                 icon: 'pi pi-sitemap',
-                routerLink: ['/app/case']               
+                routerLink: ['/case']               
             },            
             {
                 label: 'Case Configuration',
                 icon: 'pi pi-cog',
-                routerLink: ['/app/configuration'],               
+                routerLink: ['/configuration'],               
             },
             {
                 label: 'Ingestion',
                 icon: 'pi pi-fw pi-database',
-                routerLink: ['/app/ingestion'],
+                routerLink: ['/ingestion'],
             },
             {
                 label: 'Encodings',
                 icon: 'pi pi-fw pi-sliders-v',
-                routerLink: ['/app/encoding'],
+                routerLink: ['/encoding'],
             },         
             {
                 label: 'Morphing Projection',
                 icon: 'pi pi-fw pi-eye',
-                routerLink: ['/app/projection']               
+                routerLink: ['/projection']               
             },
             {
                 label: 'User Management',
                 icon: 'pi pi-fw pi-user',
-                routerLink: ['/app/user']
+                routerLink: ['/user']
             },
         ];
     }

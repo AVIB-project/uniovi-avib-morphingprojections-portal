@@ -1,13 +1,15 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
+import { AuthGuard } from './shared/services/auth-guard.service';
+
 import { AppLayoutComponent } from './layout/app.layout.component';
 
 const routes: Routes = [
     {
-        path: 'app', component: AppLayoutComponent,
+        path: '', component: AppLayoutComponent, canActivate: [AuthGuard],
         children: [
-            { path: 'dashboard', data: { breadcrumb: 'Dashboard' }, loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule) },
+            { path: '', data: { breadcrumb: 'Dashboard' }, loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule) },
             { path: 'case', data: { breadcrumb: 'Case' }, loadChildren: () => import('./views/case/case.module').then(m => m.CaseModule) },
             { path: 'case-form', data: { breadcrumb: 'Case Form' }, loadChildren: () => import('./views/case-form/case-form.module').then(m => m.CaseFormModule) },
             { path: 'configuration', data: { breadcrumb: 'Configuration' }, loadChildren: () => import('./views/configuration/configuration.module').then(m => m.ConfigurationModule) },
@@ -19,7 +21,7 @@ const routes: Routes = [
             { path: 'user-form', data: { breadcrumb: 'User Form' }, loadChildren: () => import('./views/user-form/user-form.module').then(m => m.UserFormModule) },
         ]
     },
-    { path: '', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
+    //{ path: '',  canActivate: [AuthGuard], data: { breadcrumb: 'Auth' }, loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
     { path: 'notfound', loadChildren: () => import('./demo/components/notfound/notfound.module').then(m => m.NotfoundModule) },
     { path: '**', redirectTo: '/notfound' }
 ];

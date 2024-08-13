@@ -4,6 +4,8 @@ import { LayoutService } from "./service/app.layout.service";
 
 import { NgEventBus } from 'ng-event-bus';
 
+import { AuthService } from '../shared/services/auth.service';
+
 // app services, models and enumerations
 import { ContextService } from '../shared/services/context.service';
 
@@ -50,7 +52,8 @@ export class AppTopBarComponent implements AfterViewInit {
     resourceTypeEnum = ResourceTypeEnum;
     eventType = EventType;
 
-    constructor(private contextService: ContextService, private userService: UserService,
+    constructor(private authService: AuthService,
+                private contextService: ContextService, private userService: UserService,
                 private eventBus: NgEventBus, public layoutService: LayoutService) {
     }
 
@@ -175,5 +178,13 @@ export class AppTopBarComponent implements AfterViewInit {
 
     get tabs(): MenuItem[] {
         return this.layoutService.tabs;
+    }
+
+    onProfile(event: any) {
+        console.log(event);
+    }
+
+    onLogout(event: any) {
+        this.authService.logout();
     }
 }

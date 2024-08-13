@@ -82,7 +82,7 @@ export class UserFormComponent implements OnInit {
     }
 
     onCancelUser() {
-        this.router.navigate(['app/user'])
+        this.router.navigate(['/user'])
     }
     
     onCreateUser() {
@@ -92,7 +92,7 @@ export class UserFormComponent implements OnInit {
             .subscribe((userId: any) => {
                 console.log(userId);
 
-                this.router.navigate(['app/user']);
+                this.router.navigate(['/user']);
             });
     }
 

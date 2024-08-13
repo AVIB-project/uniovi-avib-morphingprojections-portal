@@ -13,6 +13,6 @@ export class ConfigurationFormComponent implements OnInit {
     }
 
     onCreateConfiguration() {
-        this.router.navigate(['app/configuration'])
+        this.router.navigate(['/configuration'])
     }
 }

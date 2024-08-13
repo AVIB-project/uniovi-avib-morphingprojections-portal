@@ -8,6 +8,7 @@ import { TableModule } from 'primeng/table';
 import { TreeTableModule } from 'primeng/treetable';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { TooltipModule } from 'primeng/tooltip';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { UserComponent } from './user.component';
 import { UserRoutingModule } from './user-routing.module';
@@ -22,7 +23,8 @@ import { UserRoutingModule } from './user-routing.module';
 		TableModule,
 		TreeTableModule,
 		ProgressBarModule,
-		TooltipModule
+		TooltipModule,
+		ConfirmDialogModule
 	],
 	declarations: [UserComponent]
 })

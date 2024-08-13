@@ -88,7 +88,6 @@ export class UserFormComponent implements OnInit {
     onCreateUser() {
         console.log(this.userFormGroup.value);
 
-        // save user: TODO
         this.userService.saveUser(this.userFormGroup.value)
             .subscribe((userId: any) => {
                 console.log(userId);
@@ -97,9 +96,8 @@ export class UserFormComponent implements OnInit {
             });
     }
 
-
-  ngOnDestroy(): void {
-    if(this.subscriptionEvents)
-      this.subscriptionEvents.unsubscribe();
-  }
+    ngOnDestroy(): void {
+        if(this.subscriptionEvents)
+            this.subscriptionEvents.unsubscribe();
+    }
 }

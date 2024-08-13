@@ -1,4 +1,5 @@
 <div class="card">
+    <p-confirmDialog />
     <p-table #dt [value]="users" [rowHover]="true"
         responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
         [paginator]="true" [rows]="10" [showCurrentPageReport]="true"  [rowsPerPageOptions]="[10,25,50]"
@@ -30,7 +31,7 @@
                 <td style="min-width: 10rem;">
                     <div class="flex justify-content-start w-full px-0">
                         <span #active class="text-700 font-semibold white-space-nowrap">
-                            <i class="pi"
+                            <i class="pi h-2rem w-2rem"
                                 [ngClass]="{ 'text-green-500 pi-check-circle': user.active, 'text-red-500 pi-times-circle': !user.active }">
                             </i>
                         </span>
@@ -38,7 +39,7 @@
                             <button pButton class="h-2rem w-2rem mr-2" icon="pi pi-inbox"
                                 pTooltip="Update" tooltipPosition="top"
                                 (click)="onUpdateUser($event, user)"></button>
-                            <button pButton class="p-button-danger h-2rem w-2rem" icon="pi pi-trash"
+                            <button pButton class="tool-button h-2rem w-2rem p-button-danger" icon="pi pi-trash"
                                 pTooltip="Remove" tooltipPosition="top"
                                 (click)="onRemoveUser($event, user)"></button>
                         </div>

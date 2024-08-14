@@ -1,6 +1,8 @@
 <div class="card">
-    <p-table #dt [value]="organizationCases" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+    <p-confirmDialog />
+    <p-table #dt [value]="organizationCases" [rowHover]="true"
+        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [paginator]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
         [globalFilterFields]="['organizationName','projectName','caseName','caseDescription']">
         <ng-template pTemplate="caption">
             <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
@@ -8,7 +10,7 @@
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="onGlobalFilterCase(dt, $event)" placeholder="Global Search" class="w-full" />
                 </span>
-                <button (click)="onAddCase()" pButton class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-user-plus" label="Add Case"></button>
+                <button (click)="onAddCase($event)" pButton class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-user-plus" label="Add Case"></button>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
@@ -17,21 +19,34 @@
                 <th pSortableColumn="projectName" class="white-space-nowrap" style="width:25%">Project <p-sortIcon field="projectName"></p-sortIcon></th>
                 <th pSortableColumn="caseName" class="white-space-nowrap" style="width:25%">Case Name<p-sortIcon field="caseName"></p-sortIcon></th>
                 <th pSortableColumn="caseDescription" class="white-space-nowrap" style="width:25%">Case Description <p-sortIcon field="caseDescription"></p-sortIcon></th>
-                <th id="f_blank"></th>
+                <!--<th id="f_blank"></th>-->
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-organizationCase>
-            <tr>
+            <tr (mouseenter)="onToggleOptions($event, options, active)" (mouseleave)="onToggleOptions($event, options, active)" class="cursor-pointer">
                 <td>{{organizationCase.organizationName}}</td>
                 <td>{{organizationCase.projectName}}</td>
                 <td>{{organizationCase.caseName}}</td>
-                <td>{{organizationCase.caseDescription}}</td>
-                <td>
+                <!--<td>{{organizationCase.caseDescription}}</td>-->
+                <td style="min-width: 10rem;">
+                    <div class="flex justify-content-start w-full px-0">
+                        <span #active class="text-700 font-semibold white-space-nowrap">
+                            <td>{{organizationCase.caseDescription}}</td>
+                        </span>
+                        <div style="display: none" #options>
+                            <button pButton class="h-2rem w-2rem mr-2" icon="pi pi-inbox" pTooltip="Update" tooltipPosition="top"
+                                (click)="onUpdateCase($event, organizationCase)"></button>
+                            <button pButton class="tool-button h-2rem w-2rem p-button-danger" icon="pi pi-trash" pTooltip="Remove" tooltipPosition="top"
+                                (click)="onRemoveCase($event, organizationCase)"></button>
+                        </div>
+                    </div>
+                </td>
+                <!--<td>
                     <p-button (onClick)="op.toggle($event)" icon="pi pi-ellipsis-v"/>
                     <p-overlayPanel #op>
                         <p-menu [model]="items" />                        
                     </p-overlayPanel>
-                </td>
+                </td>-->
             </tr>
         </ng-template>
     </p-table>

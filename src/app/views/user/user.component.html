@@ -25,7 +25,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-user>
-            <tr (mouseenter)="toggleOptions($event, options, active)" (mouseleave)="toggleOptions($event, options, active)" class="cursor-pointer">
+            <tr (mouseenter)="onToggleOptions($event, options, active)" (mouseleave)="onToggleOptions($event, options, active)" class="cursor-pointer">
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>{{user.email}}</td>

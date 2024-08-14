@@ -21,9 +21,9 @@ export class UserComponent implements OnInit {
     users: User[];
 
     constructor(
-        private confirmationService: ConfirmationService,
-        private userService: UserService, private router: Router,
-        private eventBus: NgEventBus, private contextService: ContextService) { }
+        private confirmationService: ConfirmationService, private router: Router, private eventBus: NgEventBus,
+        private contextService: ContextService, private userService: UserService) {         
+    }
 
     private loadUsersByOrganizationId(organizationId: string) {
         this.userService.loadUsersByOrganizationId(organizationId)
@@ -49,7 +49,7 @@ export class UserComponent implements OnInit {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains')
     }
 
-    toggleOptions(event: Event, opt: HTMLElement, date: HTMLElement) {
+    onToggleOptions(event: Event, opt: HTMLElement, date: HTMLElement) {
         if (event.type === 'mouseenter') {
             opt.style.display = 'flex';
             date.style.display = 'none';
@@ -64,18 +64,10 @@ export class UserComponent implements OnInit {
     }
 
     onUpdateUser(event: Event, user: User) {
-        //event.preventDefault();
-
-        console.log(user.userId);
-
         this.router.navigate(['/user-form', { id: user.userId }])
     }
 
     onRemoveUser(event: Event, user: User) {
-        //event.preventDefault();
-        
-        console.log(user.userId);
-
         this.confirmationService.confirm({
             target: event.target as EventTarget,
             message: 'Are you sure that you want to proceed?',

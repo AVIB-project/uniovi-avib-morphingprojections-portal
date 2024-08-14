@@ -9,6 +9,7 @@ import { TreeTableModule } from 'primeng/treetable';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { MenuModule } from 'primeng/menu';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { CaseComponent } from './case.component';
 import { CaseRoutingModule } from './case-routing.module';
@@ -24,7 +25,8 @@ import { CaseRoutingModule } from './case-routing.module';
 		TreeTableModule,
 		ProgressBarModule,
 		OverlayPanelModule,
-		MenuModule
+		MenuModule,
+		ConfirmDialogModule
 	],
 	declarations: [CaseComponent]
 })

@@ -21,11 +21,11 @@ export class CaseFormComponent implements OnInit {
     
     caseFormGroup = this.fb.group({
         caseId: [null],
-        projectId: ['', Validators.required],
+        organizationId: ['', Validators.required],        
+        projectId: ['', Validators.required],                
         name: ['', Validators.required],
         description: [''],
-        type: [CaseTypeEnum.Private, Validators.required],
-        active: [true, Validators.required]
+        type: [CaseTypeEnum.Private, Validators.required]
     });
     
     caseId: String;
@@ -46,13 +46,18 @@ export class CaseFormComponent implements OnInit {
 
             if (this.caseId) {                
                 this.caseService.loadCaseById(this.caseId)
-                    .subscribe((_case: any) => {
-                        console.log(_case);
+                    .subscribe({
+                        next: (_case: any) => {
+                            console.log(_case);
 
-                        if (_case) {
-                            this.caseFormGroup.setValue(_case);
+                            if (_case) {
+                                this.caseFormGroup.setValue(_case);
+                            }  
+                        },
+                        error: error => {
+                            console.error(error.message);
                         }
-                });
+                    });
             }
         });
         

@@ -63,7 +63,7 @@ export class UserComponent implements OnInit {
         this.router.navigate(['/user-form'])
     }
 
-    onUpdateUser(event: Event, user: User) {
+    onEditUser(event: Event, user: User) {
         this.router.navigate(['/user-form', { id: user.userId }])
     }
 

@@ -10,7 +10,7 @@
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="onGlobalFilterCase(dt, $event)" placeholder="Global Search" class="w-full" />
                 </span>
-                <button (click)="onAddCase($event)" pButton class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-user-plus" label="Add Case"></button>
+                <button (click)="onAddCase($event)" pButton class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-file" label="Add Case"></button>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
@@ -34,9 +34,11 @@
                             <td>{{organizationCase.caseDescription}}</td>
                         </span>
                         <div style="display: none" #options>
-                            <button pButton class="h-2rem w-2rem mr-2" icon="pi pi-inbox" pTooltip="Update" tooltipPosition="top"
-                                (click)="onUpdateCase($event, organizationCase)"></button>
-                            <button pButton class="tool-button h-2rem w-2rem p-button-danger" icon="pi pi-trash" pTooltip="Remove" tooltipPosition="top"
+                            <button pButton class="h-2rem w-2rem mr-2" icon="pi pi-file-edit" 
+                                pTooltip="Edit" tooltipPosition="top"
+                                (click)="onEditCase($event, organizationCase)"></button>
+                            <button pButton class="tool-button h-2rem w-2rem p-button-danger" icon="pi pi-trash" 
+                                pTooltip="Remove" tooltipPosition="top"
                                 (click)="onRemoveCase($event, organizationCase)"></button>
                         </div>
                     </div>

@@ -63,7 +63,7 @@ export class CaseComponent implements OnInit {
         this.router.navigate(['/case-form']);
     }
 
-    onUpdateCase(event: Event, organizationCase: OrganizationCase) {
+    onEditCase(event: Event, organizationCase: OrganizationCase) {
         this.router.navigate(['/case-form', { id: organizationCase.caseId }])
     }
 

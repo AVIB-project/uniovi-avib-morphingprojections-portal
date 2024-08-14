@@ -1,12 +1,12 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { MenuItem } from 'primeng/api';
 import { LayoutService } from "./service/app.layout.service";
 
 import { NgEventBus } from 'ng-event-bus';
 
 import { AuthService } from '../shared/services/auth.service';
-
-// app services, models and enumerations
 import { ContextService } from '../shared/services/context.service';
 
 import { UserService } from '../shared/services/user.service';
@@ -29,17 +29,16 @@ interface ProjectItem {
     selector: 'app-topbar',
     templateUrl: './app.topbar.component.html'
 })
-export class AppTopBarComponent implements AfterViewInit {
-    @ViewChild('searchinput') searchInput!: ElementRef;
-    @ViewChild('menubutton') menuButton!: ElementRef;
+export class AppTopBarComponent {
+    @ViewChild('searchinput')
+    searchInput!: ElementRef;
+    @ViewChild('menubutton')
+    menuButton!: ElementRef;
     searchActive: boolean = false;
     menu: MenuItem[] = [];
-
-    readonly USER_ID = '66a90828bfb5b24be6ab8210';   // Administrator
-    //readonly USER_ID = '66a908d7bfb5b24be6ab8211'; // Miguel Salinas User
-    //readonly USER_ID = '66a90a0dbfb5b24be6ab8215'; // Abel Cuadrado User
-    //readonly USER_ID = '66b63046bbf7692064417fd7'; // YYY User
-    
+ 
+    userDetails: any = {};
+    user: any = {};
     userCase: UserCase; 
     organizations: Organization[];
     selectedOrganization: Organization;
@@ -52,11 +51,32 @@ export class AppTopBarComponent implements AfterViewInit {
     resourceTypeEnum = ResourceTypeEnum;
     eventType = EventType;
 
-    constructor(private authService: AuthService,
+    constructor(private router: Router, private authService: AuthService,
                 private contextService: ContextService, private userService: UserService,
                 private eventBus: NgEventBus, public layoutService: LayoutService) {
+        // get user details
+        this.loadUserDetails();        
     }
 
+    private loadUserDetails() {
+        // get user details from iam
+        this.userDetails = this.authService.getLoggedUser();
+        
+        // get user metadata from system 
+        this.userService.loadUserByEmail(this.userDetails.email)
+            .subscribe({
+                next: user => {
+                    this.user = user;  
+
+                    // load user cases
+                    this.loadUserCases(); 
+                },
+                error: error => {
+                    console.error(error.message);
+                }
+        });
+    }
+    
     private loadCasesByOrganization() {
         // parse projects list to bind to component
         this.projectList = [];
@@ -83,7 +103,7 @@ export class AppTopBarComponent implements AfterViewInit {
     }
     
     private loadUserCases() {
-        this.userService.loadUserCases(this.USER_ID)
+        this.userService.loadUserCases(this.user.userId)
             .subscribe({
                 next: userCase => {
                     this.userCase = userCase;
@@ -108,31 +128,26 @@ export class AppTopBarComponent implements AfterViewInit {
             });
     }
     
-    ngAfterViewInit() {
-        // get user cases grouped by organization/project
-        this.loadUserCases();      
+    get layoutTheme(): string {
+        return this.layoutService.config().layoutTheme;
     }
 
-    onMenuButtonClick() {
-        this.layoutService.onMenuToggle();
+    get colorScheme(): string {
+        return this.layoutService.config().colorScheme;
     }
 
-    activateSearch() {
-        this.searchActive = true;
-        setTimeout(() => {
-            this.searchInput.nativeElement.focus();
-        }, 100);
+    get logo(): string {
+        /*const path = 'assets/layout/images/logo-';
+        const logo = (this.layoutTheme === 'primaryColor'  && !(this.layoutService.config().theme  == "yellow")) ? 'light.png' : (this.colorScheme === 'light' ? 'dark.png' : 'light.png');
+        return path + logo;*/
+
+        return 'assets/layout/images/gsdpi_logo.png';
     }
 
-    deactivateSearch() {
-        this.searchActive = false;
+    get tabs(): MenuItem[] {
+        return this.layoutService.tabs;
     }
-
-    removeTab(event: MouseEvent, item: MenuItem, index: number) {
-        this.layoutService.onTabClose(item, index);
-        event.preventDefault();
-    }
-
+    
     onChangeCase() {
         // context organizations, project and case identifiers default selected
         this.contextService.getContext().organizationId = this.selectedOrganization.id;
@@ -159,29 +174,29 @@ export class AppTopBarComponent implements AfterViewInit {
         // load cases grouped by project
         this.loadCasesByOrganization();    
     }
+    
+    onMenuButtonClick() {
+        this.layoutService.onMenuToggle();
+    }
+
+    onActivateSearch() {
+        this.searchActive = true;
+        setTimeout(() => {
+            this.searchInput.nativeElement.focus();
+        }, 100);
+    }
+
+    onDeactivateSearch() {
+        this.searchActive = false;
+    }
+
+    onRemoveTab(event: MouseEvent, item: MenuItem, index: number) {
+        this.layoutService.onTabClose(item, index);
+        event.preventDefault();
+    }
         
-    get layoutTheme(): string {
-        return this.layoutService.config().layoutTheme;
-    }
-
-    get colorScheme(): string {
-        return this.layoutService.config().colorScheme;
-    }
-
-    get logo(): string {
-        /*const path = 'assets/layout/images/logo-';
-        const logo = (this.layoutTheme === 'primaryColor'  && !(this.layoutService.config().theme  == "yellow")) ? 'light.png' : (this.colorScheme === 'light' ? 'dark.png' : 'light.png');
-        return path + logo;*/
-
-        return 'assets/layout/images/gsdpi_logo.png';
-    }
-
-    get tabs(): MenuItem[] {
-        return this.layoutService.tabs;
-    }
-
     onProfile(event: any) {
-        console.log(event);
+        this.router.navigate(['/user-form', { id: this.user.userId }])
     }
 
     onLogout(event: any) {

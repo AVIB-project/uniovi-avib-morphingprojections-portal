@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { Table } from 'primeng/table';
 
+import { ContextService } from '../../shared/services/context.service';
 import { OrganizationService } from '../../shared/services/organization.service';
 import { OrganizationCase } from '../../shared/models/organization-case.model';
 
@@ -12,10 +13,14 @@ import { OrganizationCase } from '../../shared/models/organization-case.model';
 export class CaseComponent implements OnInit {
     organizationCases: OrganizationCase[];
     
-    constructor(private organizationService: OrganizationService, private router: Router) { }
+    constructor(
+        private router: Router,
+        private contextService: ContextService, private organizationService: OrganizationService) { 
+    
+    }
 
     ngOnInit() {
-        this.organizationService.getCasesByUser("66a90828bfb5b24be6ab8210")
+        this.organizationService.getCasesByUser(this.contextService.getContext().user.userId)
             .subscribe({
                 next: (organizationCases: OrganizationCase[]) => {
                     this.organizationCases = organizationCases;      

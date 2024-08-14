@@ -6,6 +6,8 @@ import { KeycloakProfile } from 'keycloak-js';
 import { PrimeNGConfig } from 'primeng/api';
 
 import { LayoutService, AppConfig } from './layout/service/app.layout.service';
+import { ContextService } from './shared/services/context.service';
+import { UserService } from './shared/services/user.service';
 
 @Component({
     selector: 'app-root',
@@ -18,8 +20,20 @@ export class AppComponent implements OnInit {
     
     constructor(
         private readonly keycloak: KeycloakService,
-        private primengConfig: PrimeNGConfig, private layoutService: LayoutService) { }
+        private primengConfig: PrimeNGConfig, private layoutService: LayoutService,
+        private contextService: ContextService, private userService: UserService) { }
 
+    async loadUserByEmail(userProfile: any) {
+        await this.userService.loadUserByEmail(userProfile.email)
+            .subscribe({
+                next: user => {
+                    this.contextService.getContext().user = user;
+                },
+                error: error => {
+                    console.error(error.message);
+                }
+        });
+    }
     async ngOnInit() {
         this.primengConfig.ripple = true;
 
@@ -42,6 +56,10 @@ export class AppComponent implements OnInit {
 
         if (this.isLoggedIn) {
             this.userProfile = await this.keycloak.loadUserProfile();
+
+            if (this.userProfile !== null) {
+                this.loadUserByEmail(this.userProfile);
+            }
         }        
     }
 }

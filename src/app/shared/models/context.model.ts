@@ -1,5 +1,5 @@
 export class Context {
-    private _username: string;
+    private _user: any;
     private _organizationId: string;
     private _projectId: string;
     private _caseId: string;
@@ -13,13 +13,13 @@ export class Context {
     private _fileSampleProjection: string;
     private _bucketAttributeProjection: string;
     private _fileAttributeProjection: string;
-
-    public get username() {
-        return this._username;
+    
+    public get user() {
+        return this._user;
     }
 
-    public set username(value: string) {
-        this._organizationId = value;
+    public set user(value: any) {
+        this._user = value;
     }    
 
     public get organizationId() {

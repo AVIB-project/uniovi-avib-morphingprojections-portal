@@ -49,6 +49,10 @@ export class UserService {
         return this.http.get<User>(`${this.baseUrl}` + "/" + userId);  
     } 
     
+    loadUserByEmail(email: String): Observable<User> {
+        return this.http.get<User>(`${this.baseUrl}` + "/" + email + "/email");  
+    } 
+    
     loadUserCases(userId: String): Observable<UserCase> {
         return this.http.get<UserCase>(`${this.baseUrl}` + "/" + userId + "/cases")
             .pipe(                

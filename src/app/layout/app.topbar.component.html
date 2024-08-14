@@ -94,10 +94,10 @@
                     </div>
                 </div>
                 <div class="field mb-12 col-12 md:col-12">
-                    <label for="repeteatPassword" class="font-semibold w-12rem">Password confirmation *</label>
-                    <p-password id="repeteatPassword" formControlName="repeteatPassword" [feedback]="false" [toggleMask]="true" />
-                    <div *ngIf="resetPasswordFormGroup.controls.repeteatPassword.errors && !resetPasswordFormGroup.controls.repeteatPassword.pristine">
-                        <small *ngIf="resetPasswordFormGroup.controls.repeteatPassword.errors['required']" class="p-error">Password confirmation is mandatory</small>
+                    <label for="confirmPassword" class="font-semibold w-12rem">Password confirmation *</label>
+                    <p-password id="confirmPassword" formControlName="confirmPassword" [feedback]="false" [toggleMask]="true" />
+                    <div *ngIf="resetPasswordFormGroup.controls.confirmPassword.errors && !resetPasswordFormGroup.controls.confirmPassword.pristine">
+                        <small *ngIf="resetPasswordFormGroup.controls.confirmPassword.errors['passwordNoMatch']" class="p-error">Password not match the same</small>
                     </div>
                 </div>
             </div>

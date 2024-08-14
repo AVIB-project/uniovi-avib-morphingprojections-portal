@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Validators, FormBuilder } from '@angular/forms';
+import { AbstractControl, AbstractControlOptions, Validators, ValidationErrors, ValidatorFn, FormBuilder } from '@angular/forms';
 
 import { MenuItem } from 'primeng/api';
 import { LayoutService } from "./service/app.layout.service";
@@ -24,7 +24,19 @@ interface ProjectItem {
     value?: string;
     items: any[],
 }
-        
+
+export const PasswordValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    const password = control.get('password');
+    const confirmpassword = control.get('confirmPassword');
+    
+    if(password && confirmpassword && password.value != confirmpassword.value) {
+        return {
+            passwordNoMatch:  true
+        }
+    }
+
+    return null;
+};
 @Component({
     selector: 'app-topbar',
     templateUrl: './app.topbar.component.html'
@@ -52,13 +64,15 @@ export class AppTopBarComponent {
     eventType = EventType;
     resetPasswordViewVisible: boolean = false;
     
-    password: String;
-    repeteatPassword: String;
-
-    resetPasswordFormGroup = this.fb.group({
-        password: ['', Validators.required],
-        repeteatPassword: ['', Validators.required]
-    });
+    resetPasswordFormGroup = this.fb.group(
+        {
+            password: ['', Validators.required],
+            confirmPassword: [],
+        },
+        {
+            validators: PasswordValidator
+        } as AbstractControlOptions
+    );
     
     constructor(private router: Router, private fb: FormBuilder, private authService: AuthService,
                 private contextService: ContextService, private userService: UserService,

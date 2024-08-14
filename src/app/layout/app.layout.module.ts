@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputTextModule } from 'primeng/inputtext';
@@ -22,6 +23,9 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { TooltipModule } from 'primeng/tooltip';
 import { DropdownModule } from 'primeng/dropdown';
 import { MenuModule } from 'primeng/menu';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { PasswordModule } from 'primeng/password';
 
 @NgModule({
     declarations: [
@@ -36,6 +40,7 @@ import { MenuModule } from 'primeng/menu';
     imports: [
         BrowserModule,
         FormsModule,
+        ReactiveFormsModule,
         HttpClientModule,
         BrowserAnimationsModule,
         InputTextModule,
@@ -51,7 +56,10 @@ import { MenuModule } from 'primeng/menu';
         RippleModule,
         RouterModule,
         TooltipModule,
-        AppConfigModule
+        AppConfigModule,
+        DialogModule,
+        ButtonModule,
+        PasswordModule
     ],
     exports: [AppLayoutComponent]
 })

@@ -1,7 +1,6 @@
 <div class="layout-topbar">
     <a class="app-logo" routerLink="/">
         <img alt="app logo" [src]="logo">
-        <span class="app-name">Verona</span>
     </a>
     
     <div class="topbar-organization">        
@@ -38,9 +37,6 @@
             </a>
             <i class="pi pi-times" (click)="onRemoveTab($event, item, i)"></i>
         </li>
-        <!--<li *ngIf="!tabs || tabs.length === 0" class="topbar-menu-empty">
-            Use (cmd + click) to open a tab
-        </li>-->
     </ul>
 
     <div class="topbar-search" [ngClass]="{'topbar-search-active': searchActive}">
@@ -67,10 +63,16 @@
         </button>
         <ul class="list-none p-3 m-0 border-round shadow-2 hidden absolute surface-overlay origin-top w-full sm:w-12rem mt-2 right-0 top-auto">
             <li>
-                <a pRipple class="flex p-2 border-round align-items-center hover:surface-hover transition-colors transition-duration-150 cursor-pointer"
+                <a *ngIf="user.role != 'ADMIN'" pRipple class="flex p-2 border-round align-items-center hover:surface-hover transition-colors transition-duration-150 cursor-pointer"
                     (click)="onProfile($event)">
                     <i class="pi pi-user mr-3"></i>
                     <span>Profile</span>
+                </a>
+                <a pRipple
+                    class="flex p-2 border-round align-items-center hover:surface-hover transition-colors transition-duration-150 cursor-pointer"
+                    (click)="onShowResetPassword($event)">
+                    <i class="pi pi-lock mr-3"></i>
+                    <span>Reset Password</span>
                 </a>
                 <a pRipple class="flex p-2 border-round align-items-center hover:surface-hover transition-colors transition-duration-150 cursor-pointer"
                     (click)="onLogout($event)">
@@ -80,4 +82,29 @@
             </li>
         </ul>
     </div>
+
+    <p-dialog header="Reset Password for {{user.firstName}}" [(visible)]="resetPasswordViewVisible" [style]="{ width: '400px' }">
+        <form novalidate [formGroup]="resetPasswordFormGroup">
+            <div class="grid formgrid p-fluid">
+                <div class="field mb-12 col-12 md:col-12">
+                    <label for="password" class="font-semibold w-12rem">Password *</label>
+                    <p-password id="password" formControlName="password" [feedback]="false" [toggleMask]="true" />
+                    <div *ngIf="resetPasswordFormGroup.controls.password.errors && !resetPasswordFormGroup.controls.password.pristine">
+                        <small *ngIf="resetPasswordFormGroup.controls.password.errors['required']" class="p-error">Password is mandatory</small>
+                    </div>
+                </div>
+                <div class="field mb-12 col-12 md:col-12">
+                    <label for="repeteatPassword" class="font-semibold w-12rem">Password confirmation *</label>
+                    <p-password id="repeteatPassword" formControlName="repeteatPassword" [feedback]="false" [toggleMask]="true" />
+                    <div *ngIf="resetPasswordFormGroup.controls.repeteatPassword.errors && !resetPasswordFormGroup.controls.repeteatPassword.pristine">
+                        <small *ngIf="resetPasswordFormGroup.controls.repeteatPassword.errors['required']" class="p-error">Password confirmation is mandatory</small>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-wrap justify-content-end gap-3">
+                <p-button label="Cancel" severity="secondary" (onClick)="resetPasswordViewVisible = false" />
+                <p-button [disabled]="!resetPasswordFormGroup.valid" label="Reset" (onClick)="onResetPassword($event)" />
+            </div>
+        </form>
+    </p-dialog>
 </div>

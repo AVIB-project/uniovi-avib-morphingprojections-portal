@@ -82,11 +82,11 @@
                             <textarea id="notes" type="text" pInputTextarea rows="5" [autoResize]="true" formControlName="notes"></textarea>
                         </div>
                     </div>
-                        <div class="flex flex-wrap justify-content-end gap-3">
+                    <div class="flex flex-wrap justify-content-end gap-3">
                             <button (click)="onCancelUser()" pButton pRipple label="Cancel" class="p-button-outlined w-auto mt-3"></button>
                             <button (click)="onCreateUser()" pButton pRipple label="Create User" class="w-auto mt-3"
                                 [disabled]="!userFormGroup.valid"></button>
-                        </div>
+                    </div>
                 </form>
             </div>
     </div>

@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Validators, FormBuilder } from '@angular/forms';
 
 import { MenuItem } from 'primeng/api';
 import { LayoutService } from "./service/app.layout.service";
@@ -8,7 +9,6 @@ import { NgEventBus } from 'ng-event-bus';
 
 import { AuthService } from '../shared/services/auth.service';
 import { ContextService } from '../shared/services/context.service';
-
 import { UserService } from '../shared/services/user.service';
 import { Organization } from '../shared/models/organization.model';
 import { Project } from '../shared/models/project.model';
@@ -50,8 +50,17 @@ export class AppTopBarComponent {
 
     resourceTypeEnum = ResourceTypeEnum;
     eventType = EventType;
+    resetPasswordViewVisible: boolean = false;
+    
+    password: String;
+    repeteatPassword: String;
 
-    constructor(private router: Router, private authService: AuthService,
+    resetPasswordFormGroup = this.fb.group({
+        password: ['', Validators.required],
+        repeteatPassword: ['', Validators.required]
+    });
+    
+    constructor(private router: Router, private fb: FormBuilder, private authService: AuthService,
                 private contextService: ContextService, private userService: UserService,
                 private eventBus: NgEventBus, public layoutService: LayoutService) {
         // get user details
@@ -61,7 +70,13 @@ export class AppTopBarComponent {
     private loadUserDetails() {
         // get user details from iam
         this.userDetails = this.authService.getLoggedUser();
-        
+
+        // if we want not reload again we must recover the cases from externalId not userId because
+        // when recover the userId therequest not finalize ans user can be undefined!!!
+        /*this.user = this.contextService.getContext().user;
+
+        this.loadUserCases();*/
+
         // get user metadata from system 
         this.userService.loadUserByEmail(this.userDetails.email)
             .subscribe({
@@ -199,6 +214,23 @@ export class AppTopBarComponent {
         this.router.navigate(['/user-form', { id: this.user.userId }])
     }
 
+    onShowResetPassword(event: any) {
+        this.resetPasswordViewVisible = true;
+    }
+
+    onResetPassword(event: any) {
+        this.resetPasswordViewVisible = false;
+
+        if (this.resetPasswordFormGroup.value.password) {
+            this.userService.resetPassword(this.user.userId, this.resetPasswordFormGroup.value.password)
+                .subscribe({
+                    error: error => {
+                        console.error(error.message);
+                    }
+                });
+        }
+    }
+    
     onLogout(event: any) {
         this.authService.logout();
     }

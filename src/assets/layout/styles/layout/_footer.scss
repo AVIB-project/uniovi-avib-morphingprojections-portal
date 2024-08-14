@@ -4,9 +4,10 @@ app-footer {
 
 .layout-footer {
     padding: 1rem 0;
+    padding-bottom: 0;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: end;
 
     .footer-start {
         display: flex;

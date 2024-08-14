@@ -71,6 +71,10 @@ export class UserService {
         return this.http.post<String>(`${this.baseUrl}`, user);  
     }
 
+    resetPassword(userId: String, password: String): Observable<void> {
+        return this.http.post<void>(`${this.baseUrl}` + "/" + userId + "/resetPassword", password);  
+    }
+    
     deleteUser(userId: String): Observable<void> {
         return this.http.delete<void>(`${this.baseUrl}` + "/" + userId);  
     }

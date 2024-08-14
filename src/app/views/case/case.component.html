@@ -17,6 +17,7 @@
                 <th pSortableColumn="projectName" class="white-space-nowrap" style="width:25%">Project <p-sortIcon field="projectName"></p-sortIcon></th>
                 <th pSortableColumn="caseName" class="white-space-nowrap" style="width:25%">Case Name<p-sortIcon field="caseName"></p-sortIcon></th>
                 <th pSortableColumn="caseDescription" class="white-space-nowrap" style="width:25%">Case Description <p-sortIcon field="caseDescription"></p-sortIcon></th>
+                <th id="f_blank"></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-organizationCase>
@@ -25,6 +26,12 @@
                 <td>{{organizationCase.projectName}}</td>
                 <td>{{organizationCase.caseName}}</td>
                 <td>{{organizationCase.caseDescription}}</td>
+                <td>
+                    <p-button (onClick)="op.toggle($event)" icon="pi pi-ellipsis-v"/>
+                    <p-overlayPanel #op>
+                        <p-menu [model]="items" />                        
+                    </p-overlayPanel>
+                </td>
             </tr>
         </ng-template>
     </p-table>

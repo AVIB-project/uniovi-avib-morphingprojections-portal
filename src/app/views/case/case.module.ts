@@ -7,6 +7,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TreeTableModule } from 'primeng/treetable';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { MenuModule } from 'primeng/menu';
 
 import { CaseComponent } from './case.component';
 import { CaseRoutingModule } from './case-routing.module';
@@ -20,7 +22,9 @@ import { CaseRoutingModule } from './case-routing.module';
 		InputTextModule,
 		TableModule,
 		TreeTableModule,
-		ProgressBarModule
+		ProgressBarModule,
+		OverlayPanelModule,
+		MenuModule
 	],
 	declarations: [CaseComponent]
 })

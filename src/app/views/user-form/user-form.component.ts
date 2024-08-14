@@ -55,7 +55,7 @@ export class UserFormComponent implements OnInit {
 
     ngOnInit(): void {
         this.languages = this.languagePipe.getList();
-        this.roles = this.rolePipe.getList();;
+        this.roles = this.rolePipe.getList();
 
         this.userFormGroup.controls.active.setValue(true);        
         this.userFormGroup.controls.organizationId.setValue(this.contextService.getContext().organizationId);
@@ -85,9 +85,7 @@ export class UserFormComponent implements OnInit {
         this.router.navigate(['/user'])
     }
     
-    onCreateUser() {
-        console.log(this.userFormGroup.value);
-
+    onAddUser() {
         this.userService.saveUser(this.userFormGroup.value)
             .subscribe((userId: any) => {
                 console.log(userId);

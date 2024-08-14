@@ -6,32 +6,33 @@
             <p class="m-0 p-0 text-600 line-height-3 mr-3">Represent the input resources for your Dataset. And the result projections calculated from these resources</p>
         </div>
         <div class="col-12 lg:col-10">
-            <div class="grid formgrid p-fluid">
-                <div class="field mb-4 col-12 md:col-6">
-                    <label for="project" class="font-medium text-900">Project *</label>
-                    <p-dropdown inputId="project" [options]="projects" optionLabel="name" [filter]="true" filterBy="name"
-                        [showClear]="true" placeholder="Select a Project or create one">
-                        <ng-template let-project pTemplate="item">
-                            <div class="flex align-items-center">
-                                <img src="assets/demo/images/flag/flag_placeholder.png"
-                                    [class]="'mr-2 flag flag-' + project.code.toLowerCase()" style="width:18px" />
-                                <div>{{project.name}}</div>
-                            </div>
-                        </ng-template>
-                    </p-dropdown>
+            <form novalidate [formGroup]="caseFormGroup">
+                <div class="grid formgrid p-fluid">
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="project" class="font-medium text-900">Project *</label>
+                        <p-dropdown inputId="project" [options]="projects" placeholder="Select a Project" 
+                            optionLabel="name" optionValue="projectId" formControlName="projectId">
+                        </p-dropdown>
+                    </div>
+                    <div class="field mb-4 col-12">
+                        <label for="name" class="font-medium text-900">Name *</label>
+                        <input id="name" type="text" pInputText formControlName="name">
+                        <div *ngIf="caseFormGroup.controls.name.errors && !caseFormGroup.controls.name.pristine">
+                            <small *ngIf="caseFormGroup.controls.name.errors['required']" class="p-error">Name is mandatory</small>
+                        </div>
+                    </div>
+                    <div class="field mb-4 col-12">
+                        <label for="description" class="font-medium text-900">Description</label>
+                        <textarea id="description" type="text" pInputTextarea rows="5" [autoResize]="true" formControlName="description"></textarea>
+                    </div>    
                 </div>
-                <div class="field mb-4 col-12">
-                    <label for="name" class="font-medium text-900">Name *</label>
-                    <input id="name" type="text" pInputText>
+                <div class="flex flex-wrap justify-content-end gap-3">
+                    <button (click)="onCancelCase($event)" pButton pRipple label="Cancel"
+                        class="p-button-outlined w-auto mt-3"></button>
+                    <button (click)="onAddCase($event)" pButton pRipple label="Add Case" class="w-auto mt-3"
+                        [disabled]="!caseFormGroup.valid"></button>
                 </div>
-                <div class="field mb-4 col-12">
-                    <label for="description" class="font-medium text-900">Description *</label>
-                    <textarea id="description" type="text" pInputTextarea rows="5" [autoResize]="true"></textarea>
-                </div>                
-                <div class="col-12">
-                    <button (click)="onCreateCase()" pButton pRipple label="Create Case" class="w-auto mt-3"></button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

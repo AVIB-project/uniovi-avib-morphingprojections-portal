@@ -1,0 +1,7 @@
+:host {
+    ::ng-deep {
+        .p-overlaypanel::before {
+            left: calc(var(--overlayArrowLeft, 0) + 2.25rem);
+        }
+    }
+}

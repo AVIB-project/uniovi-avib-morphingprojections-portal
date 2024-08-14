@@ -8,6 +8,7 @@ import { AnnotationProjectionPipe } from './annotation-projection.pipe';
 import { ResourceTypePipe } from './resource-type.pipe';
 import { RolePipe } from './role.pipe';
 import { LanguagePipe } from './language.pipe';
+import { CaseTypePipe } from './case-type.pipe';
 
 @NgModule({
   imports: [],
@@ -20,6 +21,7 @@ import { LanguagePipe } from './language.pipe';
     ResourceTypePipe,
     RolePipe,
     LanguagePipe,
+    CaseTypePipe,
   ],
   exports: [
     AnnotationGroupPipe,
@@ -30,6 +32,7 @@ import { LanguagePipe } from './language.pipe';
     ResourceTypePipe,
     RolePipe,
     LanguagePipe,
+    CaseTypePipe
   ]
 })
 export class PipesModule { }

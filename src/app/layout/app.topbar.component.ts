@@ -4,12 +4,17 @@ import { AbstractControl, AbstractControlOptions, Validators, ValidationErrors, 
 
 import { MenuItem } from 'primeng/api';
 import { LayoutService } from "./service/app.layout.service";
+import { DialogService } from 'primeng/dynamicdialog';
 
 import { NgEventBus } from 'ng-event-bus';
+
+import { OrganizationFormComponent } from '../views/organization-form/organization-form.component';
 
 import { AuthService } from '../shared/services/auth.service';
 import { ContextService } from '../shared/services/context.service';
 import { UserService } from '../shared/services/user.service';
+import { OrganizationService } from '../shared/services/organization.service';
+
 import { Organization } from '../shared/models/organization.model';
 import { Project } from '../shared/models/project.model';
 import { Case } from '../shared/models/case.model';
@@ -39,7 +44,8 @@ export const PasswordValidator: ValidatorFn = (control: AbstractControl): Valida
 };
 @Component({
     selector: 'app-topbar',
-    templateUrl: './app.topbar.component.html'
+    templateUrl: './app.topbar.component.html',
+    providers: [DialogService]
 })
 export class AppTopBarComponent {
     @ViewChild('searchinput')
@@ -59,7 +65,8 @@ export class AppTopBarComponent {
     selectedProject: ProjectItem;    
     cases: Case[];
     selectedCase: Case;      
-
+    menuOrganizationitems: MenuItem[] = [];
+    
     resourceTypeEnum = ResourceTypeEnum;
     eventType = EventType;
     resetPasswordViewVisible: boolean = false;
@@ -75,12 +82,83 @@ export class AppTopBarComponent {
     );
     
     constructor(private router: Router, private fb: FormBuilder, private authService: AuthService,
-                private contextService: ContextService, private userService: UserService,
-                private eventBus: NgEventBus, public layoutService: LayoutService) {
+                public contextService: ContextService, private userService: UserService, private organizationService: OrganizationService,
+                private eventBus: NgEventBus, public layoutService: LayoutService, private dialogService: DialogService,) {
+        this.menuOrganizationitems = [
+            {
+                label: 'Organization', items: [
+                    { label: 'Add', icon: 'pi pi-plus', command: () => this.addOrganization() },
+                    { label: 'Edit', icon: 'pi pi-check', command: () => this.editOrganization() },
+                    { label: 'Remove', icon: 'pi pi-trash', command: () => this.removeOrganization() }
+                ]
+            }
+        ]        
         // get user details
-        this.loadUserDetails();        
+        this.loadUserDetails();
     }
 
+    private addOrganization() {
+        const organizationFormRef = this.dialogService.open(OrganizationFormComponent, {
+            data: {
+                organization: null
+            },
+            header: 'Organization Form',
+            width: '50%',
+            styleClass: 'organization-form',
+        });
+
+        organizationFormRef.onClose.subscribe((result: any) => {
+            if (result && result.action == 'save') {
+                /*this.organizationService.save(result.data)
+                    .subscribe((machine: any) => {
+                        this.getMachines(this.event);
+
+                        this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.INFO,
+                            tittle: this.translateService.instant('MACHINE_VIEW.MESSAGE_TITLE_UPDATE'),
+                            message: this.translateService.instant('MACHINE_VIEW.MESSAGE_DETAIL_UPDATE', {mid: machine.data.mid})});
+                        },
+                    (error: any) => {
+                        console.log(error);
+
+                        //this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.ERROR, tittle: 'Machines Update', error: err.error.errors});
+                });*/
+            }        
+        });        
+    }
+
+    private editOrganization() {
+        const machineFormRef = this.dialogService.open(OrganizationFormComponent, {
+            data: {
+                organization: this.selectedOrganization
+            },
+            header: 'Organization Form',
+            width: '50%',
+            styleClass: 'organization-form',
+        });
+
+        machineFormRef.onClose.subscribe((result: any) => {
+            if (result && result.action == 'save') {
+                /*this.organizationService.save(result.data)
+                    .subscribe((machine: any) => {
+                        this.getMachines(this.event);
+
+                        this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.INFO,
+                            tittle: this.translateService.instant('MACHINE_VIEW.MESSAGE_TITLE_UPDATE'),
+                            message: this.translateService.instant('MACHINE_VIEW.MESSAGE_DETAIL_UPDATE', {mid: machine.data.mid})});
+                        },
+                    (error: any) => {
+                        console.log(error);
+
+                        //this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.ERROR, tittle: 'Machines Update', error: err.error.errors});
+                });*/
+            }        
+        });  
+    }
+
+    private removeOrganization() {
+        console.log("Remove organization: " + this.selectedOrganization.id);
+    }
+    
     private loadUserDetails() {
         // get user details from iam
         this.userDetails = this.authService.getLoggedUser();

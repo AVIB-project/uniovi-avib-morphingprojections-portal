@@ -22,11 +22,6 @@
                             <small *ngIf="userFormGroup.controls.lastName.errors['required']" class="p-error">Last name is mandatory</small>
                         </div>
                     </div>
-                    <!--<div class="field mb-4 col-12">
-                        <label for="avatar" class="font-medium text-900">Avatar</label>
-                        <p-fileUpload mode="basic" name="avatar" url="./upload.php" accept="image/*" [maxFileSize]="1000000"
-                            styleClass="p-button-outlined p-button-plain" chooseLabel="Upload Image"></p-fileUpload>
-                    </div>-->
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="email" class="font-medium text-900">Email *</label>
                         <input id="email" type="text" pInputText formControlName="email">

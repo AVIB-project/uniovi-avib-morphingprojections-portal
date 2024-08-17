@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppLayoutModule } from './layout/app.layout.module';
 
+import { OrganizationFormModule } from './views/organization-form/organization-form.module'
+
 import { NgEventBus } from 'ng-event-bus'
 
 function initializeKeycloak(keycloak: KeycloakService) {
@@ -28,7 +30,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
         AppLayoutModule,
         AppRoutingModule,
         BrowserModule,
-        KeycloakAngularModule
+        KeycloakAngularModule,
+        //OrganizationFormModule
     ],
     declarations: [
         AppComponent,

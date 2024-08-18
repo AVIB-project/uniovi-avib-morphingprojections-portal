@@ -23,7 +23,7 @@ export class OrganizationFormComponent {
     onCancelOrganization(event: any) {
         event.preventDefault();
 
-        this.dialog.close({action: 'cance'});    
+        this.dialog.close({action: 'cancel'});    
     }
     
     onAddOrganization(event: any) {

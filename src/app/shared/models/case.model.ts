@@ -1,7 +1,7 @@
 import { Resource } from "./resource.model";
 
 export interface Case {
-    id: string;
+    caseId: string;
     name: string;
     description?: string;
     type?: string;

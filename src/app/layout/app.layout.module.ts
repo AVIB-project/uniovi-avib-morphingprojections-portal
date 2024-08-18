@@ -26,6 +26,9 @@ import { MenuModule } from 'primeng/menu';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
+import { OrganizationFormModule } from '../views/organization-form/organization-form.module'
 
 @NgModule({
     declarations: [
@@ -59,7 +62,9 @@ import { PasswordModule } from 'primeng/password';
         AppConfigModule,
         DialogModule,
         ButtonModule,
-        PasswordModule
+        PasswordModule,
+        ConfirmDialogModule,
+        OrganizationFormModule
     ],
     exports: [AppLayoutComponent]
 })

@@ -12,9 +12,6 @@ export class AuthService {
         try {
             let userDetails = this.keycloakService.getKeycloakInstance().idTokenParsed;
             
-            console.log(userDetails);
-            console.log(this.getRoles());
-
             return userDetails;
         }
         catch (e) {

@@ -44,9 +44,13 @@ export class OrganizationService {
         for (let organizationIndex in configuration) {
             for (let organizationKey of Object.keys(configuration[organizationIndex])) {
                 if (organizationKey !== "projects") {
-                    let key = organizationKey.charAt(0).toUpperCase() + organizationKey.slice(1);
+                    if (organizationKey !== "organizationId") {
+                        let key = organizationKey.charAt(0).toUpperCase() + organizationKey.slice(1);
                 
-                    organizationItem["organization" + key] = configuration[organizationIndex][organizationKey];
+                        organizationItem["organization" + key] = configuration[organizationIndex][organizationKey];
+                    } else {
+                        organizationItem[organizationKey] = configuration[organizationIndex][organizationKey];
+                    }
                 }
                 else {
                     if (configuration[organizationIndex][organizationKey].length > 0) {
@@ -55,9 +59,13 @@ export class OrganizationService {
 
                             for (let projectKey of Object.keys(configuration[organizationIndex][organizationKey][projectIndex])) {
                                 if (projectKey !== "cases") {
-                                    let key = projectKey.charAt(0).toUpperCase() + projectKey.slice(1);
+                                    if (projectKey !== "projectId") {
+                                        let key = projectKey.charAt(0).toUpperCase() + projectKey.slice(1);
                             
-                                    projectItem["project" + key] = configuration[organizationIndex][organizationKey][projectIndex][projectKey];
+                                        projectItem["project" + key] = configuration[organizationIndex][organizationKey][projectIndex][projectKey];
+                                    } else {
+                                        projectItem[projectKey] = configuration[organizationIndex][organizationKey][projectIndex][projectKey];
+                                    }
                                 }
                                 else {
                                     if (configuration[organizationIndex][organizationKey][projectIndex][projectKey].length > 0) {
@@ -65,9 +73,13 @@ export class OrganizationService {
                                             let caseItem: any = { ...projectItem };
 
                                             for (let caseKey of Object.keys(configuration[organizationIndex][organizationKey][projectIndex][projectKey][caseIndex])) {
-                                                let key = caseKey.charAt(0).toUpperCase() + caseKey.slice(1);
+                                                if (caseKey !== "caseId") {
+                                                    let key = caseKey.charAt(0).toUpperCase() + caseKey.slice(1);
 
-                                                caseItem["case" + key] = configuration[organizationIndex][organizationKey][projectIndex][projectKey][caseIndex][caseKey];
+                                                    caseItem["case" + key] = configuration[organizationIndex][organizationKey][projectIndex][projectKey][caseIndex][caseKey];
+                                                } else {
+                                                    caseItem[caseKey] = configuration[organizationIndex][organizationKey][projectIndex][projectKey][caseIndex][caseKey];
+                                                }
                                             }
 
                                             organizationCases.push(caseItem);
@@ -93,7 +105,7 @@ export class OrganizationService {
             .pipe(map((userCase: any) => {                    
                 return this.mapCasesByUser(userCase.organizations);
             }
-        ))
+        ));
     }  
     
     saveOrganization(organization: Organization): Observable<String> {

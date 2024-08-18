@@ -1,12 +1,13 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { AppLayoutModule } from './layout/app.layout.module';
-
-import { OrganizationFormModule } from './views/organization-form/organization-form.module'
 
 import { NgEventBus } from 'ng-event-bus'
 
@@ -31,7 +32,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
         AppRoutingModule,
         BrowserModule,
         KeycloakAngularModule,
-        //OrganizationFormModule
     ],
     declarations: [
         AppComponent,

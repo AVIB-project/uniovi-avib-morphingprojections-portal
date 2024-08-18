@@ -1,7 +1,7 @@
 import { Case } from "./case.model";
 
 export interface Project {
-    id: string;
+    projectId: string;
     name: string;
     description?: string;
     creationBy: string;

@@ -5,6 +5,9 @@ import { Table } from 'primeng/table';
 import { MenuItem } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 
+import { NgEventBus, MetaData } from 'ng-event-bus';
+
+import { EventType } from '../../shared/enum/event-type.enum';
 import { ContextService } from '../../shared/services/context.service';
 import { OrganizationService } from '../../shared/services/organization.service';
 import { OrganizationCase } from '../../shared/models/organization-case.model';
@@ -16,11 +19,13 @@ import { Case } from '../../shared/models/case.model';
     providers: [ConfirmationService]
 })
 export class CaseComponent implements OnInit {
+    subscriptionEvents: any; 
+    eventType = EventType;
     organizationCases: OrganizationCase[];
     items: MenuItem[] | undefined;
 
     constructor(
-        private confirmationService: ConfirmationService, private router: Router,
+        private confirmationService: ConfirmationService, private router: Router, private eventBus: NgEventBus,
         private contextService: ContextService, private organizationService: OrganizationService) { 
     }
 
@@ -41,6 +46,13 @@ export class CaseComponent implements OnInit {
             { label: 'Edit Case', icon: 'pi pi-pencil' },
             { label: 'Remove Case', icon: 'pi pi-trash' }
         ];
+        
+        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_CHANGE_CASE)
+            .subscribe((meta: MetaData) => {
+                if (meta.data.organizationId) {
+                    this.loadCasesByUser(meta.data.user.userId);
+                }
+            });
         
         this.loadCasesByUser(this.contextService.getContext().user.userId);
     }
@@ -88,4 +100,9 @@ export class CaseComponent implements OnInit {
             }
         });
     }
+
+    ngOnDestroy(): void {
+        if(this.subscriptionEvents)
+            this.subscriptionEvents.unsubscribe();
+    }     
 }

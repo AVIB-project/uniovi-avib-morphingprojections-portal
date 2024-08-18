@@ -25,7 +25,7 @@ import { UserCase } from '../shared/models/user-case.model';
 import { ResourceTypeEnum } from '../shared/enum/resource-type.enum';
 import { EventType } from '../shared/enum/event-type.enum';
 interface ProjectItem {
-    id: string;
+    projectId: string;
     label: string;
     value?: string;
     items: any[],
@@ -137,8 +137,12 @@ export class AppTopBarComponent {
             if (result && result.action == 'save') {
                 this.organizationService.saveOrganization(result.data)
                     .subscribe((id: String) => {
+                        // refresh organizations
                         this.getUserCases();
 
+                        // emit a event for change
+                        this.onChangeCase();
+                            
                         /*this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.INFO,
                             tittle: this.translateService.instant('MACHINE_VIEW.MESSAGE_TITLE_UPDATE'),
                             message: this.translateService.instant('MACHINE_VIEW.MESSAGE_DETAIL_UPDATE', {mid: machine.data.mid})});*/
@@ -158,7 +162,7 @@ export class AppTopBarComponent {
             rejectButtonStyleClass:"p-button-text",
             accept: () => {
                 if (this.selectedOrganization) {
-                    this.organizationService.deleteOrganization(this.selectedOrganization.id)
+                    this.organizationService.deleteOrganization(this.selectedOrganization.organizationId)
                         .subscribe(() => {
                             this.getUserCases();                            
                         });
@@ -197,7 +201,7 @@ export class AppTopBarComponent {
         this.projectList = [];
 
         this.selectedOrganization.projects.forEach((project: Project) => {
-            let projectItem: ProjectItem = { id: project.id, label: project.name, value: project.description, items: [] };
+            let projectItem: ProjectItem = { projectId: project.projectId, label: project.name, value: project.description, items: [] };
 
             this.projectList.push(projectItem);
 
@@ -265,9 +269,9 @@ export class AppTopBarComponent {
     
     onChangeCase() {
         // context organizations, project and case identifiers default selected
-        this.contextService.getContext().organizationId = this.selectedOrganization.id;
-        this.contextService.getContext().projectId = this.selectedProject.id;
-        this.contextService.getContext().caseId = this.selectedCase.id;
+        this.contextService.getContext().organizationId = this.selectedOrganization.organizationId;
+        this.contextService.getContext().projectId = this.selectedProject.projectId;
+        this.contextService.getContext().caseId = this.selectedCase.caseId;
         
         // context resource default selected
         this.contextService.getContext().bucketDataMatrix = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.DATAMATRIX)?.bucket!;

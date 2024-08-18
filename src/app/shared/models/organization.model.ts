@@ -1,7 +1,7 @@
 import { Project } from "./project.model";
 
 export interface Organization {
-    id: string;
+    organizationId: string;
     name: string;
     description?: string;
     creationBy: string;

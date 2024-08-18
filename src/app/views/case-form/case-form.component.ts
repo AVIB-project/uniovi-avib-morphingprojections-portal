@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Validators, FormBuilder } from '@angular/forms';
+import { ConfirmationService } from 'primeng/api';
 
 import { MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -19,7 +20,7 @@ import { CaseTypeEnum } from '../../shared/enum/case-type.enum';
 
 @Component({
     templateUrl: './case-form.component.html',
-    providers: [DialogService]
+    providers: [DialogService, ConfirmationService]
 })
 export class CaseFormComponent implements OnInit { 
     subscriptionEvents: any;
@@ -38,7 +39,7 @@ export class CaseFormComponent implements OnInit {
     });
     
     constructor(
-        private router: Router, private route: ActivatedRoute,
+        private router: Router, private route: ActivatedRoute, private confirmationService: ConfirmationService,
         private fb: FormBuilder, private eventBus: NgEventBus,
         private contextService: ContextService,
         private projectService: ProjectService, private caseService: CaseService, private dialogService: DialogService,) {         
@@ -56,19 +57,14 @@ export class CaseFormComponent implements OnInit {
 
         projectFormRef.onClose.subscribe((result: any) => {
             if (result && result.action == 'save') {
-                /*this.organizationService.save(result.data)
-                    .subscribe((machine: any) => {
-                        this.getMachines(this.event);
+                this.projectService.saveProject(result.data)
+                    .subscribe((projectId: String) => {
+                        this.getProjectsByOrganization(this.contextService.getContext().organizationId);
 
-                        this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.INFO,
+                        /*this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.INFO,
                             tittle: this.translateService.instant('MACHINE_VIEW.MESSAGE_TITLE_UPDATE'),
-                            message: this.translateService.instant('MACHINE_VIEW.MESSAGE_DETAIL_UPDATE', {mid: machine.data.mid})});
-                        },
-                    (error: any) => {
-                        console.log(error);
-
-                        //this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.ERROR, tittle: 'Machines Update', error: err.error.errors});
-                });*/
+                            message: this.translateService.instant('MACHINE_VIEW.MESSAGE_DETAIL_UPDATE', {mid: machine.data.mid})});*/
+                    });
             }        
         });  
     }
@@ -88,24 +84,37 @@ export class CaseFormComponent implements OnInit {
 
         projectFormRef.onClose.subscribe((result: any) => {
             if (result && result.action == 'save') {
-                /*this.organizationService.save(result.data)
-                    .subscribe((machine: any) => {
-                        this.getMachines(this.event);
+                this.projectService.saveProject(result.data)
+                    .subscribe((projectId: String) => {
+                        this.getProjectsByOrganization(this.contextService.getContext().organizationId);
 
-                        this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.INFO,
+                        /*this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.INFO,
                             tittle: this.translateService.instant('MACHINE_VIEW.MESSAGE_TITLE_UPDATE'),
-                            message: this.translateService.instant('MACHINE_VIEW.MESSAGE_DETAIL_UPDATE', {mid: machine.data.mid})});
-                        },
-                    (error: any) => {
-                        console.log(error);
-
-                        //this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.ERROR, tittle: 'Machines Update', error: err.error.errors});
-                });*/
+                            message: this.translateService.instant('MACHINE_VIEW.MESSAGE_DETAIL_UPDATE', {mid: machine.data.mid})});*/
+                    });
             }        
         });
     }
 
     private removeProject() {
+        this.confirmationService.confirm({
+            //target: event.target as EventTarget,
+            message: 'Are you sure that you want to proceed?',
+            header: 'Confirmation',
+            icon: 'pi pi-exclamation-triangle',
+            acceptIcon:"none",
+            rejectIcon:"none",
+            rejectButtonStyleClass:"p-button-text",
+            accept: () => {
+                if (this.caseFormGroup.controls.projectId.value) {
+                    this.projectService.deleteProject(this.caseFormGroup.controls.projectId.value)
+                        .subscribe(() => {
+                            this.getProjectsByOrganization(this.contextService.getContext().organizationId);
+                        });
+                }
+            }
+        });
+        
         console.log("Remove project: " + this.caseFormGroup.controls.projectId);
     }
     
@@ -162,19 +171,16 @@ export class CaseFormComponent implements OnInit {
     }    
 
     onCancelCase(event: any) {
-        
-        this.router.navigate(['/case'])
+        this.router.navigate(['/case']);
     }
     
     onAddCase(event: any) {
-        console.log(this.caseFormGroup.value);
-
-        /*this.projectService.saveUser(this.caseFormGroup.value)
+        this.caseService.saveCase(this.caseFormGroup.value)
             .subscribe((caseId: any) => {
                 console.log(caseId);
 
                 this.router.navigate(['/case']);
-        });*/
+            });
     }
 
     ngOnDestroy(): void {

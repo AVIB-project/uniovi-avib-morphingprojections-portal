@@ -39,7 +39,7 @@ export class CaseService {
     }   
 
     
-    saveCase(_case: Case): Observable<String> {
+    saveCase(_case: any): Observable<String> {
         return this.http.post<String>(`${this.baseUrl}`, _case);  
     }
 

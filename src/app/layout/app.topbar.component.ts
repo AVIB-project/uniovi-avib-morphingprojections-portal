@@ -5,6 +5,7 @@ import { AbstractControl, AbstractControlOptions, Validators, ValidationErrors, 
 import { MenuItem } from 'primeng/api';
 import { LayoutService } from "./service/app.layout.service";
 import { DialogService } from 'primeng/dynamicdialog';
+import { ConfirmationService } from 'primeng/api';
 
 import { NgEventBus } from 'ng-event-bus';
 
@@ -45,7 +46,7 @@ export const PasswordValidator: ValidatorFn = (control: AbstractControl): Valida
 @Component({
     selector: 'app-topbar',
     templateUrl: './app.topbar.component.html',
-    providers: [DialogService]
+    providers: [DialogService, ConfirmationService]
 })
 export class AppTopBarComponent {
     @ViewChild('searchinput')
@@ -81,7 +82,7 @@ export class AppTopBarComponent {
         } as AbstractControlOptions
     );
     
-    constructor(private router: Router, private fb: FormBuilder, private authService: AuthService,
+    constructor(private router: Router, private fb: FormBuilder, private authService: AuthService, private confirmationService: ConfirmationService, 
                 public contextService: ContextService, private userService: UserService, private organizationService: OrganizationService,
                 private eventBus: NgEventBus, public layoutService: LayoutService, private dialogService: DialogService,) {
         this.menuOrganizationitems = [
@@ -92,7 +93,8 @@ export class AppTopBarComponent {
                     { label: 'Remove', icon: 'pi pi-trash', command: () => this.removeOrganization() }
                 ]
             }
-        ]        
+        ]    
+        
         // get user details
         this.loadUserDetails();
     }
@@ -109,19 +111,14 @@ export class AppTopBarComponent {
 
         organizationFormRef.onClose.subscribe((result: any) => {
             if (result && result.action == 'save') {
-                /*this.organizationService.save(result.data)
-                    .subscribe((machine: any) => {
-                        this.getMachines(this.event);
+                this.organizationService.saveOrganization(result.data)
+                    .subscribe((id: String) => {
+                        this.getUserCases();
 
-                        this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.INFO,
+                        /*this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.INFO,
                             tittle: this.translateService.instant('MACHINE_VIEW.MESSAGE_TITLE_UPDATE'),
-                            message: this.translateService.instant('MACHINE_VIEW.MESSAGE_DETAIL_UPDATE', {mid: machine.data.mid})});
-                        },
-                    (error: any) => {
-                        console.log(error);
-
-                        //this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.ERROR, tittle: 'Machines Update', error: err.error.errors});
-                });*/
+                            message: this.translateService.instant('MACHINE_VIEW.MESSAGE_DETAIL_UPDATE', {mid: machine.data.mid})});*/
+                    });
             }        
         });        
     }
@@ -138,25 +135,36 @@ export class AppTopBarComponent {
 
         machineFormRef.onClose.subscribe((result: any) => {
             if (result && result.action == 'save') {
-                /*this.organizationService.save(result.data)
-                    .subscribe((machine: any) => {
-                        this.getMachines(this.event);
+                this.organizationService.saveOrganization(result.data)
+                    .subscribe((id: String) => {
+                        this.getUserCases();
 
-                        this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.INFO,
+                        /*this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.INFO,
                             tittle: this.translateService.instant('MACHINE_VIEW.MESSAGE_TITLE_UPDATE'),
-                            message: this.translateService.instant('MACHINE_VIEW.MESSAGE_DETAIL_UPDATE', {mid: machine.data.mid})});
-                        },
-                    (error: any) => {
-                        console.log(error);
-
-                        //this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.ERROR, tittle: 'Machines Update', error: err.error.errors});
-                });*/
+                            message: this.translateService.instant('MACHINE_VIEW.MESSAGE_DETAIL_UPDATE', {mid: machine.data.mid})});*/
+                    });
             }        
         });  
     }
 
     private removeOrganization() {
-        console.log("Remove organization: " + this.selectedOrganization.id);
+        this.confirmationService.confirm({
+            //target: event.target as EventTarget,
+            message: 'Are you sure that you want to proceed?',
+            header: 'Confirmation',
+            icon: 'pi pi-exclamation-triangle',
+            acceptIcon:"none",
+            rejectIcon:"none",
+            rejectButtonStyleClass:"p-button-text",
+            accept: () => {
+                if (this.selectedOrganization) {
+                    this.organizationService.deleteOrganization(this.selectedOrganization.id)
+                        .subscribe(() => {
+                            this.getUserCases();                            
+                        });
+                }
+            }
+        });
     }
     
     private loadUserDetails() {
@@ -164,7 +172,7 @@ export class AppTopBarComponent {
         this.userDetails = this.authService.getLoggedUser();
 
         // if we want not reload again we must recover the cases from externalId not userId because
-        // when recover the userId therequest not finalize ans user can be undefined!!!
+        // when recover the userId the request not finalize and user can be undefined!!!
         /*this.user = this.contextService.getContext().user;
 
         this.getUserCases();*/

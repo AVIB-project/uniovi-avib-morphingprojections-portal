@@ -23,8 +23,8 @@ export class AppComponent implements OnInit {
         private primengConfig: PrimeNGConfig, private layoutService: LayoutService,
         private contextService: ContextService, private userService: UserService) { }
 
-    async loadUserByEmail(userProfile: any) {
-        await this.userService.loadUserByEmail(userProfile.email)
+    async getUserByEmail(userProfile: any) {
+        await this.userService.getUserByEmail(userProfile.email)
             .subscribe({
                 next: user => {
                     this.contextService.getContext().user = user;
@@ -58,7 +58,7 @@ export class AppComponent implements OnInit {
             this.userProfile = await this.keycloak.loadUserProfile();
 
             if (this.userProfile !== null) {
-                this.loadUserByEmail(this.userProfile);
+                this.getUserByEmail(this.userProfile);
             }
         }        
     }

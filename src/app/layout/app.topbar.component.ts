@@ -167,16 +167,16 @@ export class AppTopBarComponent {
         // when recover the userId therequest not finalize ans user can be undefined!!!
         /*this.user = this.contextService.getContext().user;
 
-        this.loadUserCases();*/
+        this.getUserCases();*/
 
         // get user metadata from system 
-        this.userService.loadUserByEmail(this.userDetails.email)
+        this.userService.getUserByEmail(this.userDetails.email)
             .subscribe({
                 next: user => {
                     this.user = user;  
 
                     // load user cases
-                    this.loadUserCases(); 
+                    this.getUserCases(); 
                 },
                 error: error => {
                     console.error(error.message);
@@ -209,8 +209,8 @@ export class AppTopBarComponent {
         }    
     }
     
-    private loadUserCases() {
-        this.userService.loadUserCases(this.user.userId)
+    private getUserCases() {
+        this.userService.getUserCases(this.user.userId)
             .subscribe({
                 next: userCase => {
                     this.userCase = userCase;

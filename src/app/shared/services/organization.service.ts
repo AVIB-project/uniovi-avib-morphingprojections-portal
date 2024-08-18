@@ -6,7 +6,9 @@ import { Observable, throwError, map } from 'rxjs'
 import { environment } from '../../../environments/environment';
 
 import { UserService } from '../services/user.service';
+
 import { OrganizationCase } from '../models/organization-case.model';
+import { Organization } from '../models/organization.model';
 
 @Injectable({
     providedIn: 'root'
@@ -87,10 +89,18 @@ export class OrganizationService {
     constructor(private http: HttpClient, private userService: UserService) { }
     
     getCasesByUser(userId: string): Observable<OrganizationCase[]> { 
-        return this.userService.loadUserCases(userId)
+        return this.userService.getUserCases(userId)
             .pipe(map((userCase: any) => {                    
                 return this.mapCasesByUser(userCase.organizations);
             }
         ))
-    }      
+    }  
+    
+    saveOrganization(organization: Organization): Observable<String> {
+        return this.http.post<String>(`${this.baseUrl}`, organization);  
+    }
+
+    deleteOrganization(organizationId: String): Observable<void> {
+        return this.http.delete<void>(`${this.baseUrl}` + "/" + organizationId);  
+    }
 }

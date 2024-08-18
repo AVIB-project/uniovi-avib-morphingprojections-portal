@@ -25,8 +25,8 @@ export class UserComponent implements OnInit {
         private contextService: ContextService, private userService: UserService) {         
     }
 
-    private loadUsersByOrganizationId(organizationId: string) {
-        this.userService.loadUsersByOrganizationId(organizationId)
+    private getUsersByOrganizationId(organizationId: string) {
+        this.userService.getUsersByOrganizationId(organizationId)
             .subscribe((users: User[]) => {
                 this.users = users;
             });
@@ -36,12 +36,12 @@ export class UserComponent implements OnInit {
         this.subscriptionEvents = this.eventBus.on(this.eventType.APP_CHANGE_CASE)
             .subscribe((meta: MetaData) => {
                 if (meta.data.organizationId) {
-                    this.loadUsersByOrganizationId(meta.data.organizationId);
+                    this.getUsersByOrganizationId(meta.data.organizationId);
                 }
         });
         
         if (this.contextService.getContext().organizationId) {
-            this.loadUsersByOrganizationId(this.contextService.getContext().organizationId);
+            this.getUsersByOrganizationId(this.contextService.getContext().organizationId);
         }
     }
 
@@ -81,7 +81,7 @@ export class UserComponent implements OnInit {
                     this.userService.deleteUser(user.userId)
                         .subscribe(() => {
                             if (this.contextService.getContext().organizationId) {
-                                this.loadUsersByOrganizationId(this.contextService.getContext().organizationId);
+                                this.getUsersByOrganizationId(this.contextService.getContext().organizationId);
                             }                            
                         });
                 }

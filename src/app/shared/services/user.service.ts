@@ -1,13 +1,14 @@
 import { Injectable, } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
-import { Observable, of, throwError } from 'rxjs'
+import { Observable, throwError } from 'rxjs'
 import { map, catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 
 import { User } from '../models/user.model';
 import { UserCase } from '../models/user-case.model';
+
 @Injectable({ providedIn: 'root' })
 export class UserService {
     readonly baseUrl: String = environment.URL + "/users";
@@ -37,23 +38,23 @@ export class UserService {
     
     constructor(private http: HttpClient) { }     
 
-    loadUsers(): Observable<User[]> {
+    getUsers(): Observable<User[]> {
         return this.http.get<User[]>(`${this.baseUrl}`);  
     } 
     
-    loadUsersByOrganizationId(organizationId: String): Observable<User[]> {
+    getUsersByOrganizationId(organizationId: String): Observable<User[]> {
         return this.http.get<User[]>(`${this.baseUrl}` + "/organizations/" + organizationId);  
     } 
     
-    loadUserById(userId: String): Observable<User> {
+    getUserById(userId: String): Observable<User> {
         return this.http.get<User>(`${this.baseUrl}` + "/" + userId);  
     } 
     
-    loadUserByEmail(email: String): Observable<User> {
+    getUserByEmail(email: String): Observable<User> {
         return this.http.get<User>(`${this.baseUrl}` + "/" + email + "/email");  
     } 
     
-    loadUserCases(userId: String): Observable<UserCase> {
+    getUserCases(userId: String): Observable<UserCase> {
         return this.http.get<UserCase>(`${this.baseUrl}` + "/" + userId + "/cases")
             .pipe(                
                 map((userCase: UserCase) => {

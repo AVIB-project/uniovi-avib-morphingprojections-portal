@@ -36,11 +36,19 @@ export class ProjectService {
 
     constructor(private http: HttpClient) { }
     
-    loadProjectById(projectId: String): Observable<Project> {
+    getProjectById(projectId: String): Observable<Project> {
         return this.http.get<Project>(`${this.baseUrl}` + "/" +projectId);  
     } 
     
-    loadProjectsByOrganizationId(organizationId: String): Observable<Project[]> {
+    getProjectsByOrganizationId(organizationId: String): Observable<Project[]> {
         return this.http.get<Project[]>(`${this.baseUrl}` + "/organizations/" + organizationId);  
-    }     
+    }   
+    
+    saveProject(project: Project): Observable<String> {
+        return this.http.post<String>(`${this.baseUrl}`, project);  
+    }
+
+    deleteProject(projectId: String): Observable<void> {
+        return this.http.delete<void>(`${this.baseUrl}` + "/" + projectId);  
+    }    
 }

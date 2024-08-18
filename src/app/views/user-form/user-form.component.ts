@@ -64,7 +64,7 @@ export class UserFormComponent implements OnInit {
             this.userId = params['id'];
 
             if (this.userId) {
-                this.userService.loadUserById(this.userId)
+                this.userService.getUserById(this.userId)
                     .subscribe((user: any) => {
                         console.log(user);
 

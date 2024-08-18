@@ -126,7 +126,7 @@ export class CaseFormComponent implements OnInit {
             this.caseId = params['id'];
 
             if (this.caseId) {                
-                this.caseService.loadCaseById(this.caseId)
+                this.caseService.getCaseById(this.caseId)
                     .subscribe({
                         next: (_case: any) => {
                             console.log(_case);
@@ -155,7 +155,7 @@ export class CaseFormComponent implements OnInit {
     }
 
     private getProjectsByOrganization(organizationId: String) {
-        this.projectService.loadProjectsByOrganizationId(organizationId)
+        this.projectService.getProjectsByOrganizationId(organizationId)
             .subscribe((projects: Project[]) => {
                 this.projects = projects;
             });

@@ -34,7 +34,16 @@ export class CaseService {
 
     constructor(private http: HttpClient) { }
     
-    loadCaseById(caseId: String): Observable<Case> {
+    getCaseById(caseId: String): Observable<Case> {
         return this.http.get<Case>(`${this.baseUrl}` + "/" + caseId);  
     }   
+
+    
+    saveCase(_case: Case): Observable<String> {
+        return this.http.post<String>(`${this.baseUrl}`, _case);  
+    }
+
+    deleteCase(caseId: String): Observable<void> {
+        return this.http.delete<void>(`${this.baseUrl}` + "/" + caseId);  
+    }     
 }

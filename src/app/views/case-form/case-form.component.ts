@@ -50,7 +50,7 @@ export class CaseFormComponent implements OnInit {
             data: {
                 project: null
             },
-            header: 'Project Form',
+            header: 'Add Project Form',
             width: '50%',
             styleClass: 'project-form',
         });
@@ -72,12 +72,11 @@ export class CaseFormComponent implements OnInit {
     private editProject() {
         const project = this.projects.find((project: any) => project.projectId == this.caseFormGroup.controls.projectId.value);
         
-
         const projectFormRef = this.dialogService.open(ProjectFormComponent, {
             data: {
                 project: project
             },
-            header: 'Project Form',
+            header: 'Edit Project Form',
             width: '50%',
             styleClass: 'project-form',
         });
@@ -97,6 +96,8 @@ export class CaseFormComponent implements OnInit {
     }
 
     private removeProject() {
+        const project = this.projects.find((project: any) => project.projectId == this.caseFormGroup.controls.projectId.value);
+
         this.confirmationService.confirm({
             //target: event.target as EventTarget,
             message: 'Are you sure that you want to proceed?',
@@ -107,7 +108,7 @@ export class CaseFormComponent implements OnInit {
             rejectButtonStyleClass:"p-button-text",
             accept: () => {
                 if (this.caseFormGroup.controls.projectId.value) {
-                    this.projectService.deleteProject(this.caseFormGroup.controls.projectId.value)
+                    this.projectService.deleteProject(project?.projectId!)
                         .subscribe(() => {
                             this.getProjectsByOrganization(this.contextService.getContext().organizationId);
                         });

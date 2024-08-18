@@ -104,7 +104,7 @@ export class AppTopBarComponent {
             data: {
                 organization: null
             },
-            header: 'Organization Form',
+            header: 'Add Organization Form',
             width: '50%',
             styleClass: 'organization-form',
         });
@@ -128,7 +128,7 @@ export class AppTopBarComponent {
             data: {
                 organization: this.selectedOrganization
             },
-            header: 'Organization Form',
+            header: 'Edit Organization Form',
             width: '50%',
             styleClass: 'organization-form',
         });

@@ -31,8 +31,8 @@ export class CaseFormComponent implements OnInit {
     
     caseFormGroup = this.fb.group({
         caseId: [null],
-        organizationId: ['', Validators.required],        
-        projectId: ['', Validators.required],                
+        organizationId: [''],        
+        projectId: [''],                
         name: ['', Validators.required],
         description: [''],
         type: [CaseTypeEnum.Private, Validators.required]
@@ -99,7 +99,6 @@ export class CaseFormComponent implements OnInit {
         const project = this.projects.find((project: any) => project.projectId == this.caseFormGroup.controls.projectId.value);
 
         this.confirmationService.confirm({
-            //target: event.target as EventTarget,
             message: 'Are you sure that you want to proceed?',
             header: 'Confirmation',
             icon: 'pi pi-exclamation-triangle',

@@ -38,7 +38,6 @@ export class CaseService {
         return this.http.get<Case>(`${this.baseUrl}` + "/" + caseId);  
     }   
 
-    
     saveCase(_case: any): Observable<String> {
         return this.http.post<String>(`${this.baseUrl}`, _case);  
     }

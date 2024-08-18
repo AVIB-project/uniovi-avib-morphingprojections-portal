@@ -10,6 +10,8 @@ import { NgEventBus, MetaData } from 'ng-event-bus';
 import { EventType } from '../../shared/enum/event-type.enum';
 import { ContextService } from '../../shared/services/context.service';
 import { OrganizationService } from '../../shared/services/organization.service';
+import { CaseService } from '../../shared/services/case.service';
+
 import { OrganizationCase } from '../../shared/models/organization-case.model';
 
 import { Case } from '../../shared/models/case.model';
@@ -26,7 +28,7 @@ export class CaseComponent implements OnInit {
 
     constructor(
         private confirmationService: ConfirmationService, private router: Router, private eventBus: NgEventBus,
-        private contextService: ContextService, private organizationService: OrganizationService) { 
+        private contextService: ContextService, private organizationService: OrganizationService, private caseService: CaseService) { 
     }
 
     private loadCasesByUser(userId: string) {
@@ -90,12 +92,10 @@ export class CaseComponent implements OnInit {
             rejectButtonStyleClass:"p-button-text",
             accept: () => {
                 if (organizationCase.caseId) {
-                    /*this.organizationService.deleteCase(organizationCase.caseId)
+                    this.caseService.deleteCase(organizationCase.caseId)
                         .subscribe(() => {
-                            if (this.contextService.getContext().organizationId) {
-                                this.loadCasesByUser(this.contextService.getContext().organizationId);
-                            }                            
-                        });*/
+                            this.loadCasesByUser(this.contextService.getContext().user.userId);                          
+                    });
                 }
             }
         });

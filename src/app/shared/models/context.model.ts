@@ -1,18 +1,18 @@
 export class Context {
     private _user: any;
     private _organizationId: string;
-    private _projectId: string;
-    private _caseId: string;
-    private _bucketDataMatrix: string;
-    private _fileDataMatrix: string;
-    private _bucketSampleAnnotation: string;
-    private _fileSampleAnnotation: string;
-    private _bucketAttributeAnnotation: string;
-    private _fileAttributeAnnotation: string;
-    private _bucketSampleProjection: string;
-    private _fileSampleProjection: string;
-    private _bucketAttributeProjection: string;
-    private _fileAttributeProjection: string;
+    private _projectId: String | null;
+    private _caseId: String | null;
+    private _bucketDataMatrix: String | null;
+    private _fileDataMatrix: String | null;
+    private _bucketSampleAnnotation: String | null;
+    private _fileSampleAnnotation: String | null;
+    private _bucketAttributeAnnotation: String | null;
+    private _fileAttributeAnnotation: String | null;
+    private _bucketSampleProjection: String | null;
+    private _fileSampleProjection: String | null;
+    private _bucketAttributeProjection: String | null;
+    private _fileAttributeProjection: String | null;
     
     public get user() {
         return this._user;
@@ -34,7 +34,7 @@ export class Context {
         return this._projectId;
     }
 
-    public set projectId(value: string) {
+    public set projectId(value: String | null) {
         this._projectId = value;
     } 
     
@@ -42,7 +42,7 @@ export class Context {
         return this._caseId;
     }
 
-    public set caseId(value: string) {
+    public set caseId(value: String | null) {
         this._caseId = value;
     } 
     
@@ -50,7 +50,7 @@ export class Context {
         return this._bucketDataMatrix;
     }
 
-    public set bucketDataMatrix(value: string) {
+    public set bucketDataMatrix(value: String | null) {
         this._bucketDataMatrix = value;
     }
     
@@ -58,7 +58,7 @@ export class Context {
         return this._fileDataMatrix;
     }
     
-    public set fileDataMatrix(value: string) {
+    public set fileDataMatrix(value: String | null) {
         this._fileDataMatrix = value;
     }
     
@@ -66,7 +66,7 @@ export class Context {
         return this._bucketSampleAnnotation;
     }
     
-    public set bucketSampleAnnotation(value: string) {
+    public set bucketSampleAnnotation(value: String | null) {
         this._bucketSampleAnnotation = value;
     }
     
@@ -74,7 +74,7 @@ export class Context {
         return this._fileSampleAnnotation;
     }
     
-    public set fileSampleAnnotation(value: string) {
+    public set fileSampleAnnotation(value: String | null) {
         this._fileSampleAnnotation = value;
     }
     
@@ -82,7 +82,7 @@ export class Context {
         return this._bucketAttributeAnnotation;
     }
 
-    public set bucketAttributeAnnotation(value: string) {
+    public set bucketAttributeAnnotation(value: String | null) {
         this._bucketAttributeAnnotation = value;
     }
     
@@ -90,7 +90,7 @@ export class Context {
         return this._fileAttributeAnnotation;
     }
         
-    public set fileAttributeAnnotation(value: string) {
+    public set fileAttributeAnnotation(value: String | null) {
         this._fileAttributeAnnotation = value;
     }
     
@@ -98,7 +98,7 @@ export class Context {
         return this._bucketSampleProjection;
     } 
     
-    public set bucketSampleProjection(value: string) {
+    public set bucketSampleProjection(value: String | null) {
         this._bucketSampleProjection = value;
     } 
     
@@ -106,7 +106,7 @@ export class Context {
         return this._bucketAttributeProjection;
     }  
     
-    public set bucketAttributeProjection(value: string) {
+    public set bucketAttributeProjection(value: String | null) {
         this._bucketAttributeProjection = value;
     } 
     
@@ -114,7 +114,7 @@ export class Context {
         return this._fileSampleProjection;
     } 
     
-    public set fileSampleProjection(value: string) {
+    public set fileSampleProjection(value: String | null) {
         this._fileSampleProjection = value;
     } 
     
@@ -122,7 +122,7 @@ export class Context {
         return this._fileAttributeProjection;
     }   
     
-    public set fileAttributeProjection(value: string) {
+    public set fileAttributeProjection(value: String | null) {
         this._fileAttributeProjection = value;
     }    
 }

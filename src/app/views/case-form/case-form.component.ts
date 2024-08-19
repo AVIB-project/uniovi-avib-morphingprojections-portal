@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, UntypedFormControl } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 
 import { MenuItem } from 'primeng/api';
@@ -32,7 +32,7 @@ export class CaseFormComponent implements OnInit {
     caseFormGroup = this.fb.group({
         caseId: [null],
         organizationId: [''],        
-        projectId: [''],                
+        projectId: new UntypedFormControl(''),                
         name: ['', Validators.required],
         description: [''],
         type: [CaseTypeEnum.Private, Validators.required]
@@ -129,7 +129,9 @@ export class CaseFormComponent implements OnInit {
             }
         ]
         
-        this.caseFormGroup.controls.projectId.setValue(this.contextService.getContext().projectId);
+        if (this.contextService.getContext().projectId) {
+            this.caseFormGroup.controls.projectId.setValue(this.contextService.getContext().projectId);
+        }
         
         this.route.params.subscribe(params => {
             this.caseId = params['id'];

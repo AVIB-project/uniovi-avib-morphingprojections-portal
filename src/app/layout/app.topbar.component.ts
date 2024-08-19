@@ -63,9 +63,9 @@ export class AppTopBarComponent {
     selectedOrganization: Organization;
     projects: Project[];
     projectList: ProjectItem[];    
-    selectedProject: ProjectItem;    
+    selectedProject: ProjectItem | null;    
     cases: Case[];
-    selectedCase: Case;      
+    selectedCase: Case | null;      
     menuOrganizationitems: MenuItem[] = [];
     
     resourceTypeEnum = ResourceTypeEnum;
@@ -215,10 +215,13 @@ export class AppTopBarComponent {
         if (this.projectList.length > 0 && this.projectList[0].items.length > 0) {
             this.selectedProject = this.projectList[0];
             this.selectedCase = this.projectList[0].items[0].value;
+        } else {
+            this.selectedProject = null;
+            this.selectedCase = null;
+        }   
 
-            // refresh indices
-            this.onChangeCase();
-        }    
+        // refresh indices
+        this.onChangeCase();
     }
     
     private getUserCases() {
@@ -268,23 +271,45 @@ export class AppTopBarComponent {
     }
     
     onChangeCase() {
-        // context organizations, project and case identifiers default selected
+        // context organizations selectd
         this.contextService.getContext().organizationId = this.selectedOrganization.organizationId;
-        this.contextService.getContext().projectId = this.selectedProject.projectId;
-        this.contextService.getContext().caseId = this.selectedCase.caseId;
-        
-        // context resource default selected
-        this.contextService.getContext().bucketDataMatrix = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.DATAMATRIX)?.bucket!;
-        this.contextService.getContext().fileDataMatrix = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.DATAMATRIX)?.file!;
-        this.contextService.getContext().bucketSampleAnnotation = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.SAMPLE_ANNOTATION)?.bucket!;
-        this.contextService.getContext().fileSampleAnnotation = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.SAMPLE_ANNOTATION)?.file!;
-        this.contextService.getContext().bucketAttributeAnnotation = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.ATTRIBUTE_ANNOTATION)?.bucket!;
-        this.contextService.getContext().fileAttributeAnnotation = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.ATTRIBUTE_ANNOTATION)?.file!;
-        this.contextService.getContext().bucketSampleProjection = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.PRIMAL_PROJECTION)?.bucket!;
-        this.contextService.getContext().fileSampleProjection = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.PRIMAL_PROJECTION)?.file!;
-        this.contextService.getContext().bucketAttributeProjection = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.DUAL_PROJECTION)?.bucket!;
-        this.contextService.getContext().fileAttributeProjection = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.DUAL_PROJECTION)?.file!;
 
+        // context project selectd
+        if ( this.selectedProject)
+            this.contextService.getContext().projectId = this.selectedProject.projectId;        
+        else
+            this.contextService.getContext().projectId = null;        
+        
+        // context case and resources selectd
+        if (this.selectedCase) {
+            this.contextService.getContext().caseId = this.selectedCase.caseId;
+
+            this.contextService.getContext().bucketDataMatrix = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.DATAMATRIX)?.bucket!;
+            this.contextService.getContext().fileDataMatrix = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.DATAMATRIX)?.file!;
+            this.contextService.getContext().bucketSampleAnnotation = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.SAMPLE_ANNOTATION)?.bucket!;
+            this.contextService.getContext().fileSampleAnnotation = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.SAMPLE_ANNOTATION)?.file!;
+            this.contextService.getContext().bucketAttributeAnnotation = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.ATTRIBUTE_ANNOTATION)?.bucket!;
+            this.contextService.getContext().fileAttributeAnnotation = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.ATTRIBUTE_ANNOTATION)?.file!;
+            this.contextService.getContext().bucketSampleProjection = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.PRIMAL_PROJECTION)?.bucket!;
+            this.contextService.getContext().fileSampleProjection = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.PRIMAL_PROJECTION)?.file!;
+            this.contextService.getContext().bucketAttributeProjection = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.DUAL_PROJECTION)?.bucket!;
+            this.contextService.getContext().fileAttributeProjection = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.DUAL_PROJECTION)?.file!;            
+        }
+        else {
+            this.contextService.getContext().caseId = null;
+
+            this.contextService.getContext().bucketDataMatrix = null;
+            this.contextService.getContext().fileDataMatrix = null;
+            this.contextService.getContext().bucketSampleAnnotation = null;
+            this.contextService.getContext().fileSampleAnnotation = null;
+            this.contextService.getContext().bucketAttributeAnnotation = null;
+            this.contextService.getContext().fileAttributeAnnotation = null;
+            this.contextService.getContext().bucketSampleProjection = null;
+            this.contextService.getContext().fileSampleProjection = null;
+            this.contextService.getContext().bucketAttributeProjection = null;
+            this.contextService.getContext().fileAttributeProjection = null;
+        }
+        
         // publish change case event type
         this.eventBus.cast(this.eventType.APP_CHANGE_CASE, this.contextService.getContext());
     }

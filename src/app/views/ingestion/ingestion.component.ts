@@ -19,15 +19,6 @@ export class IngestionComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.organizationService.getCasesByUser(this.contextService.getContext().user.userId)
-            .subscribe({
-                next: (organizationCases: OrganizationCase[]) => {
-                    this.organizationCases = organizationCases;      
-                },
-                error: error => {
-                    console.error(error.message);
-                }
-            });
     }
 
     onGlobalFilterCase(table: Table, event: Event) {

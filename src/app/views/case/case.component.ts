@@ -15,6 +15,7 @@ import { CaseService } from '../../shared/services/case.service';
 import { OrganizationCase } from '../../shared/models/organization-case.model';
 
 import { Case } from '../../shared/models/case.model';
+
 @Component({
     templateUrl: 'case.component.html',
     styleUrls: ['case.component.scss'],
@@ -31,8 +32,9 @@ export class CaseComponent implements OnInit {
         private contextService: ContextService, private organizationService: OrganizationService, private caseService: CaseService) { 
     }
 
-    private loadCasesByUser(userId: string) {
-        this.organizationService.getCasesByUser(userId)
+    private loadCasesByUser(organizationId: string, userId: string) {
+        this.organizationService.getCasesByOrganizationAndUser(organizationId, userId)
+        //this.organizationService.getCasesByUser(userId)
             .subscribe({
                 next: (organizationCases: OrganizationCase[]) => {
                     this.organizationCases = organizationCases;      
@@ -52,11 +54,11 @@ export class CaseComponent implements OnInit {
         this.subscriptionEvents = this.eventBus.on(this.eventType.APP_CHANGE_CASE)
             .subscribe((meta: MetaData) => {
                 if (meta.data.organizationId) {
-                    this.loadCasesByUser(meta.data.user.userId);
+                    this.loadCasesByUser(meta.data.organizationId, meta.data.user.userId);
                 }
             });
         
-        this.loadCasesByUser(this.contextService.getContext().user.userId);
+        this.loadCasesByUser(this.contextService.getContext().organizationId, this.contextService.getContext().user.userId);
     }
 
     onGlobalFilterCase(table: Table, event: Event) {
@@ -94,7 +96,7 @@ export class CaseComponent implements OnInit {
                 if (organizationCase.caseId) {
                     this.caseService.deleteCase(organizationCase.caseId)
                         .subscribe(() => {
-                            this.loadCasesByUser(this.contextService.getContext().user.userId);                          
+                            this.loadCasesByUser(this.contextService.getContext().organizationId, this.contextService.getContext().user.userId);                          
                     });
                 }
             }

@@ -23,12 +23,12 @@ export class AppMenuComponent implements OnInit {
                 routerLink: ['/']
                 },
                 {
-                    label: 'Case Management',
+                    label: 'Case',
                     icon: 'pi pi-sitemap',
                     routerLink: ['/case']               
                 },            
                 {
-                    label: 'Case Configuration',
+                    label: 'Configuration',
                     icon: 'pi pi-cog',
                     routerLink: ['/configuration'],               
                 },

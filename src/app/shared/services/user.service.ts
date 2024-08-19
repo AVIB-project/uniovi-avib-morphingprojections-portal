@@ -66,7 +66,7 @@ export class UserService {
                     this.handleError(error)
             )
         );  
-    }   
+    } 
 
     saveUser(user: any): Observable<String> {
         return this.http.post<String>(`${this.baseUrl}`, user);  

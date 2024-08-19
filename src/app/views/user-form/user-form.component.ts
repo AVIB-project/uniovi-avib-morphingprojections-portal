@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Validators, FormBuilder } from '@angular/forms';
 
-import { NgEventBus, MetaData } from 'ng-event-bus';
-
 import { ContextService } from '../../shared/services/context.service';
 import { UserService } from '../../shared/services/user.service';
 import { User } from '../../shared/models/user.model';
@@ -31,7 +29,7 @@ export class UserFormComponent implements OnInit {
 
     userFormGroup = this.fb.group({
         userId: [null],
-        organizationId: ['', Validators.required],
+        organizationId: [''],
         externalId: [null],
         username: ['', Validators.required],
         firstName: ['', Validators.required],
@@ -48,7 +46,7 @@ export class UserFormComponent implements OnInit {
     });
     
     constructor(
-        private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private eventBus: NgEventBus,
+        private router: Router, private route: ActivatedRoute, private fb: FormBuilder,
         private contextService: ContextService, private userService: UserService,
         private rolePipe: RolePipe, private languagePipe: LanguagePipe) {
     }
@@ -57,8 +55,7 @@ export class UserFormComponent implements OnInit {
         this.languages = this.languagePipe.getList();
         this.roles = this.rolePipe.getList();
 
-        this.userFormGroup.controls.active.setValue(true);        
-        this.userFormGroup.controls.organizationId.setValue(this.contextService.getContext().organizationId);
+        this.userFormGroup.controls.active.setValue(true);
 
         this.route.params.subscribe(params => {
             this.userId = params['id'];
@@ -73,12 +70,7 @@ export class UserFormComponent implements OnInit {
                         }
                 });
             }
-        });
-
-        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_CHANGE_CASE)
-            .subscribe((meta: MetaData) => {
-                this.userFormGroup.controls.organizationId.setValue(meta.data.organizationId);
-        });         
+        });        
     }
 
     onCancelUser() {
@@ -86,16 +78,14 @@ export class UserFormComponent implements OnInit {
     }
     
     onAddUser() {
-        this.userService.saveUser(this.userFormGroup.value)
+        // set the final organization Id
+        this.userFormGroup.controls.organizationId.setValue(this.contextService.getContext().organizationId);
+        
+        /*this.userService.saveUser(this.userFormGroup.value)
             .subscribe((userId: any) => {
                 console.log(userId);
 
                 this.router.navigate(['/user']);
-            });
-    }
-
-    ngOnDestroy(): void {
-        if(this.subscriptionEvents)
-            this.subscriptionEvents.unsubscribe();
+            });*/
     }
 }

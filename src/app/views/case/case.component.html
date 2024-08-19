@@ -15,7 +15,7 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="organizationName" class="white-space-nowrap" style="width:25%">Organization<p-sortIcon field="organizationName"></p-sortIcon></th>
+                <!--<th pSortableColumn="organizationName" class="white-space-nowrap" style="width:25%">Organization<p-sortIcon field="organizationName"></p-sortIcon></th>-->
                 <th pSortableColumn="projectName" class="white-space-nowrap" style="width:25%">Project <p-sortIcon field="projectName"></p-sortIcon></th>
                 <th pSortableColumn="caseName" class="white-space-nowrap" style="width:25%">Case Name<p-sortIcon field="caseName"></p-sortIcon></th>
                 <th pSortableColumn="caseDescription" class="white-space-nowrap" style="width:25%">Case Description <p-sortIcon field="caseDescription"></p-sortIcon></th>
@@ -24,7 +24,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-organizationCase>
             <tr (mouseenter)="onToggleOptions($event, options, active)" (mouseleave)="onToggleOptions($event, options, active)" class="cursor-pointer">
-                <td>{{organizationCase.organizationName}}</td>
+                <!--<td>{{organizationCase.organizationName}}</td>-->
                 <td>{{organizationCase.projectName}}</td>
                 <td>{{organizationCase.caseName}}</td>
                 <!--<td>{{organizationCase.caseDescription}}</td>-->

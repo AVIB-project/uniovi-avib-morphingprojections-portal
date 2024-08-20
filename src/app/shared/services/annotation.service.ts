@@ -233,4 +233,12 @@ export class AnnotationService {
 
     return this.http.request(req);
   }  
+
+  getAnnotationById(annotationId: String): Observable<Annotation> {
+    return this.http.get<Annotation>(`${this.baseUrl}` + "/" + annotationId);  
+  } 
+
+  deleteAnnotation(annotationId: String): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}` + "/" + annotationId);  
+  }  
 }

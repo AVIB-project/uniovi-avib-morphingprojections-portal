@@ -8,6 +8,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TreeTableModule } from 'primeng/treetable';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { TooltipModule } from 'primeng/tooltip';
 
 import { ConfigurationComponent } from './configuration.component';
 import { ConfigurationRoutingModule } from './configuration-routing.module';
@@ -23,6 +25,8 @@ import { ConfigurationRoutingModule } from './configuration-routing.module';
 		TableModule,
 		TreeTableModule,
 		ProgressBarModule,
+		ConfirmDialogModule,
+		TooltipModule,
 		ConfigurationRoutingModule,
 	],
 	declarations: [ConfigurationComponent]

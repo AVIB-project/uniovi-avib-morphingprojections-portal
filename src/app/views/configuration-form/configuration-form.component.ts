@@ -12,22 +12,25 @@ export class ConfigurationFormComponent implements OnInit {
     annotationFormGroup = this.fb.group({
     });
   
-    caseId: String;
+    annotationId: String;
+    annotation: any;
+
     constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder,
         private contextService: ContextService, private annotationService: AnnotationService) {         
     }
 
     ngOnInit() {   
         this.route.params.subscribe(params => {
-            this.caseId = params['id'];
+            this.annotationId = params['id'];
 
-            if (this.caseId) {
-                /*this.annotationService.getCaseById(this.caseId)
-                    .subscribe((case: any) => {
-                        if (case) {
-                            this.annotationFormGroup.setValue(case);
+            if (this.annotationId) {
+                this.annotationService.getAnnotationById(this.annotationId)
+                    .subscribe((annotation: any) => {
+                        if (annotation) {
+                            console.log(annotation);
+                            this.annotationFormGroup.setValue(annotation);
                         }
-                });*/
+                });
             }
         });        
     }

@@ -11,6 +11,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { CheckboxModule } from 'primeng/checkbox';
 
 import { ConfigurationFormComponent } from './configuration-form.component';
 import { ConfigurationFormRoutingModule } from './configuration-form-routing.module';
@@ -28,6 +29,7 @@ import { ConfigurationFormRoutingModule } from './configuration-form-routing.mod
 		InputTextareaModule,
 		InputGroupModule,
 		InputGroupAddonModule,
+		CheckboxModule,
 		ConfigurationFormRoutingModule,
 	],
 	declarations: [ConfigurationFormComponent]

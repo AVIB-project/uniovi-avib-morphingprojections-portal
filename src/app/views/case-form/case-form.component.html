@@ -10,7 +10,7 @@
                 <div class="grid formgrid p-fluid">
                     <div class="flex flex-wrap justify-content-start gap-3" style="padding-left: 14px;">
                         <div class="field" style="width: 400px;">
-                            <label for="project" class="font-medium text-900">Project *</label>
+                            <label for="project" class="font-medium text-900">Project <span style="color: red;">*</span></label>
                             <p-dropdown inputId="project" [options]="projects" placeholder="Select a Project" 
                                 optionLabel="name" optionValue="projectId" formControlName="projectId">
                             </p-dropdown>
@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="field mb-4 col-12">
-                        <label for="name" class="font-medium text-900">Name *</label>
+                        <label for="name" class="font-medium text-900">Name <span style="color: red;">*</span></label>
                         <input id="name" type="text" pInputText formControlName="name">
                         <div *ngIf="caseFormGroup.controls.name.errors && !caseFormGroup.controls.name.pristine">
                             <small *ngIf="caseFormGroup.controls.name.errors['required']" class="p-error">Name is mandatory</small>

@@ -1,40 +1,3 @@
-<!--<div class="card">
-    <span class="text-900 text-xl font-bold mb-4 block">Configuration Form</span>
-    <div class="grid">
-        <div class="col-12 lg:col-2">
-            <div class="text-900 font-medium text-xl mb-3">Configuration</div>
-            <p class="m-0 p-0 text-600 line-height-3 mr-3">Represent the bond between your Dataset and your projections</p>
-        </div>
-        <div class="col-12 lg:col-10">
-            <div class="grid formgrid p-fluid">
-                <div class="field mb-4 col-12 md:col-6">
-                    <label for="project" class="font-medium text-900">Project</label>
-                    <p-dropdown inputId="project" [options]="projects" optionLabel="name" [filter]="true" filterBy="name"
-                        [showClear]="true" placeholder="Select a Project or create one">
-                        <ng-template let-project pTemplate="item">
-                            <div class="flex align-items-center">
-                                <img src="assets/demo/images/flag/flag_placeholder.png"
-                                    [class]="'mr-2 flag flag-' + project.code.toLowerCase()" style="width:18px" />
-                                <div>{{project.name}}</div>
-                            </div>
-                        </ng-template>
-                    </p-dropdown>
-                </div>
-                <div class="field mb-4 col-12">
-                    <label for="name" class="font-medium text-900">Name</label>
-                    <input id="name" type="text" pInputText>
-                </div>
-                <div class="field mb-4 col-12">
-                    <label for="description" class="font-medium text-900">Description</label>
-                    <textarea id="description" type="text" pInputTextarea rows="5" [autoResize]="true"></textarea>
-                </div>                
-                <div class="col-12">
-                    <button (click)="onAddAnnotation()" pButton pRipple label="Add Annotation" class="w-auto mt-3"></button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
 <div class="card">
     <span class="text-900 text-xl font-bold mb-4 block">Annotation Form</span>
     <div class="grid">
@@ -45,7 +8,75 @@
         <div class="col-12 lg:col-10">
             <form novalidate [formGroup]="annotationFormGroup">
                 <div class="grid formgrid p-fluid">
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="group" class="font-medium text-900">Group <span style="color: red;">*</span></label>
+                        <p-dropdown id="group" [options]="annotationGroups" formControlName="group" styleClass="p-column-filter selector"
+                            appendTo="body" placeholder="Select group" optionLabel="name" optionValue="id" 
+                            (onChange)="onGroupChange($event)">
+                        </p-dropdown>
+                        <div *ngIf="annotationFormGroup.controls.group.errors && !annotationFormGroup.controls.group.pristine">
+                            <small *ngIf="annotationFormGroup.controls.group.errors['required']" class="p-error">Group is mandatory</small>
+                        </div>
+                    </div>
+                    <div class="field mb-4 col-12 md:col-6" style="display: flex; gap: 30px; justify-content: end;">
+                        <div style="display: grid;">
+                            <label for="precalculated" class="font-medium text-900">Precalculated <span style="color: red;">*</span></label>
+                            <p-checkbox inputId="precalculated" [binary]="true" formControlName="precalculated" />
+                            <div
+                                *ngIf="annotationFormGroup.controls.precalculated.errors && !annotationFormGroup.controls.precalculated.pristine">
+                                <small *ngIf="annotationFormGroup.controls.precalculated.errors['required']" class="p-error">Precalculated is
+                                    mandatory</small>
+                            </div>
+                        </div>
+                        <div style="display: grid;">
+                            <label for="required" class="font-medium text-900">Required <span style="color: red;">*</span></label>
+                            <p-checkbox inputId="required" [binary]="true" formControlName="required" />
+                            <div *ngIf="annotationFormGroup.controls.required.errors && !annotationFormGroup.controls.required.pristine">
+                                <small *ngIf="annotationFormGroup.controls.required.errors['required']" class="p-error">Required is
+                                    mandatory</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="name" class="font-medium text-900">Name <span style="color: red;">*</span></label>
+                        <input id="name" type="text" pInputText placeholder="Annotation name" formControlName="name" />
+                        <div *ngIf="annotationFormGroup.controls.name.errors && !annotationFormGroup.controls.name.pristine">
+                            <small *ngIf="annotationFormGroup.controls.name.errors['required']" class="p-error">Name is mandatory</small>
+                        </div>
+                    </div>
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="label" class="font-medium text-900">Label <span style="color: red;">*</span></label>
+                        <input id="label" type="text" pInputText placeholder="Label" formControlName="label" />
+                        <div *ngIf="annotationFormGroup.controls.label.errors && !annotationFormGroup.controls.label.pristine">
+                            <small *ngIf="annotationFormGroup.controls.label.errors['required']" class="p-error">Label mandatory</small>
+                        </div>
+                    </div>
+                    <div class="field mb-4 col-12 md:col-12">
+                        <label for="description" class="font-medium text-900">Description</label>
+                        <input id="description" type="text" pInputText placeholder="Description" formControlName="description" />
+                    </div>
+                    <div class="field mb-4 col-12 md:col-6" >
+                        <div style="display: grid;">
+                            <label for="type" class="font-medium text-900">Type <span style="color: red;">*</span></label>
+                            <p-dropdown id="type" [options]="annotationTypes" formControlName="type" styleClass="p-column-filter selector"
+                                appendTo="body" placeholder="Select type" optionLabel="name" optionValue="id">
+                            </p-dropdown>
+                            <div *ngIf="annotationFormGroup.controls.type.errors && !annotationFormGroup.controls.type.pristine">
+                                <small *ngIf="annotationFormGroup.controls.type.errors['required']" class="p-error">Type is mandatory</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field mb-4 col-12 md:col-6" style="display: flex; justify-content: flex-end;">
+                        <div style="display: grid;">                                                
+                            <label for="colorized" class="font-medium text-900">Colorized <span style="color: red;">*</span></label>
+                            <p-checkbox inputId="required" [binary]="true" formControlName="required" />
+                            <div *ngIf="annotationFormGroup.controls.colorized.errors && !annotationFormGroup.controls.colorized.pristine">
+                                <small *ngIf="annotationFormGroup.controls.colorized.errors['required']" class="p-error">Colorized is mandatory</small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="flex flex-wrap justify-content-end gap-3">
                     <button (click)="onCancelAnnotation()" pButton pRipple label="Cancel"
                         class="p-button-outlined w-auto mt-3"></button>

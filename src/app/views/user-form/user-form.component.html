@@ -9,21 +9,21 @@
             <form novalidate [formGroup]="userFormGroup">
                 <div class="grid formgrid p-fluid">
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="firstName" class="font-medium text-900">First name *</label>
+                        <label for="firstName" class="font-medium text-900">First name <span style="color: red;">*</span></label>
                         <input id="firstName" type="text" pInputText formControlName="firstName">
                         <div *ngIf="userFormGroup.controls.firstName.errors && !userFormGroup.controls.firstName.pristine">
                             <small *ngIf="userFormGroup.controls.firstName.errors['required']" class="p-error">First name is mandatory</small>
                         </div>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="lastName" class="font-medium text-900">Last name *</label>
+                        <label for="lastName" class="font-medium text-900">Last name <span style="color: red;">*</span></label>
                         <input id="lastName" type="text" pInputText formControlName="lastName">
                         <div *ngIf="userFormGroup.controls.lastName.errors && !userFormGroup.controls.lastName.pristine">
                             <small *ngIf="userFormGroup.controls.lastName.errors['required']" class="p-error">Last name is mandatory</small>
                         </div>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="email" class="font-medium text-900">Email *</label>
+                        <label for="email" class="font-medium text-900">Email <span style="color: red;">*</span></label>
                         <input id="email" type="text" pInputText formControlName="email">
                         <div *ngIf="userFormGroup.controls.email.errors && !userFormGroup.controls.email.pristine">
                             <small *ngIf="userFormGroup.controls.email.errors['required']" class="p-error">Email is mandatory</small>
@@ -31,14 +31,14 @@
                         </div>
                     </div>
                     <div class="field mb-4 col-12 md:col-3">
-                        <label for="username" class="font-medium text-900">Username *</label>
+                        <label for="username" class="font-medium text-900">Username <span style="color: red;">*</span></label>
                         <input id="username" type="text" pInputText formControlName="username">
                         <div *ngIf="userFormGroup.controls.username.errors && !userFormGroup.controls.username.pristine">
                             <small *ngIf="userFormGroup.controls.username.errors['required']" class="p-error">Username is mandatory</small>
                         </div>
                     </div>
                     <div class="field mb-4 col-12 md:col-3">
-                        <label for="role" class="font-medium text-900">Role *</label>
+                        <label for="role" class="font-medium text-900">Role <span style="color: red;">*</span></label>
                         <p-dropdown inputId="role" [options]="roles" placeholder="Select a Role" 
                             optionLabel="name" optionValue="id" formControlName="role">
                         </p-dropdown>
@@ -60,7 +60,7 @@
                         <input id="phone" type="text" pInputText formControlName="phone">
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="language" class="font-medium text-900">Language *</label>
+                        <label for="language" class="font-medium text-900">Language <span style="color: red;">*</span></label>
                         <p-dropdown inputId="language" [options]="languages" placeholder="Select a Language" 
                             optionLabel="name" optionValue="id" formControlName="language">
                             <ng-template let-language pTemplate="item">

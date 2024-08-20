@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Validators, FormBuilder } from '@angular/forms';
 
 import { ContextService } from '../../shared/services/context.service';
@@ -81,11 +80,11 @@ export class UserFormComponent implements OnInit {
         // set the final organization Id
         this.userFormGroup.controls.organizationId.setValue(this.contextService.getContext().organizationId);
         
-        /*this.userService.saveUser(this.userFormGroup.value)
+        this.userService.saveUser(this.userFormGroup.value)
             .subscribe((userId: any) => {
                 console.log(userId);
 
                 this.router.navigate(['/user']);
-            });*/
+            });
     }
 }

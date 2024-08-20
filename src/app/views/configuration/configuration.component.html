@@ -1,8 +1,8 @@
 <div class="card">
-    <p-table #dt [value]="organizationCases" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+    <p-table #dt [value]="annotations" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
         responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [rowsPerPageOptions]="[10,25,50]"
-        [globalFilterFields]="['organizationName','projectName','caseName','caseDescription']">
+        [globalFilterFields]="['name','description','group','precalculated','type','colorized','required']">
         <ng-template pTemplate="caption">
             <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
                 <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
@@ -10,33 +10,57 @@
                     <input pInputText type="text" (input)="onGlobalFilterCase(dt, $event)" placeholder="Global Search"
                         class="w-full" />
                 </span>
-                <button (click)="onAddConfiguration()" pButton
+                <button (click)="onAddAnnotation()" pButton
                     class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-user-plus"
-                    label="Add Configuration"></button>
+                    label="Add Annotation"></button>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="organizationName" class="white-space-nowrap" style="width:25%">Organization
-                    <p-sortIcon field="organizationName"></p-sortIcon>
+                <th pSortableColumn="name" class="white-space-nowrap" style="width:25%">Name
+                    <p-sortIcon field="name"></p-sortIcon>
                 </th>
-                <th pSortableColumn="projectName" class="white-space-nowrap" style="width:25%">Project <p-sortIcon
-                        field="projectName"></p-sortIcon>
+                <th pSortableColumn="description" class="white-space-nowrap" style="width:25%">Description
+                    <p-sortIcon field="description"></p-sortIcon>
                 </th>
-                <th pSortableColumn="caseName" class="white-space-nowrap" style="width:25%">Case <p-sortIcon
-                        field="caseName"></p-sortIcon>
+                <th pSortableColumn="group" class="white-space-nowrap" style="width:25%">Group
+                    <p-sortIcon field="group"></p-sortIcon>
                 </th>
-                <th pSortableColumn="caseDescription" class="white-space-nowrap" style="width:25%">Case Description
-                    <p-sortIcon field="caseDescription"></p-sortIcon>
+                <th pSortableColumn="precalculated" class="white-space-nowrap" style="width:25%">Precalculated
+                    <p-sortIcon field="precalculated"></p-sortIcon>                    
+                </th>
+                <th pSortableColumn="type" class="white-space-nowrap" style="width:25%">Type
+                    <p-sortIcon field="type"></p-sortIcon>
+                </th>
+                <th pSortableColumn="colorized" class="white-space-nowrap" style="width:25%">Colorized
+                    <p-sortIcon field="colorized"></p-sortIcon>
+                </th>
+                <th pSortableColumn="required" class="white-space-nowrap" style="width:25%">Required
+                    <p-sortIcon field="required"></p-sortIcon>
                 </th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-organizationCase>
+        <ng-template pTemplate="body" let-annotation>
             <tr>
-                <td>{{organizationCase.organizationName}}</td>
-                <td>{{organizationCase.projectName}}</td>
-                <td>{{organizationCase.caseName}}</td>
-                <td>{{organizationCase.caseDescription}}</td>
+                <td>{{annotation.name}}</td>
+                <td>{{annotation.description}}</td>
+                <td>{{annotation.group}}</td>
+                <td>
+                    <i class="pi h-2rem w-2rem"
+                        [ngClass]="{ 'text-green-500 pi-check-circle': annotation.precalculated, 'text-red-500 pi-times-circle': !annotation.precalculated }">
+                    </i>
+                </td>
+                <td>{{annotation.type}}</td>
+                <td>
+                    <i class="pi h-2rem w-2rem"
+                        [ngClass]="{ 'text-green-500 pi-check-circle': annotation.colorized, 'text-red-500 pi-times-circle': !annotation.colorized }">
+                    </i>
+                </td>
+                <td>
+                    <i class="pi h-2rem w-2rem"
+                        [ngClass]="{ 'text-green-500 pi-check-circle': annotation.required, 'text-red-500 pi-times-circle': !annotation.required }">
+                    </i>
+                </td>              
             </tr>
         </ng-template>
     </p-table>

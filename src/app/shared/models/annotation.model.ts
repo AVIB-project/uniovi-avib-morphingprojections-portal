@@ -5,7 +5,7 @@ import { AnnotationTypeType } from '../enum/annotation-type.enum';
 
 export interface Annotation {
     annotationId?: string;
-    caseId: string;
+    caseId: String | null;
     group?: AnnotationGroupType;
     space?: AnnotationSpaceType;
     precalculated: boolean;

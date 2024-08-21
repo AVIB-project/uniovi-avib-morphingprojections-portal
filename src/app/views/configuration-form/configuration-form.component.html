@@ -18,10 +18,11 @@
                             <small *ngIf="annotationFormGroup.controls.group.errors['required']" class="p-error">Group is mandatory</small>
                         </div>
                     </div>
-                    <div class="field mb-4 col-12 md:col-6" style="display: flex; gap: 30px; justify-content: end;">
+                    <div class="flex mb-4 col-12 md:col-6 gap-3 justify-content-end">
                         <div style="display: grid;">
                             <label for="precalculated" class="font-medium text-900">Precalculated <span style="color: red;">*</span></label>
-                            <p-checkbox inputId="precalculated" [binary]="true" formControlName="precalculated" />
+                            <p-checkbox inputId="precalculated" [binary]="true" formControlName="precalculated" 
+                                (onChange)="onPrecalculatedChange($event)"/>
                             <div
                                 *ngIf="annotationFormGroup.controls.precalculated.errors && !annotationFormGroup.controls.precalculated.pristine">
                                 <small *ngIf="annotationFormGroup.controls.precalculated.errors['required']" class="p-error">Precalculated is
@@ -37,6 +38,35 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="flex mb-4 col-12 md:col-12 p-0" *ngIf="annotationFormGroup.get('group').value == 'projection'"> 
+                        <div class="field mb-4 col-12 md:col-3">
+                            <label for="space" class="control-label required block">Space<span style="color: red;">*</span></label>
+                            <p-dropdown id="space" [options]="annotationSpaces" formControlName="space"
+                                styleClass="p-column-filter selector" appendTo="body" placeholder="Select space" optionLabel="name"
+                                optionValue="id" (onChange)="onSpaceChange($event)">
+                            </p-dropdown>
+                            <small class="p-error block" *ngIf="annotationFormGroup.get('space')?.invalid && annotationFormGroup.get('space')?.dirty">
+                                Annotation space is required
+                            </small>
+                        </div>
+                        <div class="field mb-4 col-12 md:col-3" *ngIf="annotationFormGroup.get('precalculated').value == false">
+                            <label for="projectedByAnnotation" class="control-label block">Projected By Annotation</label>
+                            <p-dropdown id="projectedByAnnotation" [options]="projectedByAnnotations" [showClear]="true"
+                                formControlName="projectedByAnnotation" styleClass="p-column-filter selector" appendTo="body"
+                                placeholder="Select Annotation" optionLabel="name" optionValue="id"
+                                (onChange)="onProjectedByAnnotationChange($event)">
+                            </p-dropdown>
+                        </div>
+                        <div class="field mb-4 col-12 md:col-3" *ngIf="annotationFormGroup.get('projectedByAnnotation').value">
+                            <label for="projectedByAnnotationValue" class="control-label block">Projected By Annotation Value</label>
+                            <p-dropdown id="projectedByAnnotationValue" [options]="projectedByAnnotationValues" [showClear]="true"
+                                formControlName="projectedByAnnotationValue" styleClass="p-column-filter selector" appendTo="body"
+                                placeholder="Select Annotation Value" optionLabel="name" optionValue="id">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="name" class="font-medium text-900">Name <span style="color: red;">*</span></label>
                         <input id="name" type="text" pInputText placeholder="Annotation name" formControlName="name" />
@@ -59,7 +89,8 @@
                         <div style="display: grid;">
                             <label for="type" class="font-medium text-900">Type <span style="color: red;">*</span></label>
                             <p-dropdown id="type" [options]="annotationTypes" formControlName="type" styleClass="p-column-filter selector"
-                                appendTo="body" placeholder="Select type" optionLabel="name" optionValue="id">
+                                appendTo="body" placeholder="Select type" optionLabel="name" optionValue="id"
+                                (onChange)="onTypeChange($event)">
                             </p-dropdown>
                             <div *ngIf="annotationFormGroup.controls.type.errors && !annotationFormGroup.controls.type.pristine">
                                 <small *ngIf="annotationFormGroup.controls.type.errors['required']" class="p-error">Type is mandatory</small>

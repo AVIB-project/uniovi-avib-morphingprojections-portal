@@ -2,24 +2,45 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Validators, FormBuilder } from '@angular/forms';
 
+import { NgEventBus, MetaData } from 'ng-event-bus';
+
 import { ContextService } from '../../shared/services/context.service';
 import { AnnotationService } from '../../shared/services/annotation.service';
 
+import { EventType } from '../../shared/enum/event-type.enum';
 import { AnnotationGroupPipe } from '../../shared/pipe/annotation-group.pipe';
-import { AnnotationSpacePipe } from '../../shared/pipe/annotation-space.pipe';
 import { AnnotationTypePipe } from '../../shared/pipe/annotation-type.pipe';
+import { AnnotationEncodingPipe } from '../../shared/pipe/annotation-encoding.pipe';
+import { AnnotationSpacePipe } from '../../shared/pipe/annotation-space.pipe';
 import { Annotation } from '../../shared/models/annotation.model';
+
 @Component({
     templateUrl: './configuration-form.component.html',
     providers: [
-        AnnotationGroupPipe,
-        AnnotationSpacePipe,
+        AnnotationGroupPipe,        
         AnnotationTypePipe,
+        AnnotationEncodingPipe,
+        AnnotationSpacePipe,
     ] 
 })
 export class ConfigurationFormComponent implements OnInit { 
+    readonly LANGUAGE_ID = "us"; // mock language. Possible -> English: us; Spanish: es
+
+    subscriptionEvents: any;
+    eventType = EventType;
+  
+    annotationGroups: any[] = [];
+    annotationTypes: any[] = [];
+    annotationEncodings: any[] = [];
+    annotationSpaces: any[] = [];
+    projectedByAnnotations: any[] = [];
+    projectedByAnnotationValues: any[] = [];
+    
+    annotations: Annotation[];
+    annotation: Annotation;
+
     annotationFormGroup = this.fb.group({
-        annotationId: [null],
+        annotationId: [''],
         caseId: [''],
         name: ['', Validators.required],
         description: [''],
@@ -36,52 +57,101 @@ export class ConfigurationFormComponent implements OnInit {
         colorized: [false, Validators.required],
         required: [true, Validators.required],
     });
-  
-    annotationGroups: any[] = [];
-    annotationSpaces: any[] = [];
-    annotationTypes: any[] = [];
-    projectedByAnnotations: any[] = [];
-    projectedByAnnotationValues: any[] = [];
     
-    annotationId: String;
-    annotation: any;
-
     private getAnnotationGroups() {
         this.annotationGroups = this.annotationGroupPipe.getList().filter(item => item.id != "encoding");
+    }
+        
+    private getAnnotationTypes() {
+        this.annotationTypes = this.annotationTypePipe.getList();
+    }
+    
+    private getAnnotationEncodings() {
+        this.annotationEncodings = this.annotationEncodingPipe.getList();
     }
     
     private getAnnotationSpaces() {
         this.annotationSpaces = this.annotationSpacePipe.getList();
     }
     
-    private getAnnotationTypes() {
-        this.annotationTypes = this.annotationTypePipe.getList();
+    private loadAvailableAnnotations(caseId: String) {
+        // set in-memory annotations collection
+        if (this.contextService.getContext().caseId) {
+            this.annotationService.loadAnnotationsAvailableByCaseId(caseId)
+                .subscribe({
+                    next: annotations => {
+                        this.annotations = annotations;
+                    },
+                    error: error => {
+                        console.error(error.message);
+                    }
+                });
+        }
     }
     
-    constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder,
+    private getProjectedByAnnotations() {
+        this.projectedByAnnotations = [];
+        
+        // get projections grouped by annotation type
+        if (this.annotationFormGroup.controls.space.value == 'primal') {
+            this.annotations.forEach((annotation: Annotation) => {
+                if (annotation.group == 'attribute' && annotation.type == 'enumeration' && annotation.required == true) {
+                    let annotationLabel = annotation.label[this.LANGUAGE_ID];
+
+                    this.projectedByAnnotations.push({id: annotation.name, name: annotationLabel});
+                }
+            });
+        }
+        else {
+            this.annotations.forEach((annotation: Annotation) => {
+                if (annotation.group == 'sample' && annotation.type == 'enumeration' && annotation.required == true) {
+                    let annotationLabel = annotation.label[this.LANGUAGE_ID];
+
+                    this.projectedByAnnotations.push({id: annotation.name, name: annotationLabel});
+                }
+            });
+        }   
+    }
+
+    constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder,  private eventBus: NgEventBus,
         private contextService: ContextService, private annotationService: AnnotationService,
-        private annotationGroupPipe: AnnotationGroupPipe, private annotationSpacePipe: AnnotationSpacePipe,
-        private annotationTypePipe: AnnotationTypePipe) {         
+        private annotationGroupPipe: AnnotationGroupPipe, private annotationTypePipe: AnnotationTypePipe,
+        private annotationEncodingPipe: AnnotationEncodingPipe, private annotationSpacePipe: AnnotationSpacePipe,
+        ) {         
     }
 
     ngOnInit() {   
-        this.route.params.subscribe(params => {
-            this.annotationId = params['id'];
+        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_CHANGE_CASE)
+            .subscribe((meta: MetaData) => {
+                this.annotationFormGroup.controls.caseId.setValue(meta.data.caseId);
 
-            if (this.annotationId) {
-                this.annotationService.getAnnotationById(this.annotationId)
+                // get all available annotations from case
+                this.loadAvailableAnnotations(meta.data.caseId);
+            });   
+        
+        // recover the annotation Id selected in edit mode
+        this.route.params.subscribe(params => {
+            let annotationId = params['id'];
+
+            if (annotationId) {
+                this.annotationService.getAnnotationById(annotationId)
                     .subscribe((annotation: any) => {
                         if (annotation) {
-                            console.log(annotation);
-                            this.annotationFormGroup.setValue(annotation);
+                            this.annotation = annotation;
+                            this.annotationFormGroup.reset(annotation);
                         }
                 });
             }
         });  
         
+        // get all available annotations from case
+        this.loadAvailableAnnotations(this.contextService.getContext().caseId);
+
+        // fill default list from pipelines
         this.getAnnotationGroups();
-        this.getAnnotationSpaces();
-        this.getAnnotationTypes();           
+        this.getAnnotationTypes();        
+        this.getAnnotationEncodings();
+        this.getAnnotationSpaces();       
     }
 
     onGroupChange(event: any) {
@@ -105,6 +175,38 @@ export class ConfigurationFormComponent implements OnInit {
         }
     }
     
+    onPrecalculatedChange(event) {
+        if (this.annotationFormGroup.controls.group.value == 'projection' && !this.annotationFormGroup.controls.precalculated.value) {
+            this.annotationFormGroup.controls.projectedByAnnotation.setValue(undefined);
+        }
+    }
+    
+    onSpaceChange(event) {
+        this.getProjectedByAnnotations();
+    }
+    
+    onTypeChange(event) {
+        if (this.annotationFormGroup.controls.type.value == 'string') {
+            this.annotationFormGroup.controls.colorized.setValue(false);  
+            this.annotationFormGroup.controls.values.setValue(undefined);
+        }
+    }
+        
+    onProjectedByAnnotationChange(event: any) {
+        let projectedByAnnotation: Annotation = this.annotations.find((annotation: Annotation) => annotation.name == this.annotationFormGroup.value.projectedByAnnotation);
+
+        this.annotationService.getAnnotationById(projectedByAnnotation.annotationId)
+            .subscribe((annotation: any) => {
+                if (annotation) {
+                    this.projectedByAnnotationValues = [];
+                    
+                    annotation.values.forEach((value, index) => {
+                        this.projectedByAnnotationValues.push({ id: value, name: value });
+                    }); 
+                }
+            });
+    }
+    
     onCancelAnnotation() {
         this.router.navigate(['/configuration'])
     }
@@ -120,4 +222,9 @@ export class ConfigurationFormComponent implements OnInit {
                 this.router.navigate(['/configuration'])
             });*/                
     }
+
+    ngOnDestroy(): void {
+        if(this.subscriptionEvents)
+            this.subscriptionEvents.unsubscribe();
+    }    
 }

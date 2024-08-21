@@ -25,6 +25,8 @@
     ],
     "strictPropertyInitialization": false,
     "skipLibCheck":true,
+    "strictNullChecks": false,
+    "noImplicitAny": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

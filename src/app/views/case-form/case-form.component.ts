@@ -128,11 +128,7 @@ export class CaseFormComponent implements OnInit {
                 ]
             }
         ]
-        
-        if (this.contextService.getContext().projectId) {
-            this.caseFormGroup.controls.projectId.setValue(this.contextService.getContext().projectId);
-        }
-        
+                
         this.route.params.subscribe(params => {
             this.caseId = params['id'];
 
@@ -163,6 +159,10 @@ export class CaseFormComponent implements OnInit {
         if (this.contextService.getContext().organizationId) {
             this.getProjectsByOrganization(this.contextService.getContext().organizationId);
         }
+
+        if (this.contextService.getContext().projectId) {
+            this.caseFormGroup.controls.projectId.setValue(this.contextService.getContext().projectId);
+        }        
     }
 
     private getProjectsByOrganization(organizationId: String) {

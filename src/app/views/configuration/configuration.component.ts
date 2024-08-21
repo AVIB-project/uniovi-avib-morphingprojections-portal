@@ -22,10 +22,10 @@ export class ConfigurationComponent implements OnInit {
     annotations: Annotation[];
     
     constructor(private router: Router, private contextService: ContextService,  private eventBus: NgEventBus,
-        private confirmationService: ConfirmationService, private annotationService: AnnotationService) { }
+        private confirmationService: ConfirmationService, private annotationService: AnnotationService) {         
+    }
     
-    private loadAvailableAnnotations(caseId: String | null) {
-        // set in-memory annotations collection
+    private loadAvailableAnnotations(caseId: String) {
         if (this.contextService.getContext().caseId) {
             this.annotationService.loadAnnotationsAvailableByCaseId(caseId)
                 .subscribe({
@@ -36,20 +36,18 @@ export class ConfigurationComponent implements OnInit {
                         console.error(error.message);
                     }
                 });
+        } else {
+            this.annotations = [];
         }
     }
     
     ngOnInit() {        
         this.subscriptionEvents = this.eventBus.on(this.eventType.APP_CHANGE_CASE)
             .subscribe((meta: MetaData) => {
-                if (meta.data.caseId) {
-                    this.loadAvailableAnnotations(meta.data.caseId);
-                }
+                this.loadAvailableAnnotations(meta.data.caseId);
             });
         
-        if (this.contextService.getContext().caseId) {
             this.loadAvailableAnnotations(this.contextService.getContext().caseId);
-        }
     }
 
     onGlobalFilterCase(table: Table, event: Event) {

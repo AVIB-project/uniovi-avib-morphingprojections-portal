@@ -75,7 +75,6 @@ export class ConfigurationFormComponent implements OnInit {
     }
     
     private loadAvailableAnnotations(caseId: String) {
-        // set in-memory annotations collection
         if (this.contextService.getContext().caseId) {
             this.annotationService.loadAnnotationsAvailableByCaseId(caseId)
                 .subscribe({
@@ -193,18 +192,20 @@ export class ConfigurationFormComponent implements OnInit {
     }
         
     onProjectedByAnnotationChange(event: any) {
-        let projectedByAnnotation: Annotation = this.annotations.find((annotation: Annotation) => annotation.name == this.annotationFormGroup.value.projectedByAnnotation);
+        if (this.annotations.length > 0) {
+            let projectedByAnnotation: Annotation = this.annotations.find((annotation: Annotation) => annotation.name == this.annotationFormGroup.value.projectedByAnnotation);
 
-        this.annotationService.getAnnotationById(projectedByAnnotation.annotationId)
-            .subscribe((annotation: any) => {
-                if (annotation) {
-                    this.projectedByAnnotationValues = [];
-                    
-                    annotation.values.forEach((value, index) => {
-                        this.projectedByAnnotationValues.push({ id: value, name: value });
-                    }); 
-                }
-            });
+            this.annotationService.getAnnotationById(projectedByAnnotation.annotationId)
+                .subscribe((annotation: any) => {
+                    if (annotation) {
+                        this.projectedByAnnotationValues = [];
+
+                        annotation.values.forEach((value, index) => {
+                            this.projectedByAnnotationValues.push({ id: value, name: value });
+                        });
+                    }
+                });
+        }
     }
     
     onCancelAnnotation() {

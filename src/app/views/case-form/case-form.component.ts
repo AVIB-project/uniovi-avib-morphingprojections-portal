@@ -120,10 +120,9 @@ export class CaseFormComponent implements OnInit {
     }
     
     constructor(
-        private router: Router, private route: ActivatedRoute, private confirmationService: ConfirmationService,
-        private fb: FormBuilder, private eventBus: NgEventBus,
-        private contextService: ContextService,
-        private projectService: ProjectService, private caseService: CaseService, private dialogService: DialogService,) {         
+        private router: Router, private route: ActivatedRoute, private eventBus: NgEventBus,
+        private fb: FormBuilder, private confirmationService: ConfirmationService, private dialogService: DialogService,
+        private contextService: ContextService, private projectService: ProjectService, private caseService: CaseService) {         
     }            
     
     ngOnInit() {
@@ -157,7 +156,7 @@ export class CaseFormComponent implements OnInit {
             }
         });
         
-        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_CHANGE_CASE)
+        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_SELECT_CONTEXT)
             .subscribe((meta: MetaData) => {
                 this.caseFormGroup.controls.projectId.setValue(meta.data.projectId);
 
@@ -180,8 +179,12 @@ export class CaseFormComponent implements OnInit {
     onAddCase(event: Event) {
         this.caseService.saveCase(this.caseFormGroup.value)
             .subscribe((caseId: any) => {
-                console.log(caseId);
+                this.caseFormGroup.controls.caseId.setValue(caseId);
 
+                // emit the new case saved to reload toolbar collections
+                this.eventBus.cast(this.eventType.APP_CHANGE_CONTEXT, this.caseFormGroup.value);
+
+                // jump to master case
                 this.router.navigate(['/case']);
             });
     }

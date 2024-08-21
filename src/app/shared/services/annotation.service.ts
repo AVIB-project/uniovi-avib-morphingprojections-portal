@@ -213,14 +213,10 @@ export class AnnotationService {
     return of(true);
   }
 
-  addAnnotation(annotation: Annotation): Observable<Annotation> {
-    return this.http.post<Annotation>(`${this.baseUrl}/addAnnotation`, annotation);      
-  }
-
-  removeAnnotation(annotationId: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${annotationId}/removeAnnotationById`);      
-  }
-  
+  getAnnotationById(annotationId: String): Observable<Annotation> {
+    return this.http.get<Annotation>(`${this.baseUrl}` + "/" + annotationId);  
+  } 
+    
   upload(organizationId: string, projectId: string, caseId: string, file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     
@@ -234,11 +230,11 @@ export class AnnotationService {
     return this.http.request(req);
   }  
 
-  getAnnotationById(annotationId: String): Observable<Annotation> {
-    return this.http.get<Annotation>(`${this.baseUrl}` + "/" + annotationId);  
-  } 
-
+  saveAnnotation(annotation: any): Observable<String> {
+    return this.http.post<String>(`${this.baseUrl}`, annotation);      
+  }
+  
   deleteAnnotation(annotationId: String): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}` + "/" + annotationId);  
-  }  
+  }   
 }

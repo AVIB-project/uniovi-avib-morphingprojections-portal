@@ -120,7 +120,7 @@ export class ConfigurationFormComponent implements OnInit {
     }
 
     ngOnInit() {   
-        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_CHANGE_CASE)
+        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_SELECT_CONTEXT)
             .subscribe((meta: MetaData) => {
                 this.annotationFormGroup.controls.caseId.setValue(meta.data.caseId);
 
@@ -216,12 +216,12 @@ export class ConfigurationFormComponent implements OnInit {
         // set the final organization Id
         //this.annotationFormGroup.controls.caseId.setValue(this.contextService.getContext().caseId);
         
-        /*this.annotationService.saveAnnotation(this.annotationFormGroup.value)
+        this.annotationService.saveAnnotation(this.annotationFormGroup.value)
             .subscribe((userId: any) => {
                 console.log(userId);
 
                 this.router.navigate(['/configuration'])
-            });*/                
+            });
     }
 
     ngOnDestroy(): void {

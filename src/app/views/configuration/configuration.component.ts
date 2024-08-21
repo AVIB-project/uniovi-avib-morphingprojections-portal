@@ -19,7 +19,7 @@ export class ConfigurationComponent implements OnInit {
     subscriptionEvents: any; 
     eventType = EventType;
 
-    annotations: Annotation[];
+    annotations: Annotation[] = [];
     
     private loadAvailableAnnotations(caseId: String) {
         if (this.contextService.getContext().caseId) {
@@ -42,7 +42,7 @@ export class ConfigurationComponent implements OnInit {
     }
         
     ngOnInit() {        
-        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_CHANGE_CASE)
+        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_SELECT_CONTEXT)
             .subscribe((meta: MetaData) => {
                 this.loadAvailableAnnotations(meta.data.caseId);
             });

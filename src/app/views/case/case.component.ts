@@ -51,10 +51,10 @@ export class CaseComponent implements OnInit {
             { label: 'Remove Case', icon: 'pi pi-trash' }
         ];
         
-        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_CHANGE_CASE)
+        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_SELECT_CONTEXT)
             .subscribe((meta: MetaData) => {
                 if (meta.data.organizationId) {
-                    this.loadCasesByUser(meta.data.organizationId, meta.data.user.userId);
+                    this.loadCasesByUser(this.contextService.getContext().organizationId, meta.data.user.userId);
                 }
             });
         

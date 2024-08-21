@@ -34,7 +34,7 @@ export class UserComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_CHANGE_CASE)
+        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_SELECT_CONTEXT)
             .subscribe((meta: MetaData) => {
                 if (meta.data.organizationId) {
                     this.getUsersByOrganizationId(meta.data.organizationId);

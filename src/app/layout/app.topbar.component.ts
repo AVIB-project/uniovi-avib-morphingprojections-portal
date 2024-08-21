@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, AbstractControlOptions, Validators, ValidationErrors, ValidatorFn, FormBuilder } from '@angular/forms';
 
@@ -7,7 +7,7 @@ import { LayoutService } from "./service/app.layout.service";
 import { DialogService } from 'primeng/dynamicdialog';
 import { ConfirmationService } from 'primeng/api';
 
-import { NgEventBus } from 'ng-event-bus';
+import { NgEventBus, MetaData } from 'ng-event-bus';
 
 import { OrganizationFormComponent } from '../views/organization-form/organization-form.component';
 
@@ -48,7 +48,10 @@ export const PasswordValidator: ValidatorFn = (control: AbstractControl): Valida
     templateUrl: './app.topbar.component.html',
     providers: [DialogService, ConfirmationService]
 })
-export class AppTopBarComponent {
+export class AppTopBarComponent implements OnInit { 
+    eventType = EventType;
+    subscriptionEvents: any; 
+
     @ViewChild('searchinput')
     searchInput!: ElementRef;
     @ViewChild('menubutton')
@@ -68,8 +71,7 @@ export class AppTopBarComponent {
     selectedCase: Case | null;      
     menuOrganizationitems: MenuItem[] = [];
     
-    resourceTypeEnum = ResourceTypeEnum;
-    eventType = EventType;
+    resourceTypeEnum = ResourceTypeEnum;    
     resetPasswordViewVisible: boolean = false;
     
     resetPasswordFormGroup = this.fb.group(
@@ -82,9 +84,10 @@ export class AppTopBarComponent {
         } as AbstractControlOptions
     );
     
-    constructor(private router: Router, private fb: FormBuilder, private authService: AuthService, private confirmationService: ConfirmationService, 
-                public contextService: ContextService, private userService: UserService, private organizationService: OrganizationService,
-                private eventBus: NgEventBus, public layoutService: LayoutService, private dialogService: DialogService,) {
+    constructor(private router: Router, private fb: FormBuilder,
+        private authService: AuthService, private confirmationService: ConfirmationService, 
+        private eventBus: NgEventBus, public layoutService: LayoutService, private dialogService: DialogService,
+        public contextService: ContextService, private userService: UserService, private organizationService: OrganizationService) {
         this.menuOrganizationitems = [
             {
                 label: 'Organization', items: [
@@ -99,6 +102,18 @@ export class AppTopBarComponent {
         this.loadUserDetails();
     }
 
+    ngOnInit() {               
+        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_CHANGE_CONTEXT)
+            .subscribe((meta: MetaData) => {
+                this.getUserCases();
+
+                if (meta.data.caseId) {
+                    console.log(meta.data.organizationId);
+                    console.log(meta.data.caseId);
+                }
+            });
+    }
+    
     private addOrganization() {
         const organizationFormRef = this.dialogService.open(OrganizationFormComponent, {
             data: {
@@ -311,7 +326,7 @@ export class AppTopBarComponent {
         }
         
         // publish change case event type
-        this.eventBus.cast(this.eventType.APP_CHANGE_CASE, this.contextService.getContext());
+        this.eventBus.cast(this.eventType.APP_SELECT_CONTEXT, this.contextService.getContext());
     }
     
     onChangeOrganization() {
@@ -363,4 +378,9 @@ export class AppTopBarComponent {
     onLogout(event: any) {
         this.authService.logout();
     }
+
+    ngOnDestroy(): void {
+        if(this.subscriptionEvents)
+            this.subscriptionEvents.unsubscribe();
+    }    
 }

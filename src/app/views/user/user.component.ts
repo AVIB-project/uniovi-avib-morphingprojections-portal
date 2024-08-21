@@ -18,18 +18,19 @@ import { User } from '../../shared/models/user.model';
 export class UserComponent implements OnInit {
     subscriptionEvents: any; 
     eventType = EventType;
+    
     users: User[];
-
-    constructor(
-        private confirmationService: ConfirmationService, private router: Router, private eventBus: NgEventBus,
-        private contextService: ContextService, private userService: UserService) {         
-    }
 
     private getUsersByOrganizationId(organizationId: string) {
         this.userService.getUsersByOrganizationId(organizationId)
             .subscribe((users: User[]) => {
                 this.users = users;
             });
+    }
+    
+    constructor(
+        private confirmationService: ConfirmationService, private router: Router, private eventBus: NgEventBus,
+        private contextService: ContextService, private userService: UserService) {         
     }
 
     ngOnInit() {

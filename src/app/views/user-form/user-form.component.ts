@@ -19,12 +19,12 @@ import { LanguagePipe } from '../../shared/pipe/language.pipe';
 })
 export class UserFormComponent implements OnInit {     
     subscriptionEvents: any;    
+    eventType = EventType;
+    
     languages: any[] = [];
     roles: any[] = [];
     userId: string;
     user: User;
-
-    eventType = EventType;
 
     userFormGroup = this.fb.group({
         userId: [null],

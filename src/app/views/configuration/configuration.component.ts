@@ -21,10 +21,6 @@ export class ConfigurationComponent implements OnInit {
 
     annotations: Annotation[];
     
-    constructor(private router: Router, private contextService: ContextService,  private eventBus: NgEventBus,
-        private confirmationService: ConfirmationService, private annotationService: AnnotationService) {         
-    }
-    
     private loadAvailableAnnotations(caseId: String) {
         if (this.contextService.getContext().caseId) {
             this.annotationService.loadAnnotationsAvailableByCaseId(caseId)
@@ -41,6 +37,10 @@ export class ConfigurationComponent implements OnInit {
         }
     }
     
+    constructor(private router: Router, private contextService: ContextService,  private eventBus: NgEventBus,
+        private confirmationService: ConfirmationService, private annotationService: AnnotationService) {         
+    }
+        
     ngOnInit() {        
         this.subscriptionEvents = this.eventBus.on(this.eventType.APP_CHANGE_CASE)
             .subscribe((meta: MetaData) => {

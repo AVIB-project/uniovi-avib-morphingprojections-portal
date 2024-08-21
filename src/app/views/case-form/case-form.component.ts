@@ -25,9 +25,10 @@ import { CaseTypeEnum } from '../../shared/enum/case-type.enum';
 export class CaseFormComponent implements OnInit { 
     subscriptionEvents: any;
     eventType = EventType;
-    caseId: String;
+
     projects: Project[] = [];
     menuProjectitems: MenuItem[] = [];
+    caseId: String;
     
     caseFormGroup = this.fb.group({
         caseId: [null],
@@ -38,13 +39,13 @@ export class CaseFormComponent implements OnInit {
         type: [CaseTypeEnum.Private, Validators.required]
     });
     
-    constructor(
-        private router: Router, private route: ActivatedRoute, private confirmationService: ConfirmationService,
-        private fb: FormBuilder, private eventBus: NgEventBus,
-        private contextService: ContextService,
-        private projectService: ProjectService, private caseService: CaseService, private dialogService: DialogService,) {         
-    }
-        
+    private getProjectsByOrganization(organizationId: String) {
+        this.projectService.getProjectsByOrganizationId(organizationId)
+            .subscribe((projects: Project[]) => {
+                this.projects = projects;
+            });
+    }   
+    
     private addProject() {
         const projectFormRef = this.dialogService.open(ProjectFormComponent, {
             data: {
@@ -118,6 +119,13 @@ export class CaseFormComponent implements OnInit {
         console.log("Remove project: " + this.caseFormGroup.controls.projectId);
     }
     
+    constructor(
+        private router: Router, private route: ActivatedRoute, private confirmationService: ConfirmationService,
+        private fb: FormBuilder, private eventBus: NgEventBus,
+        private contextService: ContextService,
+        private projectService: ProjectService, private caseService: CaseService, private dialogService: DialogService,) {         
+    }            
+    
     ngOnInit() {
         this.menuProjectitems = [
             {
@@ -165,18 +173,11 @@ export class CaseFormComponent implements OnInit {
         }        
     }
 
-    private getProjectsByOrganization(organizationId: String) {
-        this.projectService.getProjectsByOrganizationId(organizationId)
-            .subscribe((projects: Project[]) => {
-                this.projects = projects;
-            });
-    }    
-
-    onCancelCase(event: any) {
+    onCancelCase(event: Event) {
         this.router.navigate(['/case']);
     }
     
-    onAddCase(event: any) {
+    onAddCase(event: Event) {
         this.caseService.saveCase(this.caseFormGroup.value)
             .subscribe((caseId: any) => {
                 console.log(caseId);

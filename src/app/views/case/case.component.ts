@@ -24,17 +24,12 @@ import { Case } from '../../shared/models/case.model';
 export class CaseComponent implements OnInit {
     subscriptionEvents: any; 
     eventType = EventType;
+    
     organizationCases: OrganizationCase[];
     items: MenuItem[] | undefined;
 
-    constructor(
-        private confirmationService: ConfirmationService, private router: Router, private eventBus: NgEventBus,
-        private contextService: ContextService, private organizationService: OrganizationService, private caseService: CaseService) { 
-    }
-
     private loadCasesByUser(organizationId: string, userId: string) {
         this.organizationService.getCasesByOrganizationAndUser(organizationId, userId)
-        //this.organizationService.getCasesByUser(userId)
             .subscribe({
                 next: (organizationCases: OrganizationCase[]) => {
                     this.organizationCases = organizationCases;      
@@ -43,6 +38,11 @@ export class CaseComponent implements OnInit {
                     console.error(error.message);
                 }
             });
+    }
+    
+    constructor(
+        private confirmationService: ConfirmationService, private router: Router, private eventBus: NgEventBus,
+        private contextService: ContextService, private organizationService: OrganizationService, private caseService: CaseService) { 
     }
 
     ngOnInit() {

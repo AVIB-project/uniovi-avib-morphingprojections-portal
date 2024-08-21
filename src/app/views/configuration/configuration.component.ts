@@ -80,7 +80,8 @@ export class ConfigurationComponent implements OnInit {
             icon: 'pi pi-exclamation-triangle',
             acceptIcon:"none",
             rejectIcon:"none",
-            rejectButtonStyleClass:"p-button-text",
+            rejectButtonStyleClass: "p-button-text",
+            defaultFocus: 'reject',
             accept: () => {
                 if (annotation.annotationId) {
                     this.annotationService.deleteAnnotation(annotation.annotationId)

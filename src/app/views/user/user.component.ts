@@ -76,7 +76,8 @@ export class UserComponent implements OnInit {
             icon: 'pi pi-exclamation-triangle',
             acceptIcon:"none",
             rejectIcon:"none",
-            rejectButtonStyleClass:"p-button-text",
+            rejectButtonStyleClass: "p-button-text",
+            defaultFocus: 'reject',
             accept: () => {
                 if (user.userId) {
                     this.userService.deleteUser(user.userId)

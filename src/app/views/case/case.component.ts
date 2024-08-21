@@ -91,7 +91,8 @@ export class CaseComponent implements OnInit {
             icon: 'pi pi-exclamation-triangle',
             acceptIcon:"none",
             rejectIcon:"none",
-            rejectButtonStyleClass:"p-button-text",
+            rejectButtonStyleClass: "p-button-text",
+            defaultFocus: 'reject',
             accept: () => {
                 if (organizationCase.caseId) {
                     this.caseService.deleteCase(organizationCase.caseId)

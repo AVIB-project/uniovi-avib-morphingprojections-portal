@@ -37,7 +37,7 @@ export class ConfigurationComponent implements OnInit {
         }
     }
     
-    constructor(private router: Router, private contextService: ContextService,  private eventBus: NgEventBus,
+    constructor(private router: Router, public contextService: ContextService,  private eventBus: NgEventBus,
         private confirmationService: ConfirmationService, private annotationService: AnnotationService) {         
     }
         

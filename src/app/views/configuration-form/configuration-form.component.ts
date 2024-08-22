@@ -47,7 +47,7 @@ export class ConfigurationFormComponent implements OnInit {
         label: ['', Validators.required],
         group: ['', Validators.required],
         type: ['', Validators.required],
-        values: [''],
+        values: [[]],
         space: [''],
         projection: [''],        
         projectedByAnnotation: [''],
@@ -137,7 +137,9 @@ export class ConfigurationFormComponent implements OnInit {
                     .subscribe((annotation: any) => {
                         if (annotation) {                            
                             this.annotation = annotation;
+                                
                             this.annotationFormGroup.reset(annotation);
+                            this.annotationFormGroup.controls.label.setValue(this.annotation.label[this.LANGUAGE_ID]);                            
                         }
                 });
             } else {
@@ -215,8 +217,11 @@ export class ConfigurationFormComponent implements OnInit {
     }
 
     onAddAnnotation() {        
-        let annotation: any = this.annotationFormGroup.value;
-        annotation.values = [];
+        let annotation: any = this.annotationFormGroup.value;        
+
+        /*if (this.annotationFormGroup.controls.values == undefined)
+            annotation = [];*/
+        
         annotation.label = {
             "es": this.annotationFormGroup.controls.label.value,
             "us": this.annotationFormGroup.controls.label.value,

@@ -11,8 +11,8 @@ import { ContextService } from '../../shared/services/context.service';
 })
 export class ProjectFormComponent {
     projectFormGroup = this.fb.group({
-        projectId: [''],
-        organizationId: [''], 
+        projectId: [null],
+        organizationId: [null], 
         name: ['', Validators.required],
         description: ['']
     });

@@ -22,7 +22,19 @@ function initializeKeycloak(keycloak: KeycloakService) {
         initOptions: {
             onLoad: 'check-sso',
             silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html'
-        }
+        },
+        shouldAddToken: (request) => {
+            const { method, url } = request;
+
+            const isGetRequest = 'GET' === method.toUpperCase();
+            const acceptablePaths = ['/assets'];
+            
+            const isAcceptablePathMatch = acceptablePaths.some((path) =>
+                url.includes(path)
+            );
+
+            return !(isGetRequest && isAcceptablePathMatch);
+        }        
     });
 }
 

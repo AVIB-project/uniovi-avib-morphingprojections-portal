@@ -35,10 +35,10 @@
                         </span>
                         <div style="display: none" #options>
                             <button pButton class="h-2rem w-2rem mr-2" icon="pi pi-file-edit" 
-                                pTooltip="Edit" tooltipPosition="top"
+                                pTooltip="Edit" tooltipPosition="top" [disabled]="organizationCase.caseId == undefined"
                                 (click)="onEditCase($event, organizationCase)"></button>
                             <button pButton class="tool-button h-2rem w-2rem p-button-danger" icon="pi pi-trash" 
-                                pTooltip="Remove" tooltipPosition="top"
+                                pTooltip="Remove" tooltipPosition="top" [disabled]="organizationCase.caseId == undefined"
                                 (click)="onRemoveCase($event, organizationCase)"></button>
                         </div>
                     </div>

@@ -6,8 +6,8 @@ export interface Case {
     description?: string;
     type?: string;
     resources: Resource[],
-    creationBy: string;
-    creationDate: string;
-    updatedBy: string;
-    updatedDate: string;
+    creationBy?: string;
+    creationDate?: string;
+    updatedBy?: string;
+    updatedDate?: string;
 }

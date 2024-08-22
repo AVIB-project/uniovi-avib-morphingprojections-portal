@@ -12,6 +12,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ChipsModule } from 'primeng/chips';
 
 import { ConfigurationFormComponent } from './configuration-form.component';
 import { ConfigurationFormRoutingModule } from './configuration-form-routing.module';
@@ -30,6 +31,7 @@ import { ConfigurationFormRoutingModule } from './configuration-form-routing.mod
 		InputGroupModule,
 		InputGroupAddonModule,
 		CheckboxModule,
+		ChipsModule,
 		ConfigurationFormRoutingModule,
 	],
 	declarations: [ConfigurationFormComponent]

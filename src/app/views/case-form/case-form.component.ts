@@ -25,6 +25,7 @@ import { CaseTypeEnum } from '../../shared/enum/case-type.enum';
 export class CaseFormComponent implements OnInit { 
     subscriptionEvents: any;
     eventType = EventType;
+    isEditMode: boolean = false;
 
     projects: Project[] = [];
     menuProjectitems: MenuItem[] = [];
@@ -62,6 +63,9 @@ export class CaseFormComponent implements OnInit {
                     .subscribe((projectId: String) => {
                         this.getProjectsByOrganization(this.contextService.getContext().organizationId);
 
+                        // emit a project add event
+                        this.eventBus.cast(this.eventType.APP_ADD_PROJECT, projectId);
+                        
                         /*this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.INFO,
                             tittle: this.translateService.instant('MACHINE_VIEW.MESSAGE_TITLE_UPDATE'),
                             message: this.translateService.instant('MACHINE_VIEW.MESSAGE_DETAIL_UPDATE', {mid: machine.data.mid})});*/
@@ -88,6 +92,9 @@ export class CaseFormComponent implements OnInit {
                     .subscribe((projectId: String) => {
                         this.getProjectsByOrganization(this.contextService.getContext().organizationId);
 
+                        // emit a project edit event
+                        this.eventBus.cast(this.eventType.APP_EDIT_PROJECT, projectId);
+                        
                         /*this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.INFO,
                             tittle: this.translateService.instant('MACHINE_VIEW.MESSAGE_TITLE_UPDATE'),
                             message: this.translateService.instant('MACHINE_VIEW.MESSAGE_DETAIL_UPDATE', {mid: machine.data.mid})});*/
@@ -108,9 +115,12 @@ export class CaseFormComponent implements OnInit {
             rejectButtonStyleClass:"p-button-text",
             accept: () => {
                 if (this.caseFormGroup.controls.projectId.value) {
-                    this.projectService.deleteProject(project?.projectId!)
+                    this.projectService.deleteProject(project.projectId)
                         .subscribe(() => {
                             this.getProjectsByOrganization(this.contextService.getContext().organizationId);
+
+                            // emit a project delete event
+                            this.eventBus.cast(this.eventType.APP_DELETE_PROJECT, project);
                         });
                 }
             }
@@ -139,7 +149,10 @@ export class CaseFormComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.caseId = params['id'];
 
-            if (this.caseId) {                
+            if (this.caseId) {
+                // form in edit mode
+                this.isEditMode = true;
+
                 this.caseService.getCaseById(this.caseId)
                     .subscribe({
                         next: (_case: any) => {
@@ -176,14 +189,18 @@ export class CaseFormComponent implements OnInit {
         this.router.navigate(['/case']);
     }
     
-    onAddCase(event: Event) {
+    onAddCase(event: Event) {        
         this.caseService.saveCase(this.caseFormGroup.value)
-            .subscribe((caseId: any) => {
-                this.caseFormGroup.controls.caseId.setValue(caseId);
-
-                // emit the new case saved to reload toolbar collections
-                this.eventBus.cast(this.eventType.APP_CHANGE_CONTEXT, this.caseFormGroup.value);
-
+            .subscribe((_case: any) => {
+                this.caseFormGroup.controls.caseId.setValue(_case.caseId);
+                
+                if (this.isEditMode)
+                    // emit a edit case event
+                    this.eventBus.cast(this.eventType.APP_EDIT_CASE, this.caseFormGroup.value);
+                else
+                    // emit a add case event
+                    this.eventBus.cast(this.eventType.APP_ADD_CASE, this.caseFormGroup.value);
+                
                 // jump to master case
                 this.router.navigate(['/case']);
             });

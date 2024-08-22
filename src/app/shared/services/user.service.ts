@@ -50,6 +50,10 @@ export class UserService {
         return this.http.get<User>(`${this.baseUrl}` + "/" + userId);  
     } 
     
+    getUserByExternalId(externalId: String): Observable<User> {
+        return this.http.get<User>(`${this.baseUrl}` + "/" + externalId + "/external");  
+    } 
+    
     getUserByEmail(email: String): Observable<User> {
         return this.http.get<User>(`${this.baseUrl}` + "/" + email + "/email");  
     } 

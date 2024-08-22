@@ -40,7 +40,7 @@ export class ConfigurationFormComponent implements OnInit {
     annotation: Annotation;
 
     annotationFormGroup = this.fb.group({
-        annotationId: [''],
+        annotationId: [null],
         caseId: [''],
         name: ['', Validators.required],
         description: [''],
@@ -52,7 +52,7 @@ export class ConfigurationFormComponent implements OnInit {
         projection: [''],        
         projectedByAnnotation: [''],
         projectedByAnnotationValue: [''],
-        encoding: ['', Validators.required],
+        encoding: [''],
         precalculated: [false, Validators.required],
         colorized: [false, Validators.required],
         required: [true, Validators.required],
@@ -135,11 +135,13 @@ export class ConfigurationFormComponent implements OnInit {
             if (annotationId) {
                 this.annotationService.getAnnotationById(annotationId)
                     .subscribe((annotation: any) => {
-                        if (annotation) {
+                        if (annotation) {                            
                             this.annotation = annotation;
                             this.annotationFormGroup.reset(annotation);
                         }
                 });
+            } else {
+                this.annotationFormGroup.controls.caseId.setValue(this.contextService.getContext().caseId);
             }
         });  
         
@@ -212,11 +214,15 @@ export class ConfigurationFormComponent implements OnInit {
         this.router.navigate(['/configuration'])
     }
 
-    onAddAnnotation() {
-        // set the final organization Id
-        //this.annotationFormGroup.controls.caseId.setValue(this.contextService.getContext().caseId);
-        
-        this.annotationService.saveAnnotation(this.annotationFormGroup.value)
+    onAddAnnotation() {        
+        let annotation: any = this.annotationFormGroup.value;
+        annotation.values = [];
+        annotation.label = {
+            "es": this.annotationFormGroup.controls.label.value,
+            "us": this.annotationFormGroup.controls.label.value,
+        };
+
+        this.annotationService.saveAnnotation(annotation)
             .subscribe((userId: any) => {
                 console.log(userId);
 

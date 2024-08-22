@@ -9,7 +9,7 @@ import { ContextService } from '../../shared/services/context.service';
 @Component({
     templateUrl: './project-form.component.html'
 })
-export class ProjectFormComponent { 
+export class ProjectFormComponent {
     projectFormGroup = this.fb.group({
         projectId: [''],
         organizationId: [''], 
@@ -20,15 +20,13 @@ export class ProjectFormComponent {
     constructor(
         private router: Router, private route: ActivatedRoute, private contextService: ContextService,
         private dialog: DynamicDialogRef, private config: DynamicDialogConfig, private fb: FormBuilder) { 
-                console.log(this.config.data.project);
-                this.projectFormGroup.reset(this.config.data.project);
-            
+            this.projectFormGroup.reset(this.config.data.project);
     }
 
     onCancelProject(event: any) {
         event.preventDefault();
 
-        this.dialog.close({action: 'cance'});    
+        this.dialog.close({action: 'cancel'});    
     }
     
     onAddProject(event: any) {

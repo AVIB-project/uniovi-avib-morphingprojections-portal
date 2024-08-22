@@ -58,7 +58,9 @@ export class CaseComponent implements OnInit {
                 }
             });
         
-        this.loadCasesByUser(this.contextService.getContext().organizationId, this.contextService.getContext().user.userId);
+        if (this.contextService.getContext().organizationId && this.contextService.getContext().user.userId) {
+            this.loadCasesByUser(this.contextService.getContext().organizationId, this.contextService.getContext().user.userId);
+        }
     }
 
     onGlobalFilterCase(table: Table, event: Event) {
@@ -97,7 +99,10 @@ export class CaseComponent implements OnInit {
                 if (organizationCase.caseId) {
                     this.caseService.deleteCase(organizationCase.caseId)
                         .subscribe(() => {
-                            this.loadCasesByUser(this.contextService.getContext().organizationId, this.contextService.getContext().user.userId);                          
+                            this.loadCasesByUser(this.contextService.getContext().organizationId, this.contextService.getContext().user.userId);
+
+                            // emit a delete case event
+                            this.eventBus.cast(this.eventType.APP_DELETE_CASE, organizationCase);
                     });
                 }
             }

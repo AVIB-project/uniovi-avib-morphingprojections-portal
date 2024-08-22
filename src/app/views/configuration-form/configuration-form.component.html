@@ -106,6 +106,10 @@
                             </div>
                         </div>
                     </div>
+                    <div class="field mb-4 col-12 md:col-12" *ngIf="annotationFormGroup.get('group').value != 'projection' && annotationFormGroup.get('type').value == 'enumeration'">
+                        <label for="values" class="control-label block"><span style="color: red;">*</span>Values</label>
+                        <p-chips inputId="values" styleClass="selector-values" formControlName="values"></p-chips>
+                    </div>
                 </div>
 
                 <div class="flex flex-wrap justify-content-end gap-3">

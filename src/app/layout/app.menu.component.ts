@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
+import { AuthService } from '../shared/services/auth.service';
 import { ContextService } from '../shared/services/context.service';
 import { LayoutService } from './service/app.layout.service';
 
@@ -12,10 +13,10 @@ export class AppMenuComponent implements OnInit {
 
     model: any[] = [];
 
-    constructor(public layoutService: LayoutService, private contextService: ContextService) { }
+    constructor(public layoutService: LayoutService, private contextService: ContextService, private authService: AuthService) { }
 
     private configureMenuByRole() {
-        if (this.contextService.getContext().user.role == "ADMIN") {
+        if (this.authService.getRoles().includes("ADMIN")) {
             this.model = [
                 {
                 label: 'Dashboard',
@@ -53,7 +54,7 @@ export class AppMenuComponent implements OnInit {
                     routerLink: ['/user']
                 },
             ];
-        } else if (this.contextService.getContext().user.role == "USER") {
+        } else if (this.authService.getRoles().includes("USER")) {
            this.model = [
                 {
                 label: 'Dashboard',

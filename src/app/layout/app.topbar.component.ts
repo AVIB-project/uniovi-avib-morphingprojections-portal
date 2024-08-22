@@ -31,6 +31,11 @@ interface ProjectItem {
     items: any[],
 }
 
+interface CaseItem {
+    label: string;
+    value: Case;
+}
+
 export const PasswordValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const password = control.get('password');
     const confirmpassword = control.get('confirmPassword');
@@ -51,6 +56,12 @@ export const PasswordValidator: ValidatorFn = (control: AbstractControl): Valida
 export class AppTopBarComponent implements OnInit { 
     eventType = EventType;
     subscriptionEvents: any; 
+    subscriptionAddProjectEvents: any; 
+    subscriptionEditProjectEvents: any; 
+    subscriptionRemoveProjectEvents: any; 
+    subscriptionAddCaseEvents: any; 
+    subscriptionEditCaseEvents: any; 
+    subscriptionRemoveCaseEvents: any; 
 
     @ViewChild('searchinput')
     searchInput!: ElementRef;
@@ -102,16 +113,82 @@ export class AppTopBarComponent implements OnInit {
         this.loadUserDetails();
     }
 
-    ngOnInit() {               
-        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_CHANGE_CONTEXT)
-            .subscribe((meta: MetaData) => {
-                this.getUserCases();
+    ngOnInit() {
+        this.subscriptionAddProjectEvents = this.eventBus.on(this.eventType.APP_ADD_PROJECT)
+            .subscribe((meta: MetaData) => {                
+                const selectProjectItem = { projectId: meta.data.projectId, label: meta.data.name, value: meta.data.description, items: [] };
+                
+                this.projectList = [selectProjectItem, ...this.projectList];
+            });
+        
+        this.subscriptionEditProjectEvents = this.eventBus.on(this.eventType.APP_EDIT_PROJECT)
+            .subscribe((meta: MetaData) => {     
+                const projectItem: ProjectItem = this.projectList.find((projectItem: ProjectItem) => projectItem.projectId == meta.data.projectId);
 
-                if (meta.data.caseId) {
-                    console.log(meta.data.organizationId);
-                    console.log(meta.data.caseId);
+                if (projectItem) {
+                    projectItem.label = meta.data.name;
                 }
             });
+        
+        this.subscriptionRemoveProjectEvents = this.eventBus.on(this.eventType.APP_DELETE_PROJECT)
+            .subscribe((meta: MetaData) => {      
+                this.projectList = this.projectList.filter((projectItem) => projectItem.label != meta.data.name );            
+            });
+        
+        this.subscriptionAddCaseEvents = this.eventBus.on(this.eventType.APP_ADD_CASE)
+            .subscribe((meta: MetaData) => {                
+                /*const caseItem: CaseItem = {
+                    label: meta.data.name, value: {
+                        caseId: meta.data.caseId, name: meta.data.name, description: meta.data.description, type: "PRIVATE", resources: []
+                    }
+                };
+
+                const result = this.projectList.map((projectItem: ProjectItem) => {
+                    if (projectItem.projectId === meta.data.projectId) {
+                        return { ...projectItem, items: [caseItem, ...projectItem.items] };
+                    } else {
+                        return projectItem;
+                    }
+                });
+
+                this.projectList = result;*/
+
+                this.getUserCases();
+            });
+        
+        this.subscriptionEditCaseEvents = this.eventBus.on(this.eventType.APP_EDIT_CASE)
+            .subscribe((meta: MetaData) => {
+                /*const projectItem: ProjectItem = this.projectList.find((projectItem: ProjectItem) => {
+                    if (projectItem.projectId == meta.data.projectId)
+                        return projectItem;
+                    
+                    return null;
+                });
+
+                if (projectItem) {
+                    const caseItem: CaseItem = projectItem.items.find((caseItem: CaseItem) => {
+                        if (caseItem.value.caseId == meta.data.caseId)
+                            return caseItem;
+                    
+                        return null;
+                    });
+
+                    if (caseItem) {
+                        caseItem.label = meta.data.name;
+                        caseItem.value.name = meta.data.name;
+                        caseItem.value.description = meta.data.description;  
+                    }
+
+                    this.selectedCase = caseItem.value;
+                }*/
+                
+                this.getUserCases();
+            });
+        
+        this.subscriptionRemoveCaseEvents = this.eventBus.on(this.eventType.APP_DELETE_CASE)
+            .subscribe((meta: MetaData) => {                
+                this.getUserCases();
+            });         
     }
     
     private addOrganization() {
@@ -220,9 +297,9 @@ export class AppTopBarComponent implements OnInit {
 
             this.projectList.push(projectItem);
 
-            project.cases.forEach((cs: Case) => {
-                let caseItem = { label: cs.name, value: cs };
-
+            project.cases.forEach((_case: Case) => {
+                let caseItem: CaseItem = { label: _case.name, value: _case };
+                
                 projectItem.items.push(caseItem)
             });              
         }); 
@@ -355,7 +432,8 @@ export class AppTopBarComponent implements OnInit {
     }
         
     onProfile(event: any) {
-        this.router.navigate(['/user-form', { id: this.user.userId }])
+        //this.router.navigate(['/user-form', { id: this.user.userId }]);
+        this.router.navigate(['/user-form', { id: this.user.externalId }]);
     }
 
     onShowResetPassword(event: any) {
@@ -382,5 +460,23 @@ export class AppTopBarComponent implements OnInit {
     ngOnDestroy(): void {
         if(this.subscriptionEvents)
             this.subscriptionEvents.unsubscribe();
+
+        if(this.subscriptionAddProjectEvents)
+            this.subscriptionAddProjectEvents.unsubscribe();
+        
+        if(this.subscriptionEditProjectEvents)
+            this.subscriptionEditProjectEvents.unsubscribe();
+        
+        if(this.subscriptionRemoveProjectEvents)
+            this.subscriptionRemoveProjectEvents.unsubscribe();
+        
+        if(this.subscriptionAddCaseEvents)
+            this.subscriptionAddCaseEvents.unsubscribe();
+        
+        if(this.subscriptionEditCaseEvents)
+            this.subscriptionEditCaseEvents.unsubscribe();
+        
+        if(this.subscriptionRemoveCaseEvents)
+            this.subscriptionRemoveCaseEvents.unsubscribe();     
     }    
 }

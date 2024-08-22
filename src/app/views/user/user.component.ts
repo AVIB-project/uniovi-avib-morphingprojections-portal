@@ -30,7 +30,7 @@ export class UserComponent implements OnInit {
     
     constructor(
         private confirmationService: ConfirmationService, private router: Router, private eventBus: NgEventBus,
-        private contextService: ContextService, private userService: UserService) {         
+        public contextService: ContextService, private userService: UserService) {         
     }
 
     ngOnInit() {
@@ -52,8 +52,13 @@ export class UserComponent implements OnInit {
 
     onToggleOptions(event: Event, opt: HTMLElement, date: HTMLElement) {
         if (event.type === 'mouseenter') {
-            opt.style.display = 'flex';
-            date.style.display = 'none';
+            if (this.contextService.getContext().user.role != "GUEST") {
+                opt.style.display = 'flex';
+                date.style.display = 'none';
+            } else {
+                opt.style.display = 'none';
+                date.style.display = 'flex';
+            }
         } else {
             opt.style.display = 'none';
             date.style.display = 'flex';
@@ -65,7 +70,8 @@ export class UserComponent implements OnInit {
     }
 
     onEditUser(event: Event, user: User) {
-        this.router.navigate(['/user-form', { id: user.userId }])
+        //this.router.navigate(['/user-form', { id: user.userId }]);
+        this.router.navigate(['/user-form', { id: user.externalId }]);
     }
 
     onRemoveUser(event: Event, user: User) {

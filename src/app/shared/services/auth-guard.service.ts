@@ -12,30 +12,50 @@ export class AuthGuard extends KeycloakAuthGuard {
     super(router, keycloakAngular)
   }
 
-  isAccessAllowed(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
-    return new Promise(async (resolve, reject) => {
-      if(!this.authenticated)
-      {
-        this.keycloakAngular.login();
-        resolve(false);
-        return;
+  public async isAccessAllowed(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ) {
+    // Force the user to log in if currently unauthenticated.
+    if (!this.authenticated) {
+      await this.keycloakAngular.login();
+    }
+
+    // Get the request data
+    const keycloakId = (await this.keycloakAngular.loadUserProfile()).id;
+    const userId = route.params['id'];
+    const routePath = route.routeConfig.path;
+    const requiredRoles = route.data['roles'];
+
+    // Allow the user to proceed if no additional roles are required to access the route.
+    if (!Array.isArray(requiredRoles) || requiredRoles.length === 0) {
+      return true;
+    }
+    
+    let pass = requiredRoles.some((role) => {
+      if (routePath != "user-form") {
+        return this.roles.includes(role);
       }
-
-      const requiredRoles = route.data['roles'];
-      let granted: boolean = false;
-
-      if(!requiredRoles || requiredRoles.length === 0) {
-        granted = true;
-      } else {
-        for(const requiredRole of requiredRoles) {
-          if(this.roles.indexOf(requiredRole) > -1) {
-            granted = true;
-            break;
-          }
+      else {
+        if (userId) {
+          // user form edition mode only if you are the owner of the profile
+          if (this.roles.includes(role) || keycloakId == userId)
+            return true;
+          else 
+            return false;          
+        }
+        else {
+          // user form creation mode only if your have the roles
+          if (this.roles.includes(role))
+            return true;
+          else
+            return false;
         }
       }
-        
-      resolve(granted);
-    })
-  }
+    });
+
+    // Allow the user to proceed if some of the required roles are present.
+    //return requiredRoles.some((role) => this.roles.includes(role));
+    return pass;
+  }  
 }

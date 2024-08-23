@@ -13,6 +13,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { MenuModule } from 'primeng/menu';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { TagModule } from 'primeng/tag';
 
 import { IngestionFormComponent } from './ingestion-form.component';
 import { IngestionFormRoutingModule } from './ingestion-form-routing.module';
@@ -33,6 +34,7 @@ import { IngestionFormRoutingModule } from './ingestion-form-routing.module';
 		IngestionFormRoutingModule,		
 		MenuModule,
 		ConfirmDialogModule,
+		TagModule,
 	],
 	declarations: [IngestionFormComponent]
 })

@@ -6,6 +6,55 @@
             <p class="m-0 p-0 text-600 line-height-3 mr-3">Resource represent any xml raw or project file attached to our case</p>
         </div>
         <div class="col-12 lg:col-10">
+            <div class="flex flex-column gap-4">
+                <!-- Resource Type panel -->
+                <div class="flex flex-row gap-4">
+                    <div class="flex flex-row align-items-center gap-2">
+                        <label class="filter-labels">Resource Type:</label>
+                        <p-dropdown [options]="resourceTypes" [(ngModel)]="selectedResourceType" optionLabel="name" optionValue="id"
+                            (onChange)="onResourceType($event)">
+                        </p-dropdown>
+                    </div>
+            
+                    <div class="flex flex-row align-items-center gap-2">
+                        <label class="filter-labels">Description:</label>
+                        <input type="text" pInputText [(ngModel)]="resourceDescription" />
+                    </div>
+                </div>
+            
+                <!-- Upload files panel -->
+                <div class="p-fluid">
+                    <p-fileUpload #fileUpload accept="text/csv" [multiple]="true" [customUpload]="true"
+                        (onClear)="onClearFiles($event)" (onSelect)="onSelectFiles($event)" (uploadHandler)="onUploadFiles($event)">
+                        <ng-template pTemplate="toolbar">
+                            <div class="py-3">Upload Datamatrix and Annotation Files with CSV format</div>
+                        </ng-template>
+                        <ng-template let-file pTemplate="file"></ng-template>
+                    </p-fileUpload>
+            
+                    <div class="progress-panel">
+                        <div *ngFor="let file of resourceFiles">
+                            <div class="formgroup-inline">
+                                <div class="flex flex-row gap-2" style="padding-top: 18px;">
+                                    <p-button icon="pi pi-times" severity="danger" class="remove-file"
+                                        (onClick)="onRemoveFile(file)">
+                                    </p-button>
+                                    <p-tag severity="danger" [value]="file.errorMessage" *ngIf="file.errorMessage"></p-tag>
+                                </div>
+                                <div class="field" style="padding-left: 5px;">
+                                    <span id="samples_loading">{{ file.name }} - {{ file.size }} bytes</span>
+                                    <p-progressBar styleClass="file-progress-bar" aria-labelledby="samples_loading"
+                                        [value]="file.progress">
+                                    </p-progressBar>
+                                    <span id="samples_loading">{{ file.type }} - {{ file.description }}</span>
+                                </div>
+            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="flex flex-wrap justify-content-end gap-3">
                 <button (click)="onCloseResource($event)" pButton pRipple label="Close Resource" class="w-auto mt-3"></button>
             </div>

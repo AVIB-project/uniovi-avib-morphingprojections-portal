@@ -1,8 +1,8 @@
 <div class="card">
     <p-confirmDialog />
-    <p-table #dt [value]="organizationCases" [rowHover]="true"
-        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    <p-table #dt [value]="organizationCases" [rowHover]="true" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll"
         [paginator]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"        
         [globalFilterFields]="['organizationName','projectName','caseName','caseDescription']">
         <ng-template pTemplate="caption">
             <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
@@ -31,9 +31,9 @@
                 <td style="min-width: 10rem;">
                     <div class="flex justify-content-start w-full px-0">
                         <span #active class="text-700 font-semibold white-space-nowrap">
-                            <td>{{organizationCase.caseDescription}}</td>
+                            <td style="padding: 6px;">{{organizationCase.caseDescription}}</td>
                         </span>
-                        <div style="display: none" #options>
+                        <div style="display: none;" #options>
                             <button pButton class="h-2rem w-2rem mr-2" icon="pi pi-file-edit" 
                                 pTooltip="Edit Case" tooltipPosition="top" [disabled]="organizationCase.caseId == undefined"
                                 (click)="onEditCase($event, organizationCase)"></button>

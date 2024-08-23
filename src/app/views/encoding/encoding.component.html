@@ -1,6 +1,7 @@
 <div class="card">
-    <p-table #dt [value]="organizationCases" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+    <p-table #dt [value]="organizationCases" [rowHover]="true" [scrollable]="true" scrollHeight="400px" responsiveLayout="scroll"
+        [paginator]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"        
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"         
         [globalFilterFields]="['organizationName','projectName','caseName','caseDescription']">
         <ng-template pTemplate="caption">
             <div class="flex flex-wrap gap-2 align-items-center justify-content-between">

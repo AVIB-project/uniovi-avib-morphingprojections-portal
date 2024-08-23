@@ -28,16 +28,32 @@ export class IngestionComponent implements OnInit {
 
     private loadResources(caseId: string) {
         this.resourceService.getResourcesByCaseId(caseId)
-        .subscribe({
-            next: (resources: Resource[]) => {
-                this.resources = resources;          
-            },
-            error: error => {
-                console.error(error.message);
-            }
-        });
+            .subscribe({
+                next: (resources: Resource[]) => {
+                    this.resources = resources;          
+                },
+                error: error => {
+                    console.error(error.message);
+                }
+            });
     }
     
+    private removeResource(resourceFile: string) {
+        this.resourceService.deleteResouce(
+                this.contextService.getContext().organizationId,
+                this.contextService.getContext().projectId,
+                this.contextService.getContext().caseId,
+                resourceFile)
+            .subscribe({
+                next: () => {
+                    this.loadResources(this.contextService.getContext().caseId);
+                },
+                error: error => {
+                    console.error(error.message);
+                }
+            }); 
+    }
+
     ngOnInit() {
         // From case selector item
         this.subscriptionEvents = this.eventBus.on(this.eventType.APP_SELECT_CONTEXT)
@@ -82,21 +98,7 @@ export class IngestionComponent implements OnInit {
             rejectButtonStyleClass: "p-button-text",
             defaultFocus: 'reject',
             accept: () => {
-                if (resource.id) {
-                    this.resourceService.deleteResouce(
-                        this.contextService.getContext().organizationId,
-                        this.contextService.getContext().projectId,
-                        this.contextService.getContext().caseId,
-                        resource.file)
-                    .subscribe({
-                        next: () => {
-                            this.loadResources(this.contextService.getContext().caseId);
-                        },
-                        error: error => {
-                            console.error(error.message);
-                        }
-                    }); 
-                }
+                this.removeResource(resource.file);                
             }
         });
     }

@@ -51,8 +51,8 @@ export class ResourceService {
 
         return this.http.request(req);
     }
-    
+        
     deleteResouce(organizationId: string, projectId: string, caseId: string, file: string) {
         return this.http.delete(`${this.baseUrl}/organizations/${organizationId}/projects/${projectId}/cases/${caseId}/file/${file}`);     
-    }    
+    }       
 }

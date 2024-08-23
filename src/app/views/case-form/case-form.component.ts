@@ -33,8 +33,8 @@ export class CaseFormComponent implements OnInit {
     
     caseFormGroup = this.fb.group({
         caseId: [null],
-        organizationId: [''],        
-        projectId: new UntypedFormControl(''),                
+        organizationId: [null],        
+        projectId: [null],                
         name: ['', Validators.required],
         description: [''],
         type: [CaseTypeEnum.Private, Validators.required]

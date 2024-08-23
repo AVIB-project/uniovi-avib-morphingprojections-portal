@@ -32,14 +32,14 @@
                     </div>
                     <div class="field mb-4 col-12 md:col-3">
                         <label for="username" class="font-medium text-900">Username <span style="color: red;">*</span></label>
-                        <input id="username" type="text" pInputText formControlName="username">
+                        <input id="username" type="text" pInputText formControlName="username" [readonly]="isEditMode == true">
                         <div *ngIf="userFormGroup.controls.username.errors && !userFormGroup.controls.username.pristine">
                             <small *ngIf="userFormGroup.controls.username.errors['required']" class="p-error">Username is mandatory</small>
                         </div>
                     </div>
                     <div class="field mb-4 col-12 md:col-3">
                         <label for="role" class="font-medium text-900">Role <span style="color: red;">*</span></label>
-                        <p-dropdown inputId="role" [options]="roles" placeholder="Select a Role" 
+                        <p-dropdown inputId="role" [options]="roles" placeholder="Select a Role" [readonly]="contextService.getContext().user.role == 'GUEST'"
                             optionLabel="name" optionValue="id" formControlName="role">
                         </p-dropdown>
                     </div>

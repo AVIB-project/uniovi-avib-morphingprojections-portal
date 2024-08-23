@@ -41,7 +41,7 @@ export class ConfigurationFormComponent implements OnInit {
 
     annotationFormGroup = this.fb.group({
         annotationId: [null],
-        caseId: [''],
+        caseId: [null],
         name: ['', Validators.required],
         description: [''],
         label: ['', Validators.required],
@@ -139,7 +139,7 @@ export class ConfigurationFormComponent implements OnInit {
                             this.annotation = annotation;
                                 
                             this.annotationFormGroup.reset(annotation);
-                            this.annotationFormGroup.controls.label.setValue(this.annotation.label[this.LANGUAGE_ID]);                            
+                            this.annotationFormGroup.controls.label.setValue(this.annotation.label[this.LANGUAGE_ID]);                          
                         }
                 });
             } else {
@@ -154,11 +154,27 @@ export class ConfigurationFormComponent implements OnInit {
         this.getAnnotationGroups();
         this.getAnnotationTypes();        
         this.getAnnotationEncodings();
-        this.getAnnotationSpaces();       
+        this.getAnnotationSpaces();    
+        
+        this.annotationFormGroup.controls.space.valueChanges.subscribe(change => {
+            if (this.annotationFormGroup.controls.group.value == "projection") {
+                this.annotationService.loadAnnotationsAvailableByCaseId(this.contextService.getContext().caseId)
+                    .subscribe({
+                        next: annotations => {
+                            this.annotations = annotations;
+                        
+                            this.onSpaceChange(null);
+                        },
+                        error: error => {
+                            console.error(error.message);
+                        }
+                    });
+            }       
+        });
     }
 
     onGroupChange(event: any) {
-        this.annotationFormGroup.controls.colorized.setValue(false);
+        //this.annotationFormGroup.controls.colorized.setValue(false);
 
         // projection annotations
         if (this.annotationFormGroup.controls.group.value == 'projection') {

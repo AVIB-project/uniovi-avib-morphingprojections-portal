@@ -9,7 +9,7 @@ import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 })
 export class OrganizationFormComponent { 
     organizationFormGroup = this.fb.group({
-        organizationId: [''],        
+        organizationId: [null],        
         name: ['', Validators.required],
         description: ['']
     });

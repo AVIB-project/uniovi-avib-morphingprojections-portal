@@ -21,6 +21,7 @@ export class UserFormComponent implements OnInit {
     subscriptionEvents: any;    
     eventType = EventType;
     
+    isEditMode: boolean = false;
     languages: any[] = [];
     roles: any[] = [];
     userId: string;
@@ -28,8 +29,8 @@ export class UserFormComponent implements OnInit {
 
     userFormGroup = this.fb.group({
         userId: [null],
-        organizationId: [''],
-        externalId: [null],
+        organizationId: [null],
+        externalId: [''],
         username: ['', Validators.required],
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
@@ -46,7 +47,7 @@ export class UserFormComponent implements OnInit {
     
     constructor(
         private router: Router, private route: ActivatedRoute, private fb: FormBuilder,
-        private contextService: ContextService, private userService: UserService,
+        public contextService: ContextService, private userService: UserService,
         private rolePipe: RolePipe, private languagePipe: LanguagePipe) {
     }
 
@@ -60,7 +61,9 @@ export class UserFormComponent implements OnInit {
             this.userId = params['id'];
 
             if (this.userId) {
-                //this.userService.getUserById(this.userId)
+                // form in edit mode
+                this.isEditMode = true;
+                
                 this.userService.getUserByExternalId(this.userId)
                     .subscribe((user: any) => {
                         console.log(user);

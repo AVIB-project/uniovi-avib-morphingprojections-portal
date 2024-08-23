@@ -8,7 +8,8 @@ import { TableModule } from 'primeng/table';
 import { TreeTableModule } from 'primeng/treetable';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-
+import { TooltipModule } from 'primeng/tooltip';
+	
 import { IngestionComponent } from './ingestion.component';
 import { IngestionRoutingModule } from './ingestion-routing.module';
 
@@ -22,7 +23,8 @@ import { IngestionRoutingModule } from './ingestion-routing.module';
 		TableModule,
 		TreeTableModule,
 		ProgressBarModule,
-		ConfirmDialogModule
+		ConfirmDialogModule,
+		TooltipModule
 	],
 	declarations: [IngestionComponent]
 })

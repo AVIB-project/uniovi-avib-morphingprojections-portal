@@ -14,8 +14,8 @@ import { ContextService } from '../../shared/services/context.service';
 import { ProjectService } from '../../shared/services/project.service';
 import { CaseService } from '../../shared/services/case.service';
 
-import { Project } from '../../shared/models/project.model';
 import { EventType } from '../../shared/enum/event-type.enum';
+import { Project } from '../../shared/models/project.model';
 import { CaseTypeEnum } from '../../shared/enum/case-type.enum';
 
 @Component({

@@ -29,7 +29,7 @@ export class AppMenuComponent implements OnInit {
                     routerLink: ['/case']               
                 },            
                 {
-                    label: 'Configuration',
+                    label: 'Annotation',
                     icon: 'pi pi-cog',
                     routerLink: ['/configuration'],               
                 },
@@ -39,17 +39,17 @@ export class AppMenuComponent implements OnInit {
                     routerLink: ['/ingestion'],
                 },
                 {
-                    label: 'Encodings',
+                    label: 'Projection',
                     icon: 'pi pi-fw pi-sliders-v',
                     routerLink: ['/encoding'],
                 },         
                 {
-                    label: 'Morphing Projection',
+                    label: 'Analysis',
                     icon: 'pi pi-fw pi-eye',
                     routerLink: ['/projection']               
                 },
                 {
-                    label: 'User Management',
+                    label: 'Users',
                     icon: 'pi pi-fw pi-users',
                     routerLink: ['/user']
                 },

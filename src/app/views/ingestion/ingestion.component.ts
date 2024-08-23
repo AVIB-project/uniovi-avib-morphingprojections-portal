@@ -68,7 +68,7 @@ export class IngestionComponent implements OnInit {
     }
 
     onAddResource(){
-        this.router.navigate(['/resource-form'])
+        this.router.navigate(['/ingestion-form'])
     }
 
     onRemoveResource(event: Event, resource: Resource) {
@@ -83,10 +83,19 @@ export class IngestionComponent implements OnInit {
             defaultFocus: 'reject',
             accept: () => {
                 if (resource.id) {
-                    /*this.resourceService.deleteResource(resource.id)
-                        .subscribe(() => {
+                    this.resourceService.deleteResouce(
+                        this.contextService.getContext().organizationId,
+                        this.contextService.getContext().projectId,
+                        this.contextService.getContext().caseId,
+                        resource.file)
+                    .subscribe({
+                        next: () => {
                             this.loadResources(this.contextService.getContext().caseId);
-                    });*/
+                        },
+                        error: error => {
+                            console.error(error.message);
+                        }
+                    }); 
                 }
             }
         });

@@ -16,6 +16,7 @@ const routes: Routes = [
             { path: 'configuration-form', data: { breadcrumb: 'Annotation Form', roles: ['ADMIN', 'USER'] }, canActivate: [AuthGuard], loadChildren: () => import('./views/configuration-form/configuration-form.module').then(m => m.ConfigurationFormModule) },
             { path: 'encoding', data: { breadcrumb: 'Encoding', roles: ['ADMIN', 'USER'] }, canActivate: [AuthGuard], loadChildren: () => import('./views/encoding/encoding.module').then(m => m.EncodingModule) },
             { path: 'ingestion', data: { breadcrumb: 'Ingestion', roles: ['ADMIN', 'USER'] }, canActivate: [AuthGuard], loadChildren: () => import('./views/ingestion/ingestion.module').then(m => m.IngestiongModule) },
+            { path: 'ingestion-form', data: { breadcrumb: 'Ingestion Form', roles: ['ADMIN', 'USER'] }, canActivate: [AuthGuard], loadChildren: () => import('./views/ingestion-form/ingestion-form.module').then(m => m.IngestionFormModule) },
             { path: 'projection', data: { breadcrumb: 'Projection' }, canActivate: [AuthGuard], loadChildren: () => import('./views/projection/projection.module').then(m => m.ProjectionModule) },
             { path: 'user', data: { breadcrumb: 'User' }, canActivate: [AuthGuard], loadChildren: () => import('./views/user/user.module').then(m => m.UserModule) },
             { path: 'user-form', data: { breadcrumb: 'User Form', roles: ['ADMIN', 'USER'] }, canActivate: [AuthGuard], loadChildren: () => import('./views/user-form/user-form.module').then(m => m.UserFormModule) },

@@ -41,13 +41,17 @@ export class ConfigurationComponent implements OnInit {
         private confirmationService: ConfirmationService, private annotationService: AnnotationService) {         
     }
         
-    ngOnInit() {        
+    ngOnInit() {    
+        // From case selector item
         this.subscriptionEvents = this.eventBus.on(this.eventType.APP_SELECT_CONTEXT)
             .subscribe((meta: MetaData) => {
                 this.loadAvailableAnnotations(meta.data.caseId);
             });
         
+        // From menu item
+        if (this.contextService.getContext().caseId) {
             this.loadAvailableAnnotations(this.contextService.getContext().caseId);
+        }
     }
 
     onGlobalFilterCase(table: Table, event: Event) {

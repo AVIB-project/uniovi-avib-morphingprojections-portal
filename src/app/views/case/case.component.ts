@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Table } from 'primeng/table';
-import { MenuItem } from 'primeng/api';
-import { ConfirmationService } from 'primeng/api';
+import { MenuItem, ConfirmationService } from 'primeng/api';
 
 import { NgEventBus, MetaData } from 'ng-event-bus';
 
@@ -13,8 +12,6 @@ import { OrganizationService } from '../../shared/services/organization.service'
 import { CaseService } from '../../shared/services/case.service';
 
 import { OrganizationCase } from '../../shared/models/organization-case.model';
-
-import { Case } from '../../shared/models/case.model';
 
 @Component({
     templateUrl: 'case.component.html',
@@ -51,13 +48,15 @@ export class CaseComponent implements OnInit {
             { label: 'Remove Case', icon: 'pi pi-trash' }
         ];
         
+        // From case selector item
         this.subscriptionEvents = this.eventBus.on(this.eventType.APP_SELECT_CONTEXT)
             .subscribe((meta: MetaData) => {
                 if (meta.data.organizationId) {
-                    this.loadCasesByUser(this.contextService.getContext().organizationId, meta.data.user.userId);
+                    this.loadCasesByUser(meta.data.organizationId, meta.data.user.userId);
                 }
             });
         
+        // From menu item
         if (this.contextService.getContext().organizationId && this.contextService.getContext().user.userId) {
             this.loadCasesByUser(this.contextService.getContext().organizationId, this.contextService.getContext().user.userId);
         }

@@ -34,6 +34,7 @@ export class UserComponent implements OnInit {
     }
 
     ngOnInit() {
+        // From organization item
         this.subscriptionEvents = this.eventBus.on(this.eventType.APP_SELECT_CONTEXT)
             .subscribe((meta: MetaData) => {
                 if (meta.data.organizationId) {
@@ -41,6 +42,7 @@ export class UserComponent implements OnInit {
                 }
         });
         
+        // From menu item
         if (this.contextService.getContext().organizationId) {
             this.getUsersByOrganizationId(this.contextService.getContext().organizationId);
         }

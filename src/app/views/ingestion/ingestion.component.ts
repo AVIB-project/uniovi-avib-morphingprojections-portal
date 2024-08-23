@@ -2,30 +2,98 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Table } from 'primeng/table';
+import { ConfirmationService } from 'primeng/api';
 
+import { NgEventBus, MetaData } from 'ng-event-bus';
+
+import { EventType } from '../../shared/enum/event-type.enum';
 import { ContextService } from '../../shared/services/context.service';
-import { OrganizationService } from '../../shared/services/organization.service';
-import { OrganizationCase } from '../../shared/models/organization-case.model';
+import { ResourceService } from '../../shared/services/resource.service';
+import { Resource } from '../../shared/models/resource.model';
 
 @Component({
-    templateUrl: './ingestion.component.html'
+    templateUrl: './ingestion.component.html',
+    providers: [ConfirmationService]
 })
 export class IngestionComponent implements OnInit {
-    organizationCases: OrganizationCase[];
+    subscriptionEvents: any; 
+    eventType = EventType;
+
+    resources: Resource[];
     
     constructor(
-        private router: Router,
-        private organizationService: OrganizationService, private contextService: ContextService) { 
+        private router: Router, private eventBus: NgEventBus, private confirmationService: ConfirmationService, 
+        public contextService: ContextService, private resourceService: ResourceService,) { 
     }
 
+    private loadResources(caseId: string) {
+        this.resourceService.getResourcesByCaseId(caseId)
+        .subscribe({
+            next: (resources: Resource[]) => {
+                this.resources = resources;          
+            },
+            error: error => {
+                console.error(error.message);
+            }
+        });
+    }
+    
     ngOnInit() {
+        // From case selector item
+        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_SELECT_CONTEXT)
+            .subscribe((meta: MetaData) => {
+                if (meta.data.organizationId) {
+                    this.loadResources(meta.data.caseId);
+                }
+            });
+        
+        // From menu item
+        if (this.contextService.getContext().organizationId && this.contextService.getContext().user.userId) {
+            this.loadResources(this.contextService.getContext().caseId);
+        }
     }
 
+    onToggleOptions(event: Event, opt: HTMLElement, date: HTMLElement) {
+        if (event.type === 'mouseenter') {
+            opt.style.display = 'flex';
+            date.style.display = 'none';
+        } else {
+            opt.style.display = 'none';
+            date.style.display = 'flex';
+        }
+    }
+    
     onGlobalFilterCase(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains')
     }
 
-    onAddCase(){
-        this.router.navigate(['/case-form'])
+    onAddResource(){
+        this.router.navigate(['/resource-form'])
     }
+
+    onRemoveResource(event: Event, resource: Resource) {
+        this.confirmationService.confirm({
+            target: event.target as EventTarget,
+            message: 'Are you sure that you want to proceed?',
+            header: 'Confirmation',
+            icon: 'pi pi-exclamation-triangle',
+            acceptIcon:"none",
+            rejectIcon:"none",
+            rejectButtonStyleClass: "p-button-text",
+            defaultFocus: 'reject',
+            accept: () => {
+                if (resource.id) {
+                    /*this.resourceService.deleteResource(resource.id)
+                        .subscribe(() => {
+                            this.loadResources(this.contextService.getContext().caseId);
+                    });*/
+                }
+            }
+        });
+    }
+    
+    ngOnDestroy(): void {
+        if(this.subscriptionEvents)
+            this.subscriptionEvents.unsubscribe();
+    }       
 }

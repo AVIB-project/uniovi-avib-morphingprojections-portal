@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TreeTableModule } from 'primeng/treetable';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { IngestionComponent } from './ingestion.component';
 import { IngestionRoutingModule } from './ingestion-routing.module';
@@ -20,7 +21,8 @@ import { IngestionRoutingModule } from './ingestion-routing.module';
 		InputTextModule,
 		TableModule,
 		TreeTableModule,
-		ProgressBarModule
+		ProgressBarModule,
+		ConfirmDialogModule
 	],
 	declarations: [IngestionComponent]
 })

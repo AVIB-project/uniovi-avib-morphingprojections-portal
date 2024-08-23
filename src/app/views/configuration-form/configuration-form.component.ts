@@ -164,6 +164,7 @@ export class ConfigurationFormComponent implements OnInit {
                             this.annotations = annotations;
                         
                             this.onSpaceChange(null);
+                            this.onProjectedByAnnotationChange(null);
                         },
                         error: error => {
                             console.error(error.message);

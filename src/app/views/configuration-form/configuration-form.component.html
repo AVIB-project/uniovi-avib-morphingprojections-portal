@@ -98,7 +98,7 @@
                     <div class="field mb-4 col-12 md:col-6" style="display: flex; justify-content: flex-end;">
                         <div style="display: grid;">                                                
                             <label for="colorized" class="font-medium text-900">Colorized <span style="color: red;">*</span></label>
-                            <p-checkbox inputId="required" [binary]="true" formControlName="required" />
+                            <p-checkbox id="colorized" [binary]="true" formControlName="colorized" />
                             <div *ngIf="annotationFormGroup.controls.colorized.errors && !annotationFormGroup.controls.colorized.pristine">
                                 <small *ngIf="annotationFormGroup.controls.colorized.errors['required']" class="p-error">Colorized is mandatory</small>
                             </div>
@@ -106,7 +106,7 @@
                     </div>
                     <div class="field mb-4 col-12 md:col-12" *ngIf="annotationFormGroup.get('group').value != 'projection' && annotationFormGroup.get('type').value == 'enumeration'">
                         <label for="values" class="control-label block"><span style="color: red;">*</span>Values</label>
-                        <p-chips inputId="values" styleClass="selector-values" formControlName="values"></p-chips>
+                        <p-chips id="values" styleClass="selector-values" formControlName="values"></p-chips>
                     </div>
                 </div>
 

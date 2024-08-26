@@ -30,9 +30,9 @@ import { ToastModule } from 'primeng/toast';
 import { RxStompService } from '../../shared/websocket/rx-stomp.service';
 import { RxStompServiceFactory } from '../../shared/websocket/rx-stomp-service-factory';
 
-//import { SampleDataViewModule } from './forms/sample-data-view/sample-data-view.module';
-//import { SampleGroupViewModule } from './forms/sample-group-view/sample-group-view.module';
-//import { AnalyticsDataFormViewModule } from './forms/analytics-data-form-view/analytics-data-form-view.module';
+import { SampleDataViewModule } from './forms/sample-data-view/sample-data-view.module';
+import { SampleGroupViewModule } from './forms/sample-group-view/sample-group-view.module';
+import { AnalyticsDataFormViewModule } from './forms/analytics-data-form-view/analytics-data-form-view.module';
 
 import { ProjectionComponent } from './projection.component';
 import { ProjectionRoutingModule } from './projection-routing.module';
@@ -67,9 +67,9 @@ import { AnnotationFilterGroupPipe } from '../../shared/pipe/annotation-filter-g
 		SelectButtonModule,
 		ScrollPanelModule,
 		ContextMenuModule,
-		//SampleDataViewModule,
-    	//SampleGroupViewModule,
-    	//AnalyticsDataFormViewModule,
+		SampleDataViewModule,
+    	SampleGroupViewModule,
+    	AnalyticsDataFormViewModule,
 		ToastModule,
 	],
 	declarations: [

@@ -1,0 +1,121 @@
+<p-table #sampleGroupTable styleClass="p-datatable-gridlines" scrollHeight="310px" [scrollable]="true" [loading]="isLoading" 
+        [value]="samples" [globalFilterFields]="sampleAnnotationNames" [(selection)]="samplesSelected"
+        [resizableColumns]="true" columnResizeMode="expand" [rows]="10"
+        [paginator]="true" [rowsPerPageOptions]="[10, 25, 50]" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} samples"
+        (onFilter)="onSampleFiltered($event)">
+    <ng-template pTemplate="caption">
+        <div class="flex justify-content-between">
+            <div class="flex gap-1">
+                <button pButton label="Apply Groups" class="p-button-warning" icon="pi pi-filter"
+                    style="background-color: blueviolet;" 
+                    [disabled]="sampleGroups.length == 0"
+                    (click)="onApplySampleGroups()">
+                </button>
+                <button pButton label="Add Group" icon="pi pi-plus-circle"
+                    [disabled]="samplesSelected.length == 0"
+                    (click)="onAddSampleGroup()">
+                </button>
+                <button pButton label="Remove Group" class="p-button-danger" icon="pi pi-times-circle"
+                    [disabled]="samplesSelected.length == 0"
+                    (click)="onRemoveSampleGroup()">
+                </button>
+            </div>
+
+            <div class="flex gap-1">
+                <button pButton label="Export Excel" class="p-button-success" icon="pi pi-file-excel"
+                    style="margin-left: 5px" [disabled]="samples.length == 0"
+                    (click)="onExportSampleGroups($event)">
+                </button>
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                    (click)="onClearFilterGlobal()">
+                </button>
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" [(ngModel)]="sampleFilterGlobal"
+                        (input)="onApplyFilterGlobal($event.target, 'contains')" placeholder="Search keyword" />
+                </span>
+            </div>
+        </div>
+        <div style="margin-top: 10px;">
+            Samples Groups Table
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pFrozenColumn>
+                <p-checkbox [(ngModel)]="isAllSamplesSelected" [binary]="true" inputId="binary"
+                    (onChange)="onRowSelectAll()">
+                </p-checkbox>
+            </th>
+            <th>
+                Color
+            </th>
+            <th pSortableColumn="groupName">
+                Group
+                <p-sortIcon field="groupName"></p-sortIcon>
+                <p-columnFilter type="text" field="groupName" display="menu"></p-columnFilter>
+            </th>
+            <ng-container *ngFor="let sampleAnnotation of sampleAnnotations">
+                <th *ngIf="sampleAnnotation.group == 'sample'" [pSortableColumn]="sampleAnnotation.name">
+                    <container-element [ngSwitch]="sampleAnnotation.type">
+                        {{ sampleAnnotation.label[LANGUAGE_ID] }}
+                        <p-sortIcon [field]="sampleAnnotation.name"></p-sortIcon>
+                        <p-columnFilter *ngSwitchCase="'string'" type="text" [field]="sampleAnnotation.name"
+                            display="menu">
+                        </p-columnFilter>
+                        <p-columnFilter *ngSwitchCase="'boolean'" type="boolean" [field]="sampleAnnotation.name"
+                            display="menu">
+                        </p-columnFilter>
+                        <p-columnFilter *ngSwitchCase="'numeric'" type="numeric" [field]="sampleAnnotation.name"
+                            display="menu">
+                        </p-columnFilter>
+                        <p-columnFilter *ngSwitchCase="'enumeration'" [field]="sampleAnnotation.name" matchMode="equals"
+                            display="menu">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-dropdown [ngModel]="value" [options]="sampleAnnotation.values" placeholder="Any"
+                                    (onChange)="filter($event.value)">
+                                    <ng-template let-option pTemplate="item">
+                                        {{option}}
+                                    </ng-template>
+                                </p-dropdown>
+                            </ng-template>
+                        </p-columnFilter>
+                        <i class="pi pi-info-circle" style="font-size: 1rem"
+                            [pTooltip]="sampleAnnotation.description"></i>
+                    </container-element>
+                </th>
+            </ng-container>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-sample>
+        <tr>
+            <td pFrozenColumn>
+                <p-tableCheckbox [value]="sample"></p-tableCheckbox>
+            </td>
+            <td>
+                <div class="flex justify-content-center" >
+                    <span class="sample-group-color" 
+                        [pTooltip]="sample.groupName" [tooltipDisabled]="sample.groupName == undefined"
+                        [style.background-color]="sample.groupName ? sample.groupColor : 'white'">
+                    </span>
+                </div>
+            </td>
+            <td>
+                {{ sample.groupName }}
+            </td>
+            <ng-container *ngFor="let sampleAnnotation of sampleAnnotations">
+                <td *ngIf="sampleAnnotation.group == 'sample'">
+                    {{ sample[sampleAnnotation.name] }}
+                </td>
+            </ng-container>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td [attr.colspan]="sampleAnnotations?.length + 1">
+                <label style="display: block; text-align: center;">No samples found.</label>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

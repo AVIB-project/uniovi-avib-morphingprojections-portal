@@ -39,12 +39,12 @@ export class AppMenuComponent implements OnInit {
                     routerLink: ['/ingestion'],
                 },
                 {
-                    label: 'Projection',
+                    label: 'Encoding',
                     icon: 'pi pi-fw pi-sliders-v',
                     routerLink: ['/encoding'],
                 },         
                 {
-                    label: 'Analysis',
+                    label: 'Projection',
                     icon: 'pi pi-fw pi-eye',
                     routerLink: ['/projection']               
                 },

@@ -1,0 +1,18 @@
+:host ::ng-deep {  
+    .analitycs-chart {
+        width: 100%;
+    }
+
+    .chart-spinner {
+        position: fixed;
+        top: 40%;
+        left: 60%;
+    }
+}
+
+.control-label.required:after { 
+  color: #d00;
+  content: "*";
+  margin-left: 5px;
+  top:7px;
+}

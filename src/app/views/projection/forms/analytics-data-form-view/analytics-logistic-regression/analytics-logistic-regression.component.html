@@ -1,0 +1,59 @@
+<div class="flex flex-row">
+    <!-- Filter component-->
+    <div class="flex flex-column">
+        <div>
+            <form class="flex align-items-center gap-1" [formGroup]="analyticsFormViewGroup">
+                <div class="flex flex-column">
+                    <label for="name" class="control-label required">Chart Name:</label>
+                    <input type="text" pInputText inputId="name" formControlName="name"/>        
+
+                    <label for="title" class="control-label required">Chart Title:</label>
+                    <input type="text" pInputText inputId="title" formControlName="title" />                   
+                </div>
+            </form>
+        </div>
+
+        <div class="flex flex-grow-1"></div>
+
+        <div class="flex justify-content-end" style="margin-top: 5px;">
+            <button pButton label="Calculate" class="p-button-info" [disabled]="!analyticsFormViewGroup.valid"
+                (click)="onCalculateClick($event)">
+            </button>
+        </div>
+    </div>
+
+    <p-divider layout="vertical"></p-divider>
+
+    <!-- Tab component-->
+    <p-tabView [hidden]="!hiddenSpinner" class="analitycs-chart">
+        <p-tabPanel header="Chart view">
+            <p-chart #chartPlot type="line" class="analitycs-chart" [data]="dataChart" [options]="options">
+            </p-chart>
+        </p-tabPanel>
+        <p-tabPanel header="Table view">
+            <p-table [value]="dataTable" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm" scrollHeight="400px">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Gen</th>
+                        <th>Group A(μ ± σ)</th>
+                        <th>Group B(μ ± σ)</th>
+                        <th>Relevancia</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-expression>
+                    <tr>
+                        <td>{{expression.attributeId}}</td>
+                        <td>{{expression.analytics_a}}</td>
+                        <td>{{expression.analytics_b}}</td>
+                        <td>{{expression.value}}</td>                        
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+    </p-tabView>
+
+    <!-- Spinner view -->
+    <div class="chart-spinner" [hidden]="hiddenSpinner">
+        <p-progressSpinner class="canvas-spinner"></p-progressSpinner>
+    </div>
+</div>

@@ -1,3 +1,252 @@
 <div class="card">
+    <!-- Dashboard Panel App -->
+    <div class="flex flex-row justify-content-start gap-2">
+        <!-- Chart Panel -->
+        <div class="flex flex-column" style="padding: 5px;">
+            <!-- Dataset chat tool bars -->
+            <div class="flex justify-content-between" style="width: 800px;">
+                <div class="flex flex-column">
+                    <div class="flex gap-1">
+                        <div style="margin-bottom: 10px">
+                            <span class="p-input-icon-left" style="margin-right: 5px;">
+                                <i class="pi pi-search"></i>
+                                <input type="text" placeholder="Find Sample By Code" pInputText [(ngModel)]="pointCode"
+                                    style="width: 220px;" />
+                            </span>
+                            <button pButton label="Find" icon="pi pi-search" styleClass="ml-1"
+                                [disabled]="samples.length == 0" (click)="onFindByCode()">
+                            </button>
+                        </div>
+                        <div>
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                                [disabled]="samples.length == 0" (click)="onClearFilterByCode()">
+                            </button>
+                        </div>
+                    </div>
 
+                    <div class="flex" style="margin-bottom: 10px">
+                        <div style="padding-right: 10px;">
+                            <span class="p-buttonset">
+                                <button pButton type="button" label="Center" icon="pi pi-arrows-alt"
+                                    [disabled]="samples.length == 0" (click)="onCenterCanvas()">
+                                </button>
+                                <button pButton type="button" label="Add Group" icon="pi pi-plus-circle"
+                                    class="p-button-help" [disabled]="pointsSelected.length == 0"
+                                    (click)="onGroupFromChart($event, undefined)">
+                                </button>
+                                <button pButton type="button" label="Clear Groups" icon="pi pi-minus-circle"
+                                    class="p-button-danger" [disabled]="sampleGroups.length == 0"
+                                    (click)="onClearGroups($event)">
+                                </button>
+                            </span>
+                        </div>
+                        <div>
+                            <span class="p-buttonset">
+                                <button pButton type="button" label="Analytics" icon="pi pi-chart-bar"
+                                    style="background-color: #EA7014;" [disabled]="sampleGroups.length == 0"
+                                    (click)="onExecuteAnalytics($event)">
+                                </button>
+                                <button pButton type="button" label="Export" icon="pi pi-image" class="p-button-success"
+                                    [disabled]="samples.length == 0" (click)="onExportChart()">
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas scatter plot -->
+            <div class="flex flex-row">
+                <canvas class="canvas-points" #canvasPlot [hidden]="!hiddenSpinner"></canvas>
+
+                <!-- Spinner scatter plot -->
+                <div class="canvas-points" [hidden]="hiddenSpinner">
+                    <p-progressSpinner class="canvas-spinner"></p-progressSpinner>
+                </div>
+
+                <!-- Canvas legend with Context Menu-->
+                <div class="flex flex-column" style="margin-left: 5px;">
+                    <label style="margin-bottom: 5px;font-size: 10px; font-weight: bold;">
+                        Legend: {{colorizedTitle}}
+                    </label>
+                    <div *ngFor="let annotationLegend of annotationLegends"
+                        style="display: flex;align-items: center;margin-bottom: 5px;font-size: 10px;">
+                        <span [ngStyle]="{
+                'height': '10px',
+                'width': '10px',
+                'margin-right': '5px',
+                'background-color': annotationLegend.color,
+                'border-radius': '50%',
+                'cursor': annotationLegend.visible == undefined || annotationLegend.name == 'Undefined' ? 'default' : 'pointer',
+                'display': 'inline-block'}" (contextmenu)="onContextMenu($event, annotationLegend, cm)">
+                        </span>
+                        {{annotationLegend.name}}
+                    </div>
+                    <!-- Group contextual menu -->
+                    <p-contextMenu #cm appendTo="body" [global]="false" [model]="legendGroupMenuItems"></p-contextMenu>
+                </div>
+
+                <p-divider layout="vertical" styleClass="hidden md:flex"></p-divider>
+            </div>
+
+            <!-- Canvas tooltip -->
+            <div #canvasTooltip>
+                <div class="tooltip-point">
+                    <ng-container *ngFor="let sampleAnnotation of sampleAnnotations">
+                        <div *ngIf="sampleAnnotation.group == 'sample' && sampleAnnotation.type != 'link'">
+                            <b>{{ sampleAnnotation.label[contextService.getContext().user.language] }}:</b> {{ pointHover[sampleAnnotation.name] }}
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+
+            <!-- Canvas Status Bar -->
+            <div class="flex align-items-center justify-content-start">
+                <div class="time-progress">
+                    <b>Time loaded:</b> {{timeInterval}}
+                </div>
+                <span id="samples_loading"><b>Loading: </b></span>
+                <p-progressBar styleClass="hit-progress" [value]="hitPercent" aria-labelledby="samples_loading">
+                </p-progressBar>
+                <div class="flex flex-column" style="margin-left: 5px;">
+                    <table>
+                        <tr>
+                            <th>Total samples /</th>
+                            <th>visible /</th>
+                            <th>selected</th>
+                        </tr>
+                        <tr>
+                            <td>{{samples.length}}</td>
+                            <td>{{pointsChartVisible.length}}</td>
+                            <td>{{pointsSelected.length}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Encodings Panel -->
+        <div class="flex flex-column">
+            <!-- Projection Encodings -->
+            <div style="margin-top: 20px">
+                <b>Project Encodings</b>
+                <div class="flex gap-2"
+                    *ngFor="let sampleAnnotationExpression of sampleAnnotationExpressions | AnnotationFilterGroupPipe: 'projection':'supervised':'primal'">
+                    <div style="margin-left: 10px; margin-top: 20px; width: 300px;">
+                        <div>
+                            {{sampleAnnotationExpression.annotation.label[contextService.getContext().user.language]}} <span
+                                style="float: right;">{{sampleAnnotationExpression.expression}}</span>
+                        </div>
+                        <div style="padding-left: 5px;">
+                            <p-slider styleClass="encoding-slider mt-2" [(ngModel)]="sampleAnnotationExpression.expression"
+                                (onChange)="onExpressionEncodingChange($event)">
+                            </p-slider>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sliders Attribute Encodings -->
+            <div style="margin-top: 20px">
+                <b>Attribute Encodings</b>
+                <div class="flex flex-row gap-2" style="margin-top: 20px;">
+                    <p-dropdown [options]="attributeNames" placeholder="Select Hor. Attribute" [style]="{'width': '230px'}"
+                        [(ngModel)]="selectedHorAttribute" [virtualScroll]="true" [virtualScrollItemSize]="25"
+                        [showClear]="true" [filter]="true" filterBy="name" (onChange)="onHorAttributeSelect()">
+                    </p-dropdown>
+                    <p-dropdown [options]="attributeNames" placeholder="Select Vert. Attribute" [style]="{'width': '230px'}"
+                        [(ngModel)]="selectedVerAttribute" [virtualScroll]="true" [virtualScrollItemSize]="25"
+                        [showClear]="true" [filter]="true" filterBy="name" (onChange)="onVerAttributeSelect()">
+                    </p-dropdown>
+                </div>
+
+                <!-- Sliders Projection Encodings -->
+                <div class="flex gap-2"
+                    *ngFor="let sampleAnnotationExpression of sampleAnnotationExpressions | AnnotationFilterGroupPipe: 'projection':'unsupervised'">
+                    <div style="margin-left: 10px; margin-top: 20px; width: 300px;">
+                        <div>
+                            {{sampleAnnotationExpression.annotation.label[contextService.getContext().user.language]}} <span
+                                style="float: right;">{{sampleAnnotationExpression.expression}}</span>
+                        </div>
+                        <div style="padding-left: 5px;">
+                            <p-slider styleClass="encoding-slider mt-2" [(ngModel)]="sampleAnnotationExpression.expression"
+                                (onChange)="onExpressionEncodingChange($event)">
+                            </p-slider>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 10px;" *ngIf="sampleAnnotationExpression.annotation.group != 'projection'">
+                        <p-selectButton [options]="projectionOptions" optionLabel="icon" [unselectable]="true"
+                            [(ngModel)]="sampleAnnotationExpression.projection" [disabled]="samples.length == 0"
+                            (onChange)="onSelectProjection(sampleAnnotationExpression)">
+                            <ng-template let-item pTemplate>
+                                <i [class]="item.icon"></i>
+                            </ng-template>
+                        </p-selectButton>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample Annotation Encodings -->
+            <div style="margin-top: 20px">
+                <b>Sample Encodings</b>
+
+                <p-scrollPanel [style]="{ height: '540px' }">
+                    <div class="flex gap-2"
+                        *ngFor="let sampleAnnotationExpression of sampleAnnotationExpressions | AnnotationFilterGroupPipe: 'sample':'unsupervised'">
+                        <div style="margin-left: 10px; margin-top: 20px; width: 300px;">
+                            <div>
+                                {{sampleAnnotationExpression.annotation.label[contextService.getContext().user.language]}} <span
+                                    style="float: right;">{{sampleAnnotationExpression.expression}}</span>
+                            </div>
+                            <div style="padding-left: 5px;">
+                                <p-slider styleClass="encoding-slider mt-2"
+                                    [(ngModel)]="sampleAnnotationExpression.expression"
+                                    (onChange)="onExpressionEncodingChange($event)">
+                                </p-slider>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 10px;" *ngIf="sampleAnnotationExpression.annotation.group != 'attribute'">
+                            <p-selectButton [options]="projectionOptions" optionLabel="icon" [unselectable]="true"
+                                [(ngModel)]="sampleAnnotationExpression.projection" [disabled]="samples.length == 0"
+                                (onChange)="onSelectProjection(sampleAnnotationExpression)">
+                                <ng-template let-item pTemplate>
+                                    <i [class]="item.icon"></i>
+                                </ng-template>
+                            </p-selectButton>
+                        </div>
+                    </div>
+                </p-scrollPanel>
+            </div>
+        </div>
+    </div>
+
+    <!-- Side Panel Menu buttons -->
+    <button pButton type="button" label="Samples Data" icon="pi pi-table"
+        class="p-button-lg p-button-warning samples-metadata-button" [disabled]="samples.length == 0"
+        (click)="onShowSamplesDataPanel()">
+    </button>
+
+    <button pButton type="button" label="Samples Group" icon="pi pi-share-alt"
+        class="p-button-lg p-button-warning samples-group-button" [disabled]="samples.length == 0"
+        (click)="onShowSamplesGroupPanel()">
+    </button>
+
+    <!-- SidePanel Samples Group View -->
+    <!--<p-sidebar [(visible)]="showSamplesGroupPanel" position="bottom" styleClass="metadata-panel">
+        <sample-group-view [samples]="samples" [sampleAnnotations]="sampleAnnotations"
+            [sampleAnnotationNames]="sampleAnnotationNames" [sampleGroups]="sampleGroups"
+            (onSampleGroupFilterChartEvent)="onGroupFromSamples($event)">
+        </sample-group-view>
+    </p-sidebar>-->
+
+    <!-- SidePanel Samples Data View -->
+    <!--<p-sidebar [(visible)]="showSamplesDataPanel" position="bottom" styleClass="metadata-panel">
+        <sample-data-view [samples]="samples" [pointsSelected]="pointsSelected" [sampleAnnotations]="sampleAnnotations"
+            [sampleAnnotationNames]="sampleAnnotationNames" (onSampleDataFilterChartEvent)="onFilterChart($event)">
+        </sample-data-view>
+    </p-sidebar>-->
 </div>
+
+<p-toast></p-toast>

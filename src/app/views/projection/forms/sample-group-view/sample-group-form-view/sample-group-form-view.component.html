@@ -1,0 +1,23 @@
+<form [formGroup]="sampleGroupForm" (ngSubmit)="addSampleGroup()" novalidate>
+    <div class="field">
+        <label for="name" class="control-label required block">Name</label>
+        <input id="name" type="text" pInputText placeholder="Sample Group Name" [readonly]="editMode" formControlName="name" 
+            (blur)="onSearchSampleGroup($event)"/>
+        <small class="p-error block" 
+            *ngIf="sampleGroupForm.get('name')?.invalid && sampleGroupForm.get('name')?.dirty">
+            Sample Group name is required
+        </small>
+    </div>
+    <div class="field">
+        <label for="color" class="control-label required block">Color</label>
+        <p-colorPicker appendTo="body" id="color" formControlName="color"></p-colorPicker>
+        <small class="p-error block" 
+            *ngIf="sampleGroupForm.get('color')?.invalid && sampleGroupForm.get('color')?.dirty">
+            Sample Group color is required
+        </small>
+    </div>
+
+    <div class="flex justify-content-end" style="margin-top: 5px;">
+        <button pButton type="submit" label="Save" [disabled]="sampleGroupForm.invalid"></button>
+    </div>
+</form>

@@ -1,0 +1,26 @@
+<div class="dropdown-analytics">
+    <p-dropdown
+        [options]="analytics" [(ngModel)]="selectedAnalyticsKey" optionLabel="name" optionValue="key"
+        placeholder="Select a Analytic">    
+    </p-dropdown>
+</div>
+
+<!-- Analytics Filters -->
+<div [ngSwitch]="selectedAnalyticsKey">
+    <div *ngSwitchCase="'histogram'">
+        <analytics-histogram [viewInput]="view" [groupsInput]="groups" [samplesInput]="samples"
+            [sampleAnnotationsInput]="sampleAnnotations" [attributesInput]="attributes"
+            [attributeAnnotationsInput]="attributeAnnotations">
+        </analytics-histogram>
+    </div>
+    <div *ngSwitchCase="'logistic_regression'">
+        <analytics-logistic-regression [viewInput]="view" [groupsInput]="groups" [samplesInput]="samples"
+            [sampleAnnotationsInput]="sampleAnnotations" [attributesInput]="attributes"
+            [attributeAnnotationsInput]="attributeAnnotations">
+        </analytics-logistic-regression>
+    </div>
+    <div *ngSwitchCase="'anova'">
+    </div>
+    <div *ngSwitchCase="'pearson_correlation'">
+    </div>
+</div>

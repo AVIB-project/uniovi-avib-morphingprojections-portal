@@ -6,8 +6,8 @@
             <!-- Dataset chat tool bars -->
             <div class="flex justify-content-between" style="width: 800px;">
                 <div class="flex flex-column">
-                    <div class="flex gap-1">
-                        <div style="margin-bottom: 10px">
+                    <div class="flex gap-1 justify-content-between">
+                        <div style="margin-bottom: 10px;">
                             <span class="p-input-icon-left" style="margin-right: 5px;">
                                 <i class="pi pi-search"></i>
                                 <input type="text" placeholder="Find Sample By Code" pInputText [(ngModel)]="pointCode"
@@ -16,11 +16,14 @@
                             <button pButton label="Find" icon="pi pi-search" styleClass="ml-1"
                                 [disabled]="samples.length == 0" (click)="onFindByCode()">
                             </button>
+                            <button pButton label="Clear" class="p-button-outlined" style="margin-left: 5px;" icon="pi pi-filter-slash" [disabled]="samples.length == 0"
+                                (click)="onClearFilterByCode()">
+                            </button>
                         </div>
                         <div>
-                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
-                                [disabled]="samples.length == 0" (click)="onClearFilterByCode()">
-                            </button>
+                            <p-button label="Load Case" icon="pi pi-database" styleClass="ml-1" [loading]="isLoading" loadingIcon="pi pi-database"
+                                (onClick)="onLoadCase()">
+                            </p-button>
                         </div>
                     </div>
 

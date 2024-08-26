@@ -81,12 +81,9 @@ export class ProjectionComponent implements OnInit, AfterViewInit, OnDestroy {
 
     userCase: UserCase | undefined; 
     organizations: Organization[] | undefined;
-    selectedOrganization?: Organization | undefined;
     projects: Project[] | undefined;
-    projectList: any[] | undefined;
-    selectedProject?: Project | undefined;    
-    cases: Case[] | undefined;
-    selectedCase?: Case | undefined;  
+    projectList: any[] | undefined;   
+    cases: Case[] | undefined;  
     
     startTime: Date;
     endTime: Date;
@@ -319,48 +316,47 @@ export class ProjectionComponent implements OnInit, AfterViewInit, OnDestroy {
         this.annotationLegends = [];
 
         // form annotations create legend and initialize chart
-        this.annotationService.getColorizedAnnotation()
-        .subscribe({
+        this.annotationService.getColorizedAnnotation().subscribe({
             next: colorizedAnnotation => {
-            if (colorizedAnnotation?.values) {
-                this.colorizedAnnotation = colorizedAnnotation;
-                //this.colorizedTitle = colorizedAnnotation?.label[this.LANGUAGE_ID];
-                this.colorizedTitle = colorizedAnnotation?.label[this.contextService.getContext().user.language];
+                if (colorizedAnnotation?.values) {
+                    this.colorizedAnnotation = colorizedAnnotation;
+                    //this.colorizedTitle = colorizedAnnotation?.label[this.LANGUAGE_ID];
+                    this.colorizedTitle = colorizedAnnotation?.label[this.contextService.getContext().user.language];
 
-                // create color legend pallet
-                const scale = chroma.scale(['red', 'blue', 'green']).colors(colorizedAnnotation.values.length);
-                //const scale = chroma.scale('Spectral').colors(colorizedAnnotation.values.length);              
+                    // create color legend pallet
+                    const scale = chroma.scale(['red', 'blue', 'green']).colors(colorizedAnnotation.values.length);
+                    //const scale = chroma.scale('Spectral').colors(colorizedAnnotation.values.length);              
 
-                // generate canvas group to be initialized from color pallet
-                for (let i = 0; i < colorizedAnnotation.values.length; i++) {
-                this.annotationLegends.push(
+                    // generate canvas group to be initialized from color pallet
+                    for (let i = 0; i < colorizedAnnotation.values.length; i++) {
+                    this.annotationLegends.push(
+                        {
+                            name: colorizedAnnotation.values[i],
+                            description: colorizedAnnotation.values[i],
+                            group: i,
+                            color: scale[i]
+                        });
+                    }
+                    
+                    // add a final group for not defined values
+                    this.annotationLegends.push(
                     {
-                    name: colorizedAnnotation.values[i],
-                    description: colorizedAnnotation.values[i],
-                    group: i,
-                    color: scale[i]
-                    });
-                }
-                
-                // add a final group for not defined values
-                this.annotationLegends.push(
-                {
-                name: this.UNDEFINED_NAME,
-                description: this.UNDEFINED_DESCRIPTION,
-                group: colorizedAnnotation.values.length,
-                color: this.UNDEFINED_COLOR
-                });
-                
-                this.colorGroups = this.annotationLegends.map(legend => legend.color)
-                this.pointSizeGroups = [...Array(this.annotationLegends.length).keys()].map(i => this.POINT_SIZE_GROUP_DEF);
-                this.opacityGroups = [...Array(this.annotationLegends.length).keys()].map(i => this.OPACITY_GROUP_ENUM_DEF);
+                        name: this.UNDEFINED_NAME,
+                        description: this.UNDEFINED_DESCRIPTION,
+                        group: colorizedAnnotation.values.length,
+                        color: this.UNDEFINED_COLOR
+                        });
+                        
+                        this.colorGroups = this.annotationLegends.map(legend => legend.color)
+                        this.pointSizeGroups = [...Array(this.annotationLegends.length).keys()].map(i => this.POINT_SIZE_GROUP_DEF);
+                        this.opacityGroups = [...Array(this.annotationLegends.length).keys()].map(i => this.OPACITY_GROUP_ENUM_DEF);
 
-                this.pointGroups = {
-                pointColor: this.colorGroups,
-                pointSize: this.pointSizeGroups,
-                opacity: this.opacityGroups
-                }
-            }                
+                        this.pointGroups = {
+                        pointColor: this.colorGroups,
+                        pointSize: this.pointSizeGroups,
+                        opacity: this.opacityGroups
+                    }
+                }                
             },
             error: error => {
             console.error(error.message);
@@ -673,6 +669,78 @@ export class ProjectionComponent implements OnInit, AfterViewInit, OnDestroy {
         }        
     }
 
+  onLoadCase() {        
+    this.isLoading = true;
+    this.hitPercent = 0;
+    this.hiddenSpinner = false;
+
+    // start tracking timestamp
+    this.timeInterval = "Loading ...";
+    this.startTime= new Date();
+
+    // recover all samples from index project
+    /*this.rxStompService.publish({
+        destination: "/app/findAll",
+        //body: JSON.stringify({ 'index': this.contextService.getContext().indexSampleProjection })
+        body: JSON.stringify({ 'index': '6637bb3c020918fd5b3b5676' })        
+    });*/
+
+    this.projectionService.getProjectionPrimal({
+        bucketName: this.contextService.getContext().bucketSampleProjection,
+        keyObjectName: this.contextService.getContext().fileSampleProjection,
+    }).subscribe({      
+      next: samples => {
+        this.samples = samples;
+        this.totalDocuments = this.samples.length;
+
+        // set in-memory samples collection
+        this.sampleService.loadSamples(this.samples);
+
+        // initialize visible points  
+        this.pointsChartVisible = this.samples;
+
+        // recover all attribute names from index project and first sample document(all samples have the same attributes)
+        if (this.samples.length > 0) {
+          this.expressionService.getAnnotationsName({
+            bucketName: this.contextService.getContext().bucketDataMatrix,
+            keyObjectName: this.contextService.getContext().fileDataMatrix,
+            }).subscribe({      
+              next: annotationNames => { 
+                this.attributeNames = annotationNames;
+        
+                this.attributeService.loadAttributeNames(this.attributeNames);
+              },
+              error: error => {
+                console.error(error.message);
+              }
+            });
+        }
+
+        // calculate colorized default groups from dataset
+        this.initializeSampleColorizedGroups();
+
+        // recalculate morphing projection dataset
+        this.recalculateMorphingProjection();
+        
+        // center canvas to fit bound
+        this.scatterplot.zoomToArea(
+          { x: 0, y: 0, width: 1, height: 1 },
+          { transition: true }
+        );
+
+        // end tracking timestamp
+        this.endTime = new Date();
+        this.timeInterval = (this.endTime.getTime() - this.startTime.getTime()) / 1000 + " secs";                 
+
+        this.hiddenSpinner = true;
+        this.isLoading = false;                
+      },
+      error: error => {
+        console.error(error.message);
+      }
+    });
+  }
+    
     onChangeCase() {
         this.isLoading = false;
         this.hiddenSpinner = true;

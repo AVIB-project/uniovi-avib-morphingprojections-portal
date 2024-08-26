@@ -70,15 +70,15 @@
                         Legend: {{colorizedTitle}}
                     </label>
                     <div *ngFor="let annotationLegend of annotationLegends"
-                        style="display: flex;align-items: center;margin-bottom: 5px;font-size: 10px;">
+                        style="display: flex; align-items: center; margin-bottom: 5px; font-size: 10px;">
                         <span [ngStyle]="{
-                'height': '10px',
-                'width': '10px',
-                'margin-right': '5px',
-                'background-color': annotationLegend.color,
-                'border-radius': '50%',
-                'cursor': annotationLegend.visible == undefined || annotationLegend.name == 'Undefined' ? 'default' : 'pointer',
-                'display': 'inline-block'}" (contextmenu)="onContextMenu($event, annotationLegend, cm)">
+                            'height': '10px',
+                            'width': '10px',
+                            'margin-right': '5px',
+                            'background-color': annotationLegend.color,
+                            'border-radius': '50%',
+                            'cursor': annotationLegend.visible == undefined || annotationLegend.name == 'Undefined' ? 'default' : 'pointer',
+                            'display': 'inline-block'}" (contextmenu)="onContextMenu($event, annotationLegend, cm)">
                         </span>
                         {{annotationLegend.name}}
                     </div>
@@ -234,19 +234,19 @@
     </button>
 
     <!-- SidePanel Samples Group View -->
-    <!--<p-sidebar [(visible)]="showSamplesGroupPanel" position="bottom" styleClass="metadata-panel">
+    <p-sidebar [(visible)]="showSamplesGroupPanel" position="bottom" styleClass="metadata-panel">
         <sample-group-view [samples]="samples" [sampleAnnotations]="sampleAnnotations"
             [sampleAnnotationNames]="sampleAnnotationNames" [sampleGroups]="sampleGroups"
             (onSampleGroupFilterChartEvent)="onGroupFromSamples($event)">
         </sample-group-view>
-    </p-sidebar>-->
+    </p-sidebar>
 
     <!-- SidePanel Samples Data View -->
-    <!--<p-sidebar [(visible)]="showSamplesDataPanel" position="bottom" styleClass="metadata-panel">
+    <p-sidebar [(visible)]="showSamplesDataPanel" position="bottom" styleClass="metadata-panel">
         <sample-data-view [samples]="samples" [pointsSelected]="pointsSelected" [sampleAnnotations]="sampleAnnotations"
             [sampleAnnotationNames]="sampleAnnotationNames" (onSampleDataFilterChartEvent)="onFilterChart($event)">
         </sample-data-view>
-    </p-sidebar>-->
+    </p-sidebar>
 </div>
 
 <p-toast></p-toast>

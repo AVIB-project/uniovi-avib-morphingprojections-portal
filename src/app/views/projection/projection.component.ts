@@ -16,10 +16,8 @@ import { Message } from '@stomp/stompjs'
 import chroma from "chroma-js";
 
 // app components
-//import { AnnotationsConfigurationViewComponent } from './views/annotations-configuration-view/annotations-configuration-view.component';
-//import { SampleGroupFormViewComponent } from './views/sample-group-view/sample-group-form-view/sample-group-form-view.component';
-//import { AnalyticsDataFormViewComponent } from './views/analytics-data-form-view/analytics-data-form-view.component';
-//import { IngestWizardFormViewComponent } from './views/ingest-wizard-data-form-view/ingest-wizard-data-form-view.component';
+import { SampleGroupFormViewComponent } from './forms/sample-group-view/sample-group-form-view/sample-group-form-view.component';
+import { AnalyticsDataFormViewComponent } from './forms/analytics-data-form-view/analytics-data-form-view.component';
 
 // app services, models and enumerations
 import { ContextService } from '../../shared/services/context.service';
@@ -142,8 +140,8 @@ export class ProjectionComponent implements OnInit, AfterViewInit, OnDestroy {
     showSamplesGroupPanel: boolean = false;
 
     // canvas default size
-    readonly CANVAS_WIDTH: number = 800;
-    readonly CANVAS_HEIGHT: number = 600;
+    readonly CANVAS_WIDTH: number = 700;
+    readonly CANVAS_HEIGHT: number = 500;
     
     // encoding sensibility coefficient
     readonly SEN_ALPHA = 10
@@ -748,7 +746,7 @@ export class ProjectionComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     onGroupFromChart(event, group) {
-        /*const annotationGroupViewFormComponent = this.dialogService.open(SampleGroupFormViewComponent, {
+        const annotationGroupViewFormComponent = this.dialogService.open(SampleGroupFormViewComponent, {
         header: 'Sample Group',
         data: {
             sampleGroups:this.sampleGroups,
@@ -795,7 +793,7 @@ export class ProjectionComponent implements OnInit, AfterViewInit, OnDestroy {
         // deselect any chart point and initialize any chart points selected
         this.pointsSelected = [];
         this.scatterplot.deselect();
-        });*/    
+        });    
     }
     
     onGroupFromSamples(sampleGroups: SampleGroup[]) {
@@ -1071,7 +1069,7 @@ export class ProjectionComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     async onExecuteAnalytics(event) {
-        /*const annotations = await lastValueFrom(this.annotationService.getSampleRequiredAndMandatoryAnnotations());
+        const annotations = await lastValueFrom(this.annotationService.getSampleRequiredAndMandatoryAnnotations());
         
         const analyticsDataFormViewComponent = this.dialogService.open(AnalyticsDataFormViewComponent, {
         data: {
@@ -1084,16 +1082,27 @@ export class ProjectionComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         width: "75%",
         header: 'Analytics Chart View'
-        });*/     
+        });
     }
     
     ngOnDestroy() {
-        this.topicSampleHitsSubscription.unsubscribe();
-        this.topicSampleSubscription.unsubscribe();
-        this.topicAttributeNamesHitsSubscription.unsubscribe();
-        this.topicAttributeNamesSubscription.unsubscribe();
-        this.topicAttributeValuesSubscription.unsubscribe();
-        this.topicAttributeValuesHitsSubscription.unsubscribe();
+        if(this.topicSampleHitsSubscription)
+            this.topicSampleHitsSubscription.unsubscribe();
+        
+        if(this.topicSampleSubscription)
+            this.topicSampleSubscription.unsubscribe();
+        
+        if(this.topicAttributeNamesHitsSubscription)        
+            this.topicAttributeNamesHitsSubscription.unsubscribe();
+        
+        if(this.topicAttributeNamesSubscription)        
+            this.topicAttributeNamesSubscription.unsubscribe();
+        
+        if(this.topicAttributeValuesSubscription)                
+            this.topicAttributeValuesSubscription.unsubscribe();
+        
+        if(this.topicAttributeValuesHitsSubscription)
+            this.topicAttributeValuesHitsSubscription.unsubscribe();
         
         if(this.subscriptionEvents)
             this.subscriptionEvents.unsubscribe();        

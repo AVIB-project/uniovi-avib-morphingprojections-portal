@@ -225,7 +225,7 @@
         </div>
     </div>
 
-    <!-- Side Panel Menu buttons -->
+    <!-- Side Panel Menu Buttons -->
     <button pButton type="button" label="Samples Data" icon="pi pi-table"
         class="p-button-lg p-button-warning samples-metadata-button" [disabled]="samples.length == 0"
         (click)="onShowSamplesDataPanel()">
@@ -236,7 +236,7 @@
         (click)="onShowSamplesGroupPanel()">
     </button>
 
-    <!-- SidePanel Samples Group View -->
+    <!-- Side Panel Menu Views -->
     <p-sidebar [(visible)]="showSamplesGroupPanel" position="bottom" styleClass="metadata-panel">
         <sample-group-view [samples]="samples" [sampleAnnotations]="sampleAnnotations"
             [sampleAnnotationNames]="sampleAnnotationNames" [sampleGroups]="sampleGroups"
@@ -244,7 +244,6 @@
         </sample-group-view>
     </p-sidebar>
 
-    <!-- SidePanel Samples Data View -->
     <p-sidebar [(visible)]="showSamplesDataPanel" position="bottom" styleClass="metadata-panel">
         <sample-data-view [samples]="samples" [pointsSelected]="pointsSelected" [sampleAnnotations]="sampleAnnotations"
             [sampleAnnotationNames]="sampleAnnotationNames" (onSampleDataFilterChartEvent)="onFilterChart($event)">

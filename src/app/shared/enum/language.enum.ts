@@ -1,8 +1,8 @@
-let Role = ["ES", "US"]; 
+let Language = ["es", "us"]; 
 
-export type RoleType = typeof Role[number];
+export type LanguageType = typeof Language[number];
 
 export enum LanguageEnum {
-    "Spanish" = "ES",
-    "English" = "US"
+    "Spanish" = "es",
+    "English" = "us"
 }

@@ -64,7 +64,8 @@ export class AnnotationService {
   }
   
   loadAnnotationsAvailableByCaseId(caseId: String | null): Observable<Annotation[]> {
-    return this.http.get<Annotation[]>(`${this.baseUrl}/cases/${caseId}` + "/available")
+    //return this.http.get<Annotation[]>(`${this.baseUrl}/cases/${caseId}` + "/available")
+    return this.http.get<Annotation[]>(`${this.baseUrl}/cases/${caseId}`)
       .pipe(
         map((annotations: Annotation[]) => {
           this.annotations = annotations;

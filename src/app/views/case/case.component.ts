@@ -10,8 +10,10 @@ import { EventType } from '../../shared/enum/event-type.enum';
 import { ContextService } from '../../shared/services/context.service';
 import { OrganizationService } from '../../shared/services/organization.service';
 import { CaseService } from '../../shared/services/case.service';
+import { JobService } from '../../shared/services/job.service';
 
 import { OrganizationCase } from '../../shared/models/organization-case.model';
+import { JobSubmit } from '../../shared/models/job-submit.model';
 
 @Component({
     templateUrl: 'case.component.html',
@@ -39,7 +41,7 @@ export class CaseComponent implements OnInit {
     
     constructor(
         private confirmationService: ConfirmationService, private router: Router, private eventBus: NgEventBus,
-        private contextService: ContextService, private organizationService: OrganizationService, private caseService: CaseService) { 
+        private contextService: ContextService, private organizationService: OrganizationService, private caseService: CaseService, private jobService: JobService) { 
     }
 
     ngOnInit() {
@@ -84,6 +86,32 @@ export class CaseComponent implements OnInit {
         this.router.navigate(['/case-form', { id: organizationCase.caseId }])
     }
 
+    onEncodingCase(event: Event, organizationCase: OrganizationCase) {
+            this.confirmationService.confirm({
+                target: event.target as EventTarget,
+                message: 'Are you sure that you want to encoding?',
+                header: 'Confirmation',
+                icon: 'pi pi-exclamation-triangle',
+                acceptIcon:"none",
+                rejectIcon:"none",
+                rejectButtonStyleClass: "p-button-text",
+                defaultFocus: 'reject',
+                accept: () => {
+                    if (organizationCase.caseId) {
+                        const jobSubmit: JobSubmit = {
+                            caseId: organizationCase.caseId,
+                            parameters: ["V1", "V2"]
+                        };
+
+                        this.jobService.submitJob(jobSubmit)
+                            .subscribe(() => {
+                                this.router.navigate(['/encoding', { id: organizationCase.caseId }])
+                        });
+                    }
+                }
+        });
+    }
+    
     onRemoveCase(event: Event, organizationCase: OrganizationCase) {
         this.confirmationService.confirm({
             target: event.target as EventTarget,

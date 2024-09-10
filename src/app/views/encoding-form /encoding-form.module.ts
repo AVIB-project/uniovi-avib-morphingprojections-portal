@@ -13,12 +13,11 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { MenuModule } from 'primeng/menu';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { TagModule } from 'primeng/tag';
+import { ScrollerModule } from 'primeng/scroller';
 
-import { ProjectFormModule } from '../project-form/project-form.module';
-import { ImageFormModule } from '../image-form/image-form.module';
-
-import { CaseFormComponent } from './case-form.component';
-import { CaseFormRoutingModule } from './case-form-routing.module';
+import { EncodingFormComponent } from './encoding-form.component';
+import { EncodingFormRoutingModule } from './encoding-form-routing.module';
 
 @NgModule({
 	imports: [
@@ -32,13 +31,13 @@ import { CaseFormRoutingModule } from './case-form-routing.module';
 		FileUploadModule,
 		InputTextareaModule,
 		InputGroupModule,
-		InputGroupAddonModule,
-		CaseFormRoutingModule,
+		InputGroupAddonModule,		
+		EncodingFormRoutingModule,		
 		MenuModule,
 		ConfirmDialogModule,
-		ProjectFormModule,
-		ImageFormModule
+		TagModule,
+		ScrollerModule
 	],
-	declarations: [CaseFormComponent]
+	declarations: [EncodingFormComponent]
 })
-export class CaseFormModule { }
+export class EncodingFormModule { }

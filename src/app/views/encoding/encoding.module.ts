@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TreeTableModule } from 'primeng/treetable';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { TooltipModule } from 'primeng/tooltip';
 
 import { EncodingComponent } from './encoding.component';
 import { EncodingRoutingModule } from './encoding-routing.module';
@@ -20,7 +21,8 @@ import { EncodingRoutingModule } from './encoding-routing.module';
 		InputTextModule,
 		TableModule,
 		TreeTableModule,
-		ProgressBarModule
+		ProgressBarModule,
+		TooltipModule
 	],
 	declarations: [EncodingComponent]
 })

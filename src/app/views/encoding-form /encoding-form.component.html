@@ -1,0 +1,29 @@
+<div class="card">
+    <span class="text-900 text-xl font-bold mb-4 block">Encoding Form</span>
+    <div class="grid">
+        <div class="col-12 lg:col-12">
+            <!-- Job Logs panel -->
+            <div class="flex flex-column gap-4">
+                <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                    <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="onGlobalFilterJobs($event)" placeholder="Global Search"
+                            class="w-full" />
+                    </span>
+                </div>
+                <p-scroller [items]="jobFilterLogs" [itemSize]="50" scrollHeight="200px" styleClass="border-1 surface-border"
+                    [style]="{'height': '200px'}">
+                    <ng-template pTemplate="log" let-log let-options="options">
+                        <div class="flex align-items-center p-2" [ngClass]="{ 'surface-ground': options.odd }" style="height: 50px;">
+                            {{ log }}
+                        </div>
+                    </ng-template>
+                </p-scroller>
+            </div>
+
+            <div class="flex flex-wrap justify-content-end gap-3">
+                <button (click)="onCloseResource($event)" pButton pRipple label="Close" class="p-button-outlined w-auto mt-3"></button>
+            </div>
+        </div>
+    </div>
+</div>

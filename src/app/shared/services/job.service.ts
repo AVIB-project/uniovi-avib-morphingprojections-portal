@@ -37,10 +37,16 @@ export class JobService {
     constructor(private http: HttpClient) { }
 
     private getTime(job: Job): string {
-        const diffTime = Math.abs(Date.now() - new Date(job.creationDate).getTime());
-        const diffDays = Math.floor(diffTime / (60 * 60 * 24));
+        let diffTime;
+        if (job.state == "Running")
+            diffTime = Math.abs(new Date(new Date()).getTime() - new Date(job.jobCreationDate).getTime());
+        else
+            diffTime = Math.abs(new Date(job.jobFinalizeDate).getTime() - new Date(job.jobCreationDate).getTime());
+        
+        const minutes = Math.floor(diffTime / 60000);
+        const seconds = Math.floor((diffTime - minutes * 60000)/1000);
 
-        return diffDays.toString() + " secs";
+        return minutes.toString() + " min, " + seconds.toString() + " sec";
     }
     
     getAllByCaseId(caseId: String): Observable<Job[]> {

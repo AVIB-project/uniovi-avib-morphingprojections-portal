@@ -6,10 +6,10 @@ import { ConfirmationService } from 'primeng/api';
 
 import { NgEventBus, MetaData } from 'ng-event-bus';
 
-import { EventType } from '../../shared/enum/event-type.enum';
 import { ContextService } from '../../shared/services/context.service';
 import { JobService } from '../../shared/services/job.service';
 
+import { EventType } from '../../shared/enum/event-type.enum';
 import { Job } from '../../shared/models/job.model';
 
 @Component({

@@ -7,6 +7,7 @@ import { LayoutService } from './service/app.layout.service';
 
 @Component({
     selector: 'app-menu',
+    styleUrls: ['app.menu.component.scss'],
     templateUrl: './app.menu.component.html'
 })
 export class AppMenuComponent implements OnInit {
@@ -24,27 +25,27 @@ export class AppMenuComponent implements OnInit {
                 routerLink: ['/']
                 },
                 {
-                    label: 'Case',
+                    label: 'Cases',
                     icon: 'pi pi-sitemap',
                     routerLink: ['/case']               
                 },            
                 {
-                    label: 'Annotation',
-                    icon: 'pi pi-cog',
+                    label: 'Annotations',
+                    icon: 'pi pi-bookmark',
                     routerLink: ['/configuration'],               
                 },
                 {
-                    label: 'Ingestion',
+                    label: 'Resources',
                     icon: 'pi pi-fw pi-database',
                     routerLink: ['/ingestion'],
                 },
                 {
-                    label: 'Encoding',
-                    icon: 'pi pi-fw pi-sliders-v',
+                    label: 'Jobs',
+                    icon: 'pi pi-fw pi-cog',
                     routerLink: ['/encoding'],
                 },         
                 {
-                    label: 'Projection',
+                    label: 'Projections',
                     icon: 'pi pi-fw pi-eye',
                     routerLink: ['/projection']               
                 },
@@ -72,17 +73,17 @@ export class AppMenuComponent implements OnInit {
                     routerLink: ['/configuration'],               
                 },
                 {
-                    label: 'Ingestion',
+                    label: 'Resource',
                     icon: 'pi pi-fw pi-database',
                     routerLink: ['/ingestion'],
                 },
                 {
-                    label: 'Encodings',
-                    icon: 'pi pi-fw pi-sliders-v',
+                    label: 'Job',
+                    icon: 'pi pi-fw pi-cog',
                     routerLink: ['/encoding'],
                 },         
                 {
-                    label: 'Morphing Projection',
+                    label: 'Projection',
                     icon: 'pi pi-fw pi-eye',
                     routerLink: ['/projection']               
                 },
@@ -100,7 +101,7 @@ export class AppMenuComponent implements OnInit {
                     routerLink: ['/']
                 },        
                 {
-                    label: 'Morphing Projection',
+                    label: 'Projection',
                     icon: 'pi pi-fw pi-eye',
                     routerLink: ['/projection']               
                 },

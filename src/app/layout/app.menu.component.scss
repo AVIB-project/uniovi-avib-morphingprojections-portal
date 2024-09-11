@@ -1,0 +1,16 @@
+:host {
+    ::ng-deep {
+        .app-menu-item {
+            width: 150px;
+        }
+
+        .app-menu-item > a.active-route {
+            background-color: #798BC8;
+        }
+
+        .app-menu-item:hover {
+            background-color: #798BC880;
+            width: 150px;
+        }
+    }
+}

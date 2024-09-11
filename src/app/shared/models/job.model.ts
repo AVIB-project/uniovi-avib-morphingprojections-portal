@@ -6,6 +6,8 @@ export interface Job {
     version: string;
     state: string;
     diffTime: string;
+    jobCreationDate: string;
+    jobFinalizeDate: string;
     creationBy: string;
     creationDate: string;
     updatedBy: string;

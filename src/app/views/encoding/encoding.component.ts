@@ -87,4 +87,9 @@ export class EncodingComponent implements OnInit {
     onJobsLog(event: Event, job: Job) {
         this.router.navigate(['/encoding-form', { name: job.name }]);
     }
+
+    ngOnDestroy(): void {
+        if(this.subscriptionEvents)
+            this.subscriptionEvents.unsubscribe();
+    }      
 }

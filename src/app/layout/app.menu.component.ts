@@ -63,32 +63,32 @@ export class AppMenuComponent implements OnInit {
                 routerLink: ['/']
                 },
                 {
-                    label: 'Case Management',
+                    label: 'Cases',
                     icon: 'pi pi-sitemap',
                     routerLink: ['/case']               
                 },            
                 {
-                    label: 'Case Configuration',
+                    label: 'Annotations',
                     icon: 'pi pi-cog',
                     routerLink: ['/configuration'],               
                 },
                 {
-                    label: 'Resource',
+                    label: 'Resources',
                     icon: 'pi pi-fw pi-database',
                     routerLink: ['/ingestion'],
                 },
                 {
-                    label: 'Job',
+                    label: 'Jobs',
                     icon: 'pi pi-fw pi-cog',
                     routerLink: ['/encoding'],
                 },         
                 {
-                    label: 'Projection',
+                    label: 'Projections',
                     icon: 'pi pi-fw pi-eye',
                     routerLink: ['/projection']               
                 },
                 {
-                    label: 'User Management',
+                    label: 'Users',
                     icon: 'pi pi-fw pi-users',
                     routerLink: ['/user']
                 },

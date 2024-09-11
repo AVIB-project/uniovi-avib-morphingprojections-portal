@@ -1,11 +1,22 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Subscription, debounceTime } from 'rxjs';
+import { Router } from '@angular/router';
+
+import { NgEventBus, MetaData } from 'ng-event-bus';
+
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
+
+import { DashboardService } from '../../shared/services/dashboard.service';
+import { ContextService } from '../../shared/services/context.service';
+
+import { EventType } from '../../shared/enum/event-type.enum';
 
 @Component({
     templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+    subscriptionEvents: any; 
+    eventType = EventType;
 
     overviewChartData: any;
 
@@ -21,14 +32,31 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     subscription: Subscription;
 
-    constructor(public layoutService: LayoutService) { 
+    dashboardResources: any = {};
+
+    constructor(public layoutService: LayoutService, private dashboardService: DashboardService, private eventBus: NgEventBus,
+        private contextService: ContextService, private router: Router,) { 
         this.subscription = this.layoutService.configUpdate$
-        .pipe(debounceTime(25))
-        .subscribe((config) => {
-            this.initCharts();
-        });
+            .pipe(debounceTime(25))
+            .subscribe((config) => {
+                this.initCharts();
+            });
     }
 
+    private loadDashboardResources(organizationId: String, userId: String) {
+        this.dashboardService.getDashboardTotalResources(organizationId, userId)
+            .subscribe({
+                next: (dashboardResources: any) => {
+                    this.dashboardResources = dashboardResources; 
+                    
+                    console.log(this.dashboardResources);
+                },
+                error: error => {
+                    console.error(error.message);
+                }
+            });
+    }
+    
     ngOnInit() {
         this.initCharts();
 
@@ -37,6 +65,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
             {name: 'This Week', code: '1'}
         ];
         this.selectedOverviewWeek = this.overviewWeeks[0]
+
+        // From case selector item
+        this.subscriptionEvents = this.eventBus.on(this.eventType.APP_SELECT_CONTEXT)
+            .subscribe((meta: MetaData) => {
+                if (meta.data.organizationId) {
+                    this.loadDashboardResources(meta.data.organizationId, meta.data.user.userId);
+                }
+            });
+        
+        // From menu item
+        if (this.contextService.getContext().organizationId && this.contextService.getContext().user.userId) {
+            this.loadDashboardResources(this.contextService.getContext().organizationId, this.contextService.getContext().user.userId);
+        }        
+    }
+
+    onUsersViewClick() {
+        this.router.navigate(['/user']);    
     }
 
     initCharts() {
@@ -212,5 +257,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+
+        if(this.subscriptionEvents)
+            this.subscriptionEvents.unsubscribe();        
     }
 }

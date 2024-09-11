@@ -20,18 +20,22 @@ export class EncodingFormComponent implements OnInit {
         private contextService: ContextService,) {         
     }            
     
+    private getJobLogs() {
+        this.jobService.getJobLogs(this.jobName)
+            .subscribe((jobLogs: any) => {
+                let logs: string[] = jobLogs.log.split("\n");
+                        
+                this.jobLogs = logs;
+                this.jobFilterLogs = logs;
+        });
+    }
+
     ngOnInit() { 
         this.route.params.subscribe(params => {
             this.jobName = params['name'];
 
             if (this.jobName) {
-                this.jobService.getJobLogs(this.jobName)
-                    .subscribe((jobLogs: any) => {
-                        let logs: string[] = jobLogs.log.split("\n");
-                        
-                        this.jobLogs = logs;
-                        this.jobFilterLogs = logs;
-                    });
+                this.getJobLogs();
             }
         });
     }
@@ -44,6 +48,10 @@ export class EncodingFormComponent implements OnInit {
         });
 
         this.jobFilterLogs = filtered;
+    }
+    
+    onRefreshLog(event: Event) {
+        this.getJobLogs();
     }
     
     onCloseResource(event: Event) {

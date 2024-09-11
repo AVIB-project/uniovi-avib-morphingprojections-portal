@@ -10,7 +10,7 @@
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="onGlobalFilterCase(dt, $event)" placeholder="Global Search" class="w-full" />
                 </span>
-                <button pButton class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-file" label="Add User"
+                <button pButton class="w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-user" label="Add User"
                     (click)="onAddUser($event)" *ngIf="contextService.getContext().user && contextService.getContext().user.role != 'GUEST'">
                 </button>
             </div>

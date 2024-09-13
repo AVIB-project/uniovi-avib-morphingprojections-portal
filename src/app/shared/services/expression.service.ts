@@ -1,7 +1,8 @@
 import { Injectable, } from '@angular/core';
-import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-import { Observable} from 'rxjs'
+import { Observable, throwError } from 'rxjs'
+import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 
@@ -11,26 +12,40 @@ import { environment } from '../../../environments/environment';
 export class ExpressionService {
     readonly baseUrl: string = environment.URL + "/expressions";
 
+    private handleError(error: HttpErrorResponse) {
+        if (error.status === 0) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.error('An error occurred:', error.error);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong.
+          console.error(`Backend returned code ${error.status}, body was: `, error.error);
+        }
+
+        // Return an observable with a user-facing error message.
+        return throwError(() => new Error('Something bad happened; please try again later.'));
+    }
+    
     constructor(private http: HttpClient) { }
 
-    getExpressionsByAnnotationPrimal(resource: any): Observable<any> {
-        const headers = { 'Content-Type': 'application/json' };
-        const body = resource;
-
-        return this.http.post<any>(`${this.baseUrl}/annotation`, body, { headers });
+    getExpressionsByAnnotationPrimal(data: any): Observable<any> {
+        return this.http.post<any>(`${this.baseUrl}/annotation`, data)
+            .pipe(
+                catchError(this.handleError)
+            );        
     }    
 
-    getAnnotationsName(resource: any): Observable<any> {
-        const headers = { 'Content-Type': 'application/json' };
-        const body = resource;
-
-        return this.http.post<any>(`${this.baseUrl}/annotations/name`, body, { headers });
+    getAnnotationsName(data: any): Observable<any> {
+        return this.http.post<any>(`${this.baseUrl}/annotations/name`, data)
+            .pipe(
+                catchError(this.handleError)
+            );         
     }    
 
-    getAnnotationsValue(resource: any): Observable<any> {
-        const headers = { 'Content-Type': 'application/json' };
-        const body = resource;
-
-        return this.http.post<any>(`${this.baseUrl}/annotations/value`, body, { headers });
+    getAnnotationsValue(data: any): Observable<any> {
+        return this.http.post<any>(`${this.baseUrl}/annotations/value`, data)
+            .pipe(
+                catchError(this.handleError)
+            );         
     } 
 }

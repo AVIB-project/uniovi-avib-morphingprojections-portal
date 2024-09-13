@@ -10,8 +10,10 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
-import { UserComponent } from './user.component';
+import { UserInviteFormModule } from '../user-invite-form/user-invite-form.module';
 import { UserRoutingModule } from './user-routing.module';
+
+import { UserComponent } from './user.component';
 
 @NgModule({
 	imports: [
@@ -24,7 +26,8 @@ import { UserRoutingModule } from './user-routing.module';
 		TreeTableModule,
 		ProgressBarModule,
 		TooltipModule,
-		ConfirmDialogModule
+		ConfirmDialogModule,
+		UserInviteFormModule
 	],
 	declarations: [UserComponent]
 })

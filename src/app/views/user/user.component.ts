@@ -3,8 +3,11 @@ import { Router } from '@angular/router';
 
 import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 
 import { NgEventBus, MetaData } from 'ng-event-bus';
+
+import { UserInviteFormComponent } from '../../views/user-invite-form/user-invite-form.component';
 
 import { ContextService } from '../../shared/services/context.service';
 import { UserService } from '../../shared/services/user.service';
@@ -13,7 +16,7 @@ import { EventType } from '../../shared/enum/event-type.enum';
 import { User } from '../../shared/models/user.model';
 @Component({
     templateUrl: './user.component.html',
-    providers: [ConfirmationService]
+    providers: [ConfirmationService, DialogService]
 })
 export class UserComponent implements OnInit {
     subscriptionEvents: any; 
@@ -29,7 +32,7 @@ export class UserComponent implements OnInit {
     }
     
     constructor(
-        private confirmationService: ConfirmationService, private router: Router, private eventBus: NgEventBus,
+        private confirmationService: ConfirmationService, private router: Router, private eventBus: NgEventBus, private dialogService: DialogService,
         public contextService: ContextService, private userService: UserService) {         
     }
 
@@ -97,6 +100,27 @@ export class UserComponent implements OnInit {
                 }
             }
         });
+    }
+
+    onInviteUser(event: Event) {
+        const organizationFormRef = this.dialogService.open(UserInviteFormComponent, {
+            header: 'Invite User Form',
+            width: '50%',
+            styleClass: 'invite-user-form',
+        });
+
+        organizationFormRef.onClose.subscribe((result: any) => {
+            if (result && result.action == 'invite') {
+                console.log("Invite user: " + result.data);         
+                
+                this.userService.inviteUserByEmail({ email: result.data, organizationId: this.contextService.getContext().organizationId })
+                    .subscribe((log: number) => {
+                        /*this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.INFO,
+                            tittle: this.translateService.instant('MACHINE_VIEW.MESSAGE_TITLE_UPDATE'),
+                            message: this.translateService.instant('MACHINE_VIEW.MESSAGE_DETAIL_UPDATE', {mid: machine.data.mid})});*/
+                    });
+            }        
+        });        
     }
 
     ngOnDestroy(): void {

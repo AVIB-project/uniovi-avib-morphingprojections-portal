@@ -16,30 +16,23 @@ import { Annotation } from '../models/annotation.model';
 export class AnnotationService {
   readonly baseUrl: string = environment.URL + "/annotations";
 
-  readonly httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json'
-    })
-  };
+  private handleError(error: HttpErrorResponse) {
+      if (error.status === 0) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.error('An error occurred:', error.error);
+      } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong.
+          console.error(`Backend returned code ${error.status}, body was: `, error.error);
+      }
+
+      // Return an observable with a user-facing error message.
+      return throwError(() => new Error('Something bad happened; please try again later.'));
+  }
 
   private annotations: Annotation[];
 
   constructor(private http: HttpClient, private contextService: ContextService) { }
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
-    }
-
-    // Return an observable with a user-facing error message.
-    return throwError(() => new Error('Something bad happened; please try again later.'));
-  }
 
   private createEncodingAnnotation(annotationSelected: any, encodingType: string, coordenate: string, annotationSpace: string): Annotation {
     const annotation: Annotation = {
@@ -72,7 +65,7 @@ export class AnnotationService {
 
           return this.annotations;
         }),
-        catchError(error => this.handleError(error))
+        catchError(this.handleError)
       );  
   }
 
@@ -89,7 +82,8 @@ export class AnnotationService {
       .pipe(
         map((annotations: Annotation[]) =>
           annotations.filter(annotation => annotation.group !== 'encoding')
-        )
+        ),
+        catchError(this.handleError)
       );
   }
 
@@ -108,7 +102,8 @@ export class AnnotationService {
       .pipe(
         map((annotations: Annotation[]) =>
           annotations.filter(annotation => annotation.group == 'sample')
-        )
+        ),
+        catchError(this.handleError)
       );
   }
   
@@ -117,7 +112,8 @@ export class AnnotationService {
       .pipe(
         map((annotations: Annotation[]) =>
           annotations.filter(annotation => (annotation.group == 'sample' && annotation.required == true))
-        )
+        ),
+        catchError(this.handleError)
       );  
   }
   
@@ -129,7 +125,8 @@ export class AnnotationService {
             annotation.space == 'primal' && (annotation.encoding == "supervised" || annotation.encoding == "unsupervised"))
             //(annotation.encoding == "supervised" || annotation.encoding == "unsupervised"))
         ),
-        map(annotations => ([...annotations].sort((a, b) => a.encoding! > b.encoding! ? 1 : -1)))
+        map(annotations => ([...annotations].sort((a, b) => a.encoding! > b.encoding! ? 1 : -1))),
+        catchError(this.handleError)
       ); 
   }
      
@@ -138,7 +135,8 @@ export class AnnotationService {
       .pipe(
         map((annotations: Annotation[]) =>
           annotations.find(annotation => annotation.colorized == true)
-        )
+        ),
+        catchError(this.handleError)
       );
   }
   
@@ -162,7 +160,7 @@ export class AnnotationService {
 
           return annotation;
         }),
-        catchError(error => this.handleError(error))
+        catchError(this.handleError)
       );  
   }
 
@@ -185,7 +183,7 @@ export class AnnotationService {
 
           return annotation;
         }),
-        catchError(error => this.handleError(error))
+        catchError(this.handleError)
       );   
   }
   
@@ -215,7 +213,10 @@ export class AnnotationService {
   }
 
   getAnnotationById(annotationId: String): Observable<Annotation> {
-    return this.http.get<Annotation>(`${this.baseUrl}` + "/" + annotationId);  
+    return this.http.get<Annotation>(`${this.baseUrl}` + "/" + annotationId)
+        .pipe(
+            catchError(this.handleError)
+        );    
   } 
     
   upload(organizationId: string, projectId: string, caseId: string, file: File): Observable<HttpEvent<any>> {
@@ -232,10 +233,16 @@ export class AnnotationService {
   }  
 
   saveAnnotation(annotation: any): Observable<String> {
-    return this.http.post<String>(`${this.baseUrl}`, annotation);      
+    return this.http.post<String>(`${this.baseUrl}`, annotation)
+        .pipe(
+            catchError(this.handleError)
+        );     
   }
   
   deleteAnnotation(annotationId: String): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}` + "/" + annotationId);  
+    return this.http.delete<void>(`${this.baseUrl}` + "/" + annotationId)
+        .pipe(
+            catchError(this.handleError)
+        );    
   }   
 }

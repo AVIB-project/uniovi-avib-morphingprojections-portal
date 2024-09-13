@@ -1,5 +1,5 @@
 import { Injectable, } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs'
 import { map, catchError } from 'rxjs/operators';
@@ -15,21 +15,14 @@ export class UserService {
 
     private userCase!: UserCase;
 
-    readonly httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type':  'application/json'
-        })
-    }; 
-
     private handleError(error: HttpErrorResponse) {
         if (error.status === 0) {
-        // A client-side or network error occurred. Handle it accordingly.
-        console.error('An error occurred:', error.error);
+            // A client-side or network error occurred. Handle it accordingly.
+            console.error('An error occurred:', error.error);
         } else {
-        // The backend returned an unsuccessful response code.
-        // The response body may contain clues as to what went wrong.
-        console.error(
-            `Backend returned code ${error.status}, body was: `, error.error);
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong.
+            console.error(`Backend returned code ${error.status}, body was: `, error.error);
         }
 
         // Return an observable with a user-facing error message.
@@ -39,23 +32,38 @@ export class UserService {
     constructor(private http: HttpClient) { }     
 
     getUsers(): Observable<User[]> {
-        return this.http.get<User[]>(`${this.baseUrl}`);  
+        return this.http.get<User[]>(`${this.baseUrl}`)
+            .pipe(
+                catchError(this.handleError)
+            ); 
     } 
     
     getUsersByOrganizationId(organizationId: String): Observable<User[]> {
-        return this.http.get<User[]>(`${this.baseUrl}` + "/organizations/" + organizationId);  
+        return this.http.get<User[]>(`${this.baseUrl}` + "/organizations/" + organizationId)
+            .pipe(
+                catchError(this.handleError)
+            );        
     } 
     
     getUserById(userId: String): Observable<User> {
-        return this.http.get<User>(`${this.baseUrl}` + "/" + userId);  
+        return this.http.get<User>(`${this.baseUrl}` + "/" + userId)
+            .pipe(
+                catchError(this.handleError)
+            );         
     } 
     
     getUserByExternalId(externalId: String): Observable<User> {
-        return this.http.get<User>(`${this.baseUrl}` + "/" + externalId + "/external");  
+        return this.http.get<User>(`${this.baseUrl}` + "/" + externalId + "/external")
+            .pipe(
+                catchError(this.handleError)
+            );  
     } 
     
     getUserByEmail(email: String): Observable<User> {
-        return this.http.get<User>(`${this.baseUrl}` + "/" + email + "/email");  
+        return this.http.get<User>(`${this.baseUrl}` + "/" + email + "/email")
+            .pipe(
+                catchError(this.handleError)
+            );
     } 
     
     getUserCases(userId: String): Observable<UserCase> {
@@ -66,21 +74,35 @@ export class UserService {
 
                     return this.userCase;
                 }),
-                catchError(error =>
-                    this.handleError(error)
-            )
-        );  
+                catchError(this.handleError)
+            );  
     } 
 
     saveUser(user: any): Observable<String> {
-        return this.http.post<String>(`${this.baseUrl}`, user);  
+        return this.http.post<String>(`${this.baseUrl}`, user)
+            .pipe(
+                catchError(this.handleError)
+            );
     }
 
     resetPassword(userId: String, password: String): Observable<void> {
-        return this.http.post<void>(`${this.baseUrl}` + "/" + userId + "/resetPassword", password);  
+        return this.http.post<void>(`${this.baseUrl}` + "/" + userId + "/resetPassword", password)
+            .pipe(
+                catchError(this.handleError)
+            );  
     }
     
     deleteUser(userId: String): Observable<void> {
-        return this.http.delete<void>(`${this.baseUrl}` + "/" + userId);  
+        return this.http.delete<void>(`${this.baseUrl}` + "/" + userId)
+            .pipe(
+                catchError(this.handleError)
+            ); 
     }
+
+    inviteUserByEmail(data: any): Observable<number> {       
+        return this.http.post<number>(`${this.baseUrl}` + "/inviteUser", data)
+            .pipe(
+                catchError(this.handleError)
+            );
+    } 
 }

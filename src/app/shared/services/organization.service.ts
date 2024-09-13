@@ -1,7 +1,8 @@
 import { Injectable, } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, throwError, map } from 'rxjs'
+import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 
@@ -17,21 +18,14 @@ import { Organization } from '../models/organization.model';
 export class OrganizationService {
     readonly baseUrl: string = environment.URL + "/organizations";
 
-    readonly httpOptions = {
-        headers: new HttpHeaders({
-            'Content-Type':  'application/json'
-        })
-    };    
-
     private handleError(error: HttpErrorResponse) {
         if (error.status === 0) {
-        // A client-side or network error occurred. Handle it accordingly.
-        console.error('An error occurred:', error.error);
+            // A client-side or network error occurred. Handle it accordingly.
+            console.error('An error occurred:', error.error);
         } else {
-        // The backend returned an unsuccessful response code.
-        // The response body may contain clues as to what went wrong.
-        console.error(
-            `Backend returned code ${error.status}, body was: `, error.error);
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong.
+            console.error(`Backend returned code ${error.status}, body was: `, error.error);
         }
 
         // Return an observable with a user-facing error message.
@@ -105,15 +99,22 @@ export class OrganizationService {
         return this.caseService.getCasesByOrganizationAndUser(organizationId, userId)
             .pipe(map((userCase: any) => {                    
                 return this.mapCasesByUser(userCase.organizations);
-            }
+            }),
+            catchError(this.handleError
         ));
     }
     
     saveOrganization(organization: Organization): Observable<String> {
-        return this.http.post<String>(`${this.baseUrl}`, organization);  
+        return this.http.post<String>(`${this.baseUrl}`, organization)
+            .pipe(
+                catchError(this.handleError)
+            );         
     }
 
     deleteOrganization(organizationId: String): Observable<void> {
-        return this.http.delete<void>(`${this.baseUrl}` + "/" + organizationId);  
+        return this.http.delete<void>(`${this.baseUrl}` + "/" + organizationId)
+            .pipe(
+                catchError(this.handleError)
+            );        
     }
 }

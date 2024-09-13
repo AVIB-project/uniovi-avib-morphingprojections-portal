@@ -1,9 +1,8 @@
 import { Injectable, } from '@angular/core';
-import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
+import { HttpEvent, HttpClient, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 
+import { Observable, throwError } from 'rxjs'
 import { map, catchError } from 'rxjs/operators';
-
-import { Observable} from 'rxjs'
 
 import { environment } from '../../../environments/environment';
 
@@ -14,11 +13,28 @@ import { Resource } from '../models/resource.model';
 })
 export class ResourceService {        
     readonly baseUrl: string = environment.URL + "/resources";
+
+    private handleError(error: HttpErrorResponse) {
+        if (error.status === 0) {
+            // A client-side or network error occurred. Handle it accordingly.
+            console.error('An error occurred:', error.error);
+        } else {
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong.
+            console.error(`Backend returned code ${error.status}, body was: `, error.error);
+        }
+
+        // Return an observable with a user-facing error message.
+        return throwError(() => new Error('Something bad happened; please try again later.'));
+    }
     
     constructor(private http: HttpClient) { }
-
+    
     getResources(): Observable<any> {
-        return this.http.get(`${this.baseUrl}/files`);
+        return this.http.get(`${this.baseUrl}/files`)
+            .pipe(
+                catchError(this.handleError)
+            );        
     }
     
     getResourcesByCaseId(caseId: string): Observable<Resource[]> {
@@ -33,8 +49,9 @@ export class ResourceService {
                     });
 
                     return resources;
-                })
-            )            
+                }),
+                catchError(this.handleError)
+            );        
     }      
 
     uploadResources(organizationId: string, projectId: string, caseId: string, type: string, description: string, file: File): Observable<HttpEvent<any>> {
@@ -53,6 +70,9 @@ export class ResourceService {
     }
         
     deleteResouce(organizationId: string, projectId: string, caseId: string, file: string) {
-        return this.http.delete(`${this.baseUrl}/organizations/${organizationId}/projects/${projectId}/cases/${caseId}/file/${file}`);     
+        return this.http.delete(`${this.baseUrl}/organizations/${organizationId}/projects/${projectId}/cases/${caseId}/file/${file}`)
+            .pipe(
+                catchError(this.handleError)
+            );        
     }       
 }

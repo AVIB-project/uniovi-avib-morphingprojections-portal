@@ -16,6 +16,8 @@ import { Annotation } from '../models/annotation.model';
 export class AnnotationService {
   readonly baseUrl: string = environment.URL + "/annotations";
 
+  private annotations: Annotation[];
+  
   private handleError(error: HttpErrorResponse) {
       if (error.status === 0) {
           // A client-side or network error occurred. Handle it accordingly.
@@ -29,10 +31,6 @@ export class AnnotationService {
       // Return an observable with a user-facing error message.
       return throwError(() => new Error('Something bad happened; please try again later.'));
   }
-
-  private annotations: Annotation[];
-
-  constructor(private http: HttpClient, private contextService: ContextService) { }
 
   private createEncodingAnnotation(annotationSelected: any, encodingType: string, coordenate: string, annotationSpace: string): Annotation {
     const annotation: Annotation = {
@@ -56,6 +54,8 @@ export class AnnotationService {
     return annotation;
   }
   
+  constructor(private http: HttpClient, private contextService: ContextService) { }
+  
   loadAnnotationsAvailableByCaseId(caseId: String | null): Observable<Annotation[]> {
     //return this.http.get<Annotation[]>(`${this.baseUrl}/cases/${caseId}` + "/available")
     return this.http.get<Annotation[]>(`${this.baseUrl}/cases/${caseId}`)
@@ -69,6 +69,13 @@ export class AnnotationService {
       );  
   }
 
+  getAnnotationById(annotationId: String): Observable<Annotation> {
+    return this.http.get<Annotation>(`${this.baseUrl}` + "/" + annotationId)
+        .pipe(
+            catchError(this.handleError)
+        );    
+  } 
+  
   getAnnotations(): Annotation[] {
     return this.annotations;     
   }
@@ -211,13 +218,6 @@ export class AnnotationService {
 
     return of(true);
   }
-
-  getAnnotationById(annotationId: String): Observable<Annotation> {
-    return this.http.get<Annotation>(`${this.baseUrl}` + "/" + annotationId)
-        .pipe(
-            catchError(this.handleError)
-        );    
-  } 
     
   upload(organizationId: string, projectId: string, caseId: string, file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();

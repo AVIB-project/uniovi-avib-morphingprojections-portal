@@ -23,10 +23,17 @@ export class ConfigurationComponent implements OnInit {
     
     private loadAvailableAnnotations(caseId: String) {
         if (this.contextService.getContext().caseId) {
-            this.annotationService.loadAnnotationsAvailableByCaseId(caseId)
+            // get all annotations by case id
+            this.annotationService.loadAnnotationsAvailableByCaseId(caseId)                
                 .subscribe({
                     next: annotations => {
-                        this.annotations = annotations;
+                        // get all not encoding annotations
+                        this.annotationService.getAllAnnotations()
+                            .subscribe({
+                                next: annotations => {
+                                    this.annotations = annotations;
+                                }
+                            });              
                     },
                     error: error => {
                         console.error(error.message);

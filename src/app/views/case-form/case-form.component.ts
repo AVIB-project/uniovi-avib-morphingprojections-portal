@@ -43,7 +43,7 @@ export class CaseFormComponent implements OnInit {
         imageId: [null],
         name: ['', Validators.required],
         description: [''],
-        type: [CaseTypeEnum.Private, Validators.required]
+        type: [CaseTypeEnum.PRIVATE, Validators.required]
     });
 
     private getImagesByOrganization(organizationId: String) {

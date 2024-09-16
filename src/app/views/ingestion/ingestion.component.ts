@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpResponse } from '@angular/common/http';
 
 import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
@@ -38,12 +39,12 @@ export class IngestionComponent implements OnInit {
             });
     }
     
-    private removeResource(resourceFile: string) {
+    private removeResource(filename: string) {
         this.resourceService.deleteResouce(
                 this.contextService.getContext().organizationId,
                 this.contextService.getContext().projectId,
                 this.contextService.getContext().caseId,
-                resourceFile)
+                filename)
             .subscribe({
                 next: () => {
                     this.loadResources(this.contextService.getContext().caseId);
@@ -52,6 +53,26 @@ export class IngestionComponent implements OnInit {
                     console.error(error.message);
                 }
             }); 
+    }
+
+    private downloadResource(filename: string) {
+        this.resourceService.downloadResource(
+                this.contextService.getContext().organizationId,
+                this.contextService.getContext().projectId,
+                this.contextService.getContext().caseId,
+                filename)
+            .subscribe((response: any) => {
+                const file = new Blob([response.body], { type: 'text/csv' });
+                let fileURL = URL.createObjectURL(file);
+                
+                // create <a> element dynamically setting file
+                let fileLink = document.createElement('a');
+                fileLink.href = fileURL;                
+                fileLink.download = filename;
+
+                // simulate click
+                fileLink.click();
+            });       
     }
 
     ngOnInit() {
@@ -101,6 +122,10 @@ export class IngestionComponent implements OnInit {
                 this.removeResource(resource.file);                
             }
         });
+    }
+    
+    onDownloadResource(event: Event, resource: Resource) {
+        this.downloadResource(resource.file);        
     }
     
     ngOnDestroy(): void {

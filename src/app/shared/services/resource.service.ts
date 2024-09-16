@@ -1,7 +1,7 @@
 import { Injectable, } from '@angular/core';
-import { HttpEvent, HttpClient, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import { HttpEvent, HttpClient, HttpRequest, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 
-import { Observable, throwError } from 'rxjs'
+import { Observable, throwError, } from 'rxjs'
 import { map, catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
@@ -68,9 +68,22 @@ export class ResourceService {
 
         return this.http.request(req);
     }
+    
+    downloadResource(organizationId: string, projectId: string, caseId: string, filename: string): Observable<HttpResponse<any>> {   
+        let headers = new HttpHeaders();
+        headers = headers.append('Accept', 'text/csv; charset=utf-8');
         
-    deleteResouce(organizationId: string, projectId: string, caseId: string, file: string) {
-        return this.http.delete(`${this.baseUrl}/organizations/${organizationId}/projects/${projectId}/cases/${caseId}/file/${file}`)
+        return this.http.get(`http://localhost:8083/storage/organizations/${organizationId}/projects/${projectId}/cases/${caseId}/file/${filename}`, {
+        //return this.http.get(`http://localhost:8082/resources/organizations/${organizationId}/projects/${projectId}/cases/${caseId}/file/${filename}`, {
+        //return this.http.get(`${this.baseUrl}/organizations/${organizationId}/projects/${projectId}/cases/${caseId}/file/${filename}`, {
+                headers: headers,
+                observe: 'response',
+                responseType: 'blob'
+            });
+    }
+    
+    deleteResouce(organizationId: string, projectId: string, caseId: string, filename: string) {
+        return this.http.delete(`${this.baseUrl}/organizations/${organizationId}/projects/${projectId}/cases/${caseId}/file/${filename}`)
             .pipe(
                 catchError(this.handleError)
             );        

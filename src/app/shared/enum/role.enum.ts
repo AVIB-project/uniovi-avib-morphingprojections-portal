@@ -3,7 +3,7 @@ let Role = ["ADMIN", "USER", "GUEST"];
 export type RoleType = typeof Role[number];
 
 export enum RoleEnum {
-    "Administrator" = "ADMIN",
+    "ADMIN" = "ADMIN",
     "User" = "USER",
     "Guest" = "GUEST"
 }

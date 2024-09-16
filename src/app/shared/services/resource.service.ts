@@ -73,9 +73,9 @@ export class ResourceService {
         let headers = new HttpHeaders();
         headers = headers.append('Accept', 'text/csv; charset=utf-8');
         
-        return this.http.get(`http://localhost:8083/storage/organizations/${organizationId}/projects/${projectId}/cases/${caseId}/file/${filename}`, {
+        //return this.http.get(`http://localhost:8083/storage/organizations/${organizationId}/projects/${projectId}/cases/${caseId}/file/${filename}`, {
         //return this.http.get(`http://localhost:8082/resources/organizations/${organizationId}/projects/${projectId}/cases/${caseId}/file/${filename}`, {
-        //return this.http.get(`${this.baseUrl}/organizations/${organizationId}/projects/${projectId}/cases/${caseId}/file/${filename}`, {
+        return this.http.get(`${this.baseUrl}/organizations/${organizationId}/projects/${projectId}/cases/${caseId}/file/${filename}`, {
                 headers: headers,
                 observe: 'response',
                 responseType: 'blob'

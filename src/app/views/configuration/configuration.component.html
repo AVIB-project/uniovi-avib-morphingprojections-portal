@@ -11,9 +11,13 @@
                     <input pInputText type="text" (input)="onGlobalFilterCase(dt, $event)" placeholder="Global Search"
                         class="w-full" />
                 </span>
-                <button (click)="onAddAnnotation($event)" pButton [disabled]="contextService.getContext().caseId == undefined"
-                    class="w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-cog"
-                    label="Add Annotation"></button>
+                <div class="flex gap-2">
+                    <button (click)="onAddAnnotation($event)" pButton [disabled]="contextService.getContext().caseId == undefined"
+                        class="w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-cog"
+                        label="Add Annotation"></button>
+                    <button (click)="onRefreshAnnotations($event)" pButton class=" w-full sm:w-auto flex-order-0 sm:flex-order-1"
+                        icon="pi pi-sync" label="Refresh Annotations"></button>
+                </div>
             </div>
         </ng-template>
         <ng-template pTemplate="header">

@@ -75,7 +75,7 @@ export class ConfigurationComponent implements OnInit {
     onEditAnnotation(event: Event, annotation: Annotation) {
         this.router.navigate(['/configuration-form', { id: annotation.annotationId }])
     }
-
+    
     onRemoveAnnotation(event: Event, annotation: Annotation) {
         this.confirmationService.confirm({
             target: event.target as EventTarget,
@@ -97,5 +97,9 @@ export class ConfigurationComponent implements OnInit {
                 }
             }
         });
-    }    
+    }   
+    
+    onRefreshAnnotations(event: Event) {
+        this.loadAvailableAnnotations(this.contextService.getContext().caseId);
+    }
 }

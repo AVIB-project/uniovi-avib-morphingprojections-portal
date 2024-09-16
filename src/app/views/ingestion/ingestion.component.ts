@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpResponse } from '@angular/common/http';
 
 import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
@@ -124,6 +123,10 @@ export class IngestionComponent implements OnInit {
         });
     }
     
+    onRefreshResources(event: Event) {
+        this.loadResources(this.contextService.getContext().caseId);
+    }
+
     onDownloadResource(event: Event, resource: Resource) {
         this.downloadResource(resource.file);        
     }

@@ -136,6 +136,10 @@ export class CaseComponent implements OnInit {
         });
     }
 
+    onRefreshCases(event: Event) {
+        this.loadCasesByUser(this.contextService.getContext().organizationId, this.contextService.getContext().user.userId);
+    }
+    
     ngOnDestroy(): void {
         if(this.subscriptionEvents)
             this.subscriptionEvents.unsubscribe();

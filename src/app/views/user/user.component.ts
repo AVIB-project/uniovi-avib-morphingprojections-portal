@@ -118,11 +118,16 @@ export class UserComponent implements OnInit {
                         /*this.eventBus.cast(this.eventType.MESSAGE, {severity: this.eventSeverity.INFO,
                             tittle: this.translateService.instant('MACHINE_VIEW.MESSAGE_TITLE_UPDATE'),
                             message: this.translateService.instant('MACHINE_VIEW.MESSAGE_DETAIL_UPDATE', {mid: machine.data.mid})});*/
+                        this.getUsersByOrganizationId(this.contextService.getContext().organizationId);                        
                     });
             }        
         });        
     }
 
+    onRefreshUsers(event: Event) {
+        this.getUsersByOrganizationId(this.contextService.getContext().organizationId);
+    }
+    
     ngOnDestroy(): void {
         if(this.subscriptionEvents)
             this.subscriptionEvents.unsubscribe();

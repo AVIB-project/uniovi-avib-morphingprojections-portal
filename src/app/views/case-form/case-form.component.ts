@@ -154,6 +154,8 @@ export class CaseFormComponent implements OnInit {
 
         projectFormRef.onClose.subscribe((result: any) => {
             if (result && result.action == 'save') {
+                result.data.parameters = { "space": "primal,dual" };
+
                 this.imageService.saveImage(result.data)
                     .subscribe((imageId: String) => {                                                
                         this.getImagesByOrganization(this.contextService.getContext().organizationId);
@@ -175,13 +177,10 @@ export class CaseFormComponent implements OnInit {
         });
 
         projectFormRef.onClose.subscribe((result: any) => {
-            if (result && result.action == 'save') {
-                this.projectService.saveProject(result.data)
-                    .subscribe((projectId: String) => {
-                    this.imageService.saveImage(result.data)
-                        .subscribe((imageId: String) => {                                                
-                            this.getImagesByOrganization(this.contextService.getContext().organizationId);
-                        });
+            if (result && result.action == 'save') {                        
+                this.imageService.saveImage(result.data)
+                    .subscribe((imageId: String) => {                                                
+                        this.getImagesByOrganization(this.contextService.getContext().organizationId);
                     });
             }        
         });        

@@ -98,9 +98,15 @@ export class CaseComponent implements OnInit {
                 defaultFocus: 'reject',
                 accept: () => {
                     if (organizationCase.caseId) {
+                        // create parameters entity
+                        const parameters = {};
+                        parameters["case_id"] = organizationCase.caseId;
+                        parameters["space"] = "primal,dual";
+                        
+                        // create job submit entity
                         const jobSubmit: JobSubmit = {
                             caseId: organizationCase.caseId,
-                            parameters: ["V1", "V2"]
+                            parameters: parameters
                         };
 
                         this.jobService.submitJob(jobSubmit)

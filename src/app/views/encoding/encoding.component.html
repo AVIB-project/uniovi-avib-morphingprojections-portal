@@ -17,8 +17,8 @@
                 <th pSortableColumn="name" class="white-space-nowrap" style="width:25%">Name<p-sortIcon field="name"></p-sortIcon></th>
                 <th pSortableColumn="image" class="white-space-nowrap" style="width:25%">Image<p-sortIcon field="image"></p-sortIcon></th>
                 <th pSortableColumn="version" class="white-space-nowrap" style="width:25%">Version <p-sortIcon field="version"></p-sortIcon></th>
-                <th pSortableColumn="state" class="white-space-nowrap" style="width:25%">State <p-sortIcon field="state"></p-sortIcon></th>
                 <th pSortableColumn="creationDate" class="white-space-nowrap" style="width:25%">Creation Date <p-sortIcon field="creationDate"></p-sortIcon></th>
+                <th pSortableColumn="state" class="white-space-nowrap" style="width:25%">State <p-sortIcon field="state"></p-sortIcon></th>                
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-job>
@@ -26,18 +26,15 @@
                 <td>{{job.name}}</td>
                 <td>{{job.image}}</td>
                 <td>{{job.version}}</td>
-                <td>
-                    <div class="job-state" 
-                        [pTooltip]="job.diffTime" 
-                        tooltipPosition="left" >
-                        <span [ngClass]="getStateJob(job.state)"></span>{{job.state}}
-                    </div>
-                </td>
-                <!--<td>{{job.creationDate | date:'medium'}}</td>-->
+                <td style="padding: 6px;" [pTooltip]="job.diffTime" tooltipPosition="left">{{job.creationDate | date:'medium'}}</td>
                 <td style="min-width: 10rem;">
                     <div class="flex justify-content-start w-full px-0">
                         <span #active class="text-700 font-semibold white-space-nowrap">
-                            <td style="padding: 6px;">{{job.creationDate | date:'medium'}}</td>
+                            <td>
+                                <div class="job-state" tooltipPosition="left">
+                                    <span [ngClass]="getStateJob(job.state)"></span>{{job.state}}
+                                </div>
+                            </td>
                         </span>
                         <div style="display: none;" #options>
                             <button pButton class="h-2rem w-2rem mr-2" severity="warning" icon="pi pi-tag" pTooltip="Jobs Log" tooltipPosition="top"

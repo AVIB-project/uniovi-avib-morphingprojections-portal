@@ -9,6 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { ChipsModule } from 'primeng/chips';
 
 import { ImageFormComponent } from './image-form.component';
 
@@ -23,6 +24,7 @@ import { ImageFormComponent } from './image-form.component';
 		InputTextareaModule,
 		InputGroupModule,
 		InputGroupAddonModule,
+		ChipsModule
 	],
 	declarations: [ImageFormComponent]
 })

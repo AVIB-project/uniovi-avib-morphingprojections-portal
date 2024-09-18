@@ -17,6 +17,8 @@ export class ImageFormComponent {
         description: [''],
         image: ['', Validators.required],
         version: ['', Validators.required],
+        command: ['', Validators.required],
+        parameters: [[]],
     });
     
     constructor(

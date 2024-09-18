@@ -8,7 +8,7 @@
             <form novalidate [formGroup]="projectFormGroup">
                 <div class="grid formgrid p-fluid">
                     <div class="field mb-4 col-12">
-                        <label for="name" class="font-medium text-900">Name *</label>
+                        <label for="name" class="font-medium text-900">Name <span style="color: red;">*</span></label>
                         <input id="name" type="text" pInputText formControlName="name">
                         <div *ngIf="projectFormGroup.controls.name.errors && !projectFormGroup.controls.name.pristine">
                             <small *ngIf="projectFormGroup.controls.name.errors['required']" class="p-error">Name is mandatory</small>

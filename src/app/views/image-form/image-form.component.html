@@ -8,7 +8,7 @@
             <form novalidate [formGroup]="imageFormGroup">
                 <div class="grid formgrid p-fluid">
                     <div class="field mb-4 col-12">
-                        <label for="name" class="font-medium text-900">Name *</label>
+                        <label for="name" class="font-medium text-900">Name <span style="color: red;">*</span></label>
                         <input id="name" type="text" pInputText formControlName="name">
                         <div *ngIf="imageFormGroup.controls.name.errors && !imageFormGroup.controls.name.pristine">
                             <small *ngIf="imageFormGroup.controls.name.errors['required']" class="p-error">Name is mandatory</small>
@@ -16,21 +16,33 @@
                     </div>
                     <div class="field mb-4 col-12">
                         <label for="description" class="font-medium text-900">Description</label>
-                        <textarea id="description" type="text" pInputTextarea rows="5" [autoResize]="true" formControlName="description"></textarea>
+                        <input id="description" type="text" pInputText formControlName="description">
                     </div> 
                     <div class="field mb-4 col-9">
-                        <label for="image" class="font-medium text-900">Image *</label>
+                        <label for="image" class="font-medium text-900">Image <span style="color: red;">*</span></label>
                         <input id="image" type="text" pInputText formControlName="image">
                         <div *ngIf="imageFormGroup.controls.image.errors && !imageFormGroup.controls.image.pristine">
                             <small *ngIf="imageFormGroup.controls.image.errors['required']" class="p-error">Image is mandatory</small>
                         </div>
                     </div>
                     <div class="field mb-4 col-3">
-                        <label for="version" class="font-medium text-900">Version *</label>
+                        <label for="version" class="font-medium text-900">Version <span style="color: red;">*</span></label>
                         <input id="version" type="text" pInputText formControlName="version">
                         <div *ngIf="imageFormGroup.controls.version.errors && !imageFormGroup.controls.version.pristine">
                             <small *ngIf="imageFormGroup.controls.version.errors['required']" class="p-error">Version is mandatory</small>
                         </div>
+                    </div>
+                    <div class="field mb-4 col-12">
+                        <label for="command" class="font-medium text-900">Command <span style="color: red;">*</span></label>
+                        <textarea id="command" rows="3" cols="30" [autoResize]="true" pInputTextarea formControlName="command">
+                        </textarea>
+                        <div *ngIf="imageFormGroup.controls.command.errors && !imageFormGroup.controls.command.pristine">
+                            <small *ngIf="imageFormGroup.controls.command.errors['required']" class="p-error">Command is mandatory</small>
+                        </div>
+                    </div>
+                    <div class="field mb-4 col-12 md:col-12">
+                        <label for="parameters" class="control-label block">Parameters</label>
+                        <p-chips id="parameters" styleClass="selector-values" formControlName="parameters"></p-chips>
                     </div>
                 </div>
                 <div class="flex flex-wrap justify-content-end gap-3">

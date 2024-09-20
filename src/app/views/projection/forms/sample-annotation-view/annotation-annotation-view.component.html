@@ -1,0 +1,213 @@
+<p-table #annotationsConfigTable styleClass="p-datatable-gridlines" [scrollHeight]="scrollHeight" [scrollable]="true" 
+    selectionMode="single" [(selection)]="selectedAnnotations" dataKey="name"
+    [value]="sampleAnnotations" [resizableColumns]="true" columnResizeMode="expand" [rows]="25" [loading]="isLoading"
+    [globalFilterFields]="sampleAnnotationNames" [paginator]="true" [rowsPerPageOptions]="[10, 25, 50]"
+    [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} annotations">
+    <ng-template pTemplate="caption">
+        <div class="flex gap-2">
+            <div class="flex ml-auto gap-2">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                    (click)="onClearFilterGlobal($event.target)">
+                </button>
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" [(ngModel)]="filterGlobal"
+                        (input)="onApplyFilterGlobal($event.target, 'contains')" placeholder="Search keyword" />
+                </span>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 4rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="name">
+                Name
+                <p-sortIcon field="name"></p-sortIcon>
+                <p-columnFilter field="name" display="menu" [hideOnClear]="true"></p-columnFilter>
+            </th>
+            <th pSortableColumn="description" pResizableColumn>
+                Description
+                <p-sortIcon field="description"></p-sortIcon>
+                <p-columnFilter field="description" display="menu" [hideOnClear]="true"></p-columnFilter>
+            </th>
+            <th pSortableColumn="type">
+                Type
+                <p-sortIcon field="type"></p-sortIcon>
+                <p-columnFilter field="type" matchMode="equals" display="menu">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown [ngModel]="value" [options]="annotationTypes" placeholder="Any" 
+                            optionLabel="name" optionValue= "id" (onChange)="filter($event.value)">
+                        </p-dropdown>
+                    </ng-template>
+                </p-columnFilter>
+            </th>
+            <th pSortableColumn="group">
+                Group
+                <p-sortIcon field="group"></p-sortIcon>
+                <p-columnFilter field="group" matchMode="equals" display="menu">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown [ngModel]="value" [options]="annotationGroups" placeholder="Any" 
+                            optionLabel="name" optionValue= "id" (onChange)="filter($event.value)">
+                        </p-dropdown>
+                    </ng-template>
+                </p-columnFilter>
+            </th>
+            <th pSortableColumn="space">
+                Space
+                <p-sortIcon field="space"></p-sortIcon>
+                <p-columnFilter field="space" matchMode="equals" display="menu">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown [ngModel]="value" [options]="annotationSpaces" placeholder="Any" optionLabel="name"
+                            optionValue="id" (onChange)="filter($event.value)">
+                        </p-dropdown>
+                    </ng-template>
+                </p-columnFilter>
+            </th>
+            <th pSortableColumn="projected_by_annotation" pResizableColumn>
+                Projected by Annotation
+                <p-sortIcon field="projected_by_annotation"></p-sortIcon>
+                <p-columnFilter field="projected_by_annotation" display="menu" [hideOnClear]="true"></p-columnFilter>
+            </th>
+            <th pSortableColumn="projected_by_annotation_value" pResizableColumn>
+                Projected by Annotation Value
+                <p-sortIcon field="projected_by_annotation_value"></p-sortIcon>
+                <p-columnFilter field="projected_by_annotation_value" display="menu" [hideOnClear]="true"></p-columnFilter>
+            </th>
+            <!--<th>
+                Values
+            </th>-->
+            <!--<th pSortableColumn="label">
+                Label
+            </th>-->
+            <th pSortableColumn="encoding">
+                Encoding
+                <p-sortIcon field="encoding"></p-sortIcon>
+                <p-columnFilter field="encoding" matchMode="equals" display="menu">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown [ngModel]="value" [options]="annotationEncodings" placeholder="Any"
+                            optionLabel="name" optionValue= "id"  (onChange)="filter($event.value)">
+                        </p-dropdown>
+                    </ng-template>
+                </p-columnFilter>
+            </th>
+            <th pSortableColumn="colorized">
+                Colorized
+                <p-sortIcon field="colorized"></p-sortIcon>
+                <p-columnFilter field="colorized" type="boolean" display="menu"></p-columnFilter>
+            </th>
+            <th pSortableColumn="precalculated">
+                Precalculated
+                <p-sortIcon field="precalculated"></p-sortIcon>
+                <p-columnFilter field="precalculated" type="boolean" display="menu"></p-columnFilter>
+            </th>
+            <th pSortableColumn="required" >
+                Required
+                <p-sortIcon field="required"></p-sortIcon>
+                <p-columnFilter field="required" type="boolean" display="menu"></p-columnFilter>
+            </th>
+            <th alignFrozen="right" pFrozenColumn>
+                Menu
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-sampleAnnotation>
+        <tr>
+            <td>
+                <p-tableCheckbox [value]="sampleAnnotation"></p-tableCheckbox>
+            </td>
+            <td> {{ sampleAnnotation.name }} </td>
+            <td> {{ sampleAnnotation.description }} </td>
+            <td> {{ sampleAnnotation.type | AnnotationTypePipe}} </td>
+            <td> {{ sampleAnnotation.group | AnnotationGroupPipe }} </td>
+            <td> {{ sampleAnnotation.space | AnnotationSpacePipe }} </td>
+            <td> {{ sampleAnnotation.projectedByAnnotation }} </td>
+            <td> {{ sampleAnnotation.projectedByAnnotationValue }} </td>
+            <!--<td *ngIf="sampleAnnotation.type == 'enumeration'; else simpleType" style="padding: 5px;">
+                <p-overlayPanel #sampleAnnotationValuesPanel>
+                    <p-listbox [options]="sampleAnnotation.values" [style]="{'width':'15rem'}"
+                        [listStyle]="{'max-height': '220px'}">
+                    </p-listbox>
+                </p-overlayPanel>
+                <p-button styleClass="button-annotation-values" icon="pi pi-list" label="Show" [badge]="sampleAnnotation.values.length" (click)="sampleAnnotationValuesPanel.toggle($event)"></p-button>
+            </td>-->
+            <!--<ng-template #simpleType>
+                <td>
+                    {{ sampleAnnotation.values }}
+                </td>
+            </ng-template>-->
+            <!--<td style="padding: 5px;">
+                <p-overlayPanel #sampleAnnotationLabelPanel>
+                    <p-listbox [options]="getLabelsByAnnotation(sampleAnnotation)" optionLabel="name" [style]="{'width':'15rem'}"
+                        [listStyle]="{'max-height': '220px'}">
+                        <ng-template let-label pTemplate="item">
+                            <div class="flex align-items-center gap-2">
+                                <img src="assets/images/flag_placeholder.png"
+                                    [class]="'flag flag-' + label.code.toLowerCase()" style="width: 18px" />
+                                <div>{{ label.name }}</div>
+                            </div>
+                        </ng-template>
+                    </p-listbox>
+                </p-overlayPanel>
+                <p-button styleClass="button-annotation-values" icon="pi pi-list" label="Show"
+                    (click)="sampleAnnotationLabelPanel.toggle($event)">
+                </p-button>
+            </td>-->
+            <td> {{ sampleAnnotation.encoding | AnnotationEncodingPipe}} </td>
+            <td>
+                <i class="pi"
+                    [ngClass]="{ 'text-green-500 pi-check-circle': sampleAnnotation.colorized, 'text-red-500 pi-times-circle': !sampleAnnotation.colorized }">
+                </i>
+            </td>
+            <td>
+                <i class="pi"
+                    [ngClass]="{ 'text-green-500 pi-check-circle': sampleAnnotation.precalculated, 'text-red-500 pi-times-circle': !sampleAnnotation.precalculated }">
+                </i>
+            </td>
+            <td>
+                <i class="pi"
+                    [ngClass]="{ 'text-green-500 pi-check-circle': sampleAnnotation.required, 'text-red-500 pi-times-circle': !sampleAnnotation.required }">
+                </i>
+            </td>
+            <td alignFrozen="right" pFrozenColumn style="padding: 2px; z-index: 0">
+                <div *ngIf="sampleAnnotation.group == 'sample' && 
+                            ['enumeration', 'numeric'].includes(sampleAnnotation.type)"
+                    [hidden]="sampleAnnotation.required == false">
+                    <!--<div pTooltip="Add supervised encoding" tooltipPosition="top" style="display:inline-block;">
+                        <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-success mr-2" size="small"
+                            [disabled]="sampleAnnotation.encoding !== undefined && sampleAnnotation.encoding !== null"
+                            (click)="onAddSupervisedEncodingAnnotation($event, sampleAnnotation)">
+                        </button>
+                    </div>-->
+                    <div pTooltip="Add unsupervised encoding" tooltipPosition="top" style="display:inline-block;">
+                        <button pButton pRipple icon="pi pi-eye-slash" class="p-button-rounded p-button-warning mr-2" size="small"
+                            [disabled]="sampleAnnotation.encoding !== undefined && sampleAnnotation.encoding !== null"
+                            (click)="onAddUnsupervisedEncodingAnnotation($event, sampleAnnotation)">
+                        </button>
+                    </div>
+                    <div pTooltip="Remove encoding" tooltipPosition="top" style="display:inline-block;">
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger mr-2" size="small"                       
+                            [disabled]="sampleAnnotation.encoding == undefined || sampleAnnotation.encoding == null"
+                            (click)="onDeleteEncodingAnnotation($event, sampleAnnotation)">
+                        </button>
+                    </div>
+                    <div pTooltip="Set color group" tooltipPosition="top" style="display:inline-block;">
+                        <button pButton pRipple icon="pi pi-share-alt" class="p-button-rounded p-button-help" size="small"
+                            [disabled]="sampleAnnotation.colorized == true"
+                            (click)="onColorizedEncodingAnnotation($event, sampleAnnotation)">
+                        </button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td [attr.colspan]="sampleAnnotations?.length">
+                <label style="display: block; text-align: center;">No samples annotations configuration found.</label>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+<p-confirmDialog></p-confirmDialog>

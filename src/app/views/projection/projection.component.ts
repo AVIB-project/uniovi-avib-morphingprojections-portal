@@ -17,6 +17,7 @@ import chroma from "chroma-js";
 
 // app components
 import { SampleGroupFormViewComponent } from './forms/sample-group-view/sample-group-form-view/sample-group-form-view.component';
+import { AnnotationViewComponent } from './forms/sample-annotation-view/annotation-annotation-view.component';
 import { AnalyticsDataFormViewComponent } from './forms/analytics-data-form-view/analytics-data-form-view.component';
 
 // app services, models and enumerations
@@ -74,6 +75,9 @@ export class ProjectionComponent implements OnInit, AfterViewInit, OnDestroy {
     // scatter plot tooltip component
     @ViewChild('canvasTooltip')
     tooltip: ElementRef = {} as ElementRef;
+    
+    // annotation dialog form view
+    annotationViewComponent: DynamicDialogRef | undefined;
     
     pointsSelected: any = [];
 
@@ -791,6 +795,51 @@ export class ProjectionComponent implements OnInit, AfterViewInit, OnDestroy {
         this.showSamplesGroupPanel = !this.showSamplesGroupPanel;
     }
     
+    onShowAnnotationsPanel(event) {
+        //this.annotationService.getSampleAnnotations().subscribe({
+        this.annotationService.getAllAnnotations().subscribe({      
+        next: data => {
+            this.annotationViewComponent = this.dialogService.open(AnnotationViewComponent, {
+            header: 'Annotations View',
+            data: {
+                sampleAnnotations: data,
+                sampleAnnotationNames: this.annotationEnum
+            },          
+            width: '80%',
+            contentStyle: { overflow: 'auto' },
+            baseZIndex: 10000,
+            maximizable: false
+            });
+
+            this.annotationViewComponent.onClose.subscribe((annotations: Annotation[]) => {
+                // refresh encoding annotations to show new selectors
+                this.getEncodingAnnotations();
+                
+                // get unique colorized annotation to generate annotation lengend
+                this.generateColorizedColorScale();
+
+                // calculate colorized default groups from dataset
+                this.initializeSampleColorizedGroups();
+
+                // set new color points
+                this.scatterplot.set(this.pointGroups);
+
+                // refresh and recalculate morphing projection
+                this.recalculateMorphingProjection();
+
+                // refresh filter chart points
+                this.onContextMenuShowGroupEvent(event, this.annotationLegends);
+                
+                this.pointsSelected = [];
+                this.scatterplot.deselect();          
+            });
+        },
+        error: error => {
+            console.error(error.message);
+        }
+        });         
+    }
+    
     onExportChart() {        
         const IMAGE_EXTENSION = '.png';
         let link = document.createElement("a");    
@@ -1137,7 +1186,7 @@ export class ProjectionComponent implements OnInit, AfterViewInit, OnDestroy {
         // filter chart
         this.scatterplot.filter(this.pointsChartVisible);
     }
-
+    
     async onExecuteAnalytics(event) {
         const annotations = await lastValueFrom(this.annotationService.getSampleRequiredAndMandatoryAnnotations());
         

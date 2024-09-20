@@ -236,6 +236,11 @@
         (click)="onShowSamplesGroupPanel()">
     </button>
 
+    <button pButton type="button" label="Annotations" icon="pi pi-bookmark"
+        class="p-button-lg p-button-secondary samples-annotations-button"
+        (click)="onShowAnnotationsPanel($event)">
+    </button>
+
     <!-- Side Panel Menu Views -->
     <p-sidebar [(visible)]="showSamplesGroupPanel" position="bottom" styleClass="metadata-panel">
         <sample-group-view [samples]="samples" [sampleAnnotations]="sampleAnnotations"

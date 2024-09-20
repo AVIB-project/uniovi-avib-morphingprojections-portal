@@ -32,6 +32,7 @@ import { RxStompServiceFactory } from '../../shared/websocket/rx-stomp-service-f
 
 import { SampleDataViewModule } from './forms/sample-data-view/sample-data-view.module';
 import { SampleGroupViewModule } from './forms/sample-group-view/sample-group-view.module';
+import { AnnotationsConfigurationViewModule } from './forms/sample-annotation-view/annotation-annotation-view.module';
 import { AnalyticsDataFormViewModule } from './forms/analytics-data-form-view/analytics-data-form-view.module';
 
 import { ProjectionComponent } from './projection.component';
@@ -68,7 +69,8 @@ import { AnnotationFilterGroupPipe } from '../../shared/pipe/annotation-filter-g
 		ScrollPanelModule,
 		ContextMenuModule,
 		SampleDataViewModule,
-    	SampleGroupViewModule,
+		SampleGroupViewModule,
+		AnnotationsConfigurationViewModule,
     	AnalyticsDataFormViewModule,
 		ToastModule,
 	],

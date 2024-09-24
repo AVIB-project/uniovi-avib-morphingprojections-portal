@@ -39,7 +39,6 @@ import { UserCase } from '../../shared/models/user-case.model';
 import { Organization } from '../../shared/models/organization.model';
 import { Project } from '../../shared/models/project.model';
 import { Case } from '../../shared/models/case.model';
-import { Resource } from '../../shared/models/resource.model';
 import { Sample } from '../../shared/models/sample.model';
 import { Attribute } from '../../shared/models/attribute.model';
 import { Annotation } from '../../shared/models/annotation.model';

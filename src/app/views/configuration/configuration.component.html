@@ -34,6 +34,9 @@
                 <th pSortableColumn="type" class="white-space-nowrap" style="width:25%">Type
                     <p-sortIcon field="type"></p-sortIcon>
                 </th>
+                <th pSortableColumn="space" class="white-space-nowrap" style="width:25%">Space
+                    <p-sortIcon field="space"></p-sortIcon>
+                </th>
                 <th pSortableColumn="precalculated" class="white-space-nowrap" style="width:25%">Precalculated
                     <p-sortIcon field="precalculated"></p-sortIcon>                    
                 </th>
@@ -51,6 +54,7 @@
                 <td>{{annotation.description}}</td>
                 <td>{{annotation.group}}</td>
                 <td>{{annotation.type}}</td>
+                <td>{{annotation.space}}</td>
                 <td>
                     <i class="pi h-2rem w-2rem"
                         [ngClass]="{ 'text-green-500 pi-check-circle': annotation.precalculated, 'text-red-500 pi-times-circle': !annotation.precalculated }">

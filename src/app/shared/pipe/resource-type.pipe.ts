@@ -26,7 +26,9 @@ export class ResourceTypePipe implements PipeTransform {
             if ([
                 ResourceTypeEnum.DATAMATRIX,
                 ResourceTypeEnum.SAMPLE_ANNOTATION,
-                ResourceTypeEnum.ATTRIBUTE_ANNOTATION].includes(propertyValue)) {
+                ResourceTypeEnum.ATTRIBUTE_ANNOTATION,
+                ResourceTypeEnum.SAMPLE_PRECALCULATED_ANNOTATION,
+                ResourceTypeEnum.ATTRIBUTE_PRECALCULATED_ANNOTATION].includes(propertyValue)) {
                     this.resourceTypeList.push({ id: propertyValue, name: propertyKey });
             }
         }

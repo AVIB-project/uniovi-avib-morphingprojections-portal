@@ -101,7 +101,8 @@ export class CaseComponent implements OnInit {
                         // create parameters entity
                         const parameters = {};
                         parameters["case_id"] = organizationCase.caseId;
-                        parameters["space"] = "primal,dual";
+                        //parameters["space"] = "primal,dual";
+                        parameters["space"] = "primal"; // TODO: Only calculated primal projection
                         
                         // create job submit entity
                         const jobSubmit: JobSubmit = {

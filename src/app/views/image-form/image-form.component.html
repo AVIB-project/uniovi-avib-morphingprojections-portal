@@ -18,18 +18,25 @@
                         <label for="description" class="font-medium text-900">Description</label>
                         <input id="description" type="text" pInputText formControlName="description">
                     </div> 
-                    <div class="field mb-4 col-9">
+                    <div class="field mb-4 col-8">
                         <label for="image" class="font-medium text-900">Image <span style="color: red;">*</span></label>
                         <input id="image" type="text" pInputText formControlName="image">
                         <div *ngIf="imageFormGroup.controls.image.errors && !imageFormGroup.controls.image.pristine">
                             <small *ngIf="imageFormGroup.controls.image.errors['required']" class="p-error">Image is mandatory</small>
                         </div>
                     </div>
-                    <div class="field mb-4 col-3">
+                    <div class="field mb-4 col-2">
                         <label for="version" class="font-medium text-900">Version <span style="color: red;">*</span></label>
                         <input id="version" type="text" pInputText formControlName="version">
                         <div *ngIf="imageFormGroup.controls.version.errors && !imageFormGroup.controls.version.pristine">
                             <small *ngIf="imageFormGroup.controls.version.errors['required']" class="p-error">Version is mandatory</small>
+                        </div>
+                    </div>
+                    <div class="field mb-4 col-2">
+                        <label for="environment" class="font-medium text-900">Environment <span style="color: red;">*</span></label>
+                        <input id="environment" type="text" pInputText formControlName="environment">
+                        <div *ngIf="imageFormGroup.controls.environment.errors && !imageFormGroup.controls.environment.pristine">
+                            <small *ngIf="imageFormGroup.controls.environment.errors['required']" class="p-error">Environment is mandatory</small>
                         </div>
                     </div>
                     <div class="field mb-4 col-12">

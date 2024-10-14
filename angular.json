@@ -50,6 +50,27 @@
                             ],
                             "outputHashing": "all"
                         },
+                        "avib": {
+                            "budgets": [
+                                {
+                                "type": "initial",
+                                "maximumWarning": "5mb",
+                                "maximumError": "7mb"
+                                },
+                                {
+                                "type": "anyComponentStyle",
+                                "maximumWarning": "15kb",
+                                "maximumError": "20kb"
+                                }
+                            ],
+                            "outputHashing": "all",              
+                            "fileReplacements": [
+                                {
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.avib.ts"
+                                }
+                            ]
+                        },                         
                         "development": {
                             "buildOptimizer": false,
                             "optimization": false,

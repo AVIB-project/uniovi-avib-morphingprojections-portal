@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   
-  URL: 'https://avispe.edv.uniovi.es/kubernetes/morphingprojections-backend',
-  URL_WS: 'wss://avispe.edv.uniovi.es/kubernetes/morphingprojections-backend/ws',
+  URL: 'http://minikube.io/morphingprojections-backend',
+  URL_WS: 'wss://minikube.io/morphingprojections-backend/ws',
+  URL_IAM: 'http://minikube.io' 
 };

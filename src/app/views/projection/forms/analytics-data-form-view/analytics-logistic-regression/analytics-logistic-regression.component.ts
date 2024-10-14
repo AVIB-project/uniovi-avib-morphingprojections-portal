@@ -195,16 +195,15 @@ export class AnalyticsLogisticRegressionComponent implements OnInit {
     this.dataTable = this.responseAnalytics;
   }
 
-  onCalculateClick(event) {
-    this.requestAnalytics = this.analyticsFormViewGroup.value;
+  onCalculateClick(event) {    
+    this.requestAnalytics = this.analyticsFormViewGroup.value;    
+    this.requestAnalytics.attributes = this.attributeAnnotations;
     //this.requestAnalytics.indexDataMatrix = this.contextService.getContext().indexDataMatrix //TODO
     
-    this.requestAnalytics.attributes = this.attributeAnnotations;
-
-    this.hiddenSpinner = false;
-
+    // set Chart title
     this.chartAnalytics.chart.config.options.plugins.title.text = this.analyticsFormViewGroup.get('title').value;
-
+    
+    this.hiddenSpinner = false;
     this.analyticsService.executeLogisticRegression(this.requestAnalytics)
       .subscribe({
         next: responseAnalytics => {

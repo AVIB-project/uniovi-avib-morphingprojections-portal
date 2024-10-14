@@ -148,7 +148,7 @@ export class CaseFormComponent implements OnInit {
                 image: null
             },
             header: 'Add Image Form',
-            width: '50%',
+            width: '60%',
             styleClass: 'image-form',
         });
 
@@ -172,7 +172,7 @@ export class CaseFormComponent implements OnInit {
                 image: image
             },
             header: 'Edit Image Form',
-            width: '50%',
+            width: '60%',
             styleClass: 'image-form',
         });
 

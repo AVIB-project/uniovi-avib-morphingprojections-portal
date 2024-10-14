@@ -16,6 +16,7 @@ export class ImageFormComponent {
         name: ['', Validators.required],
         description: [''],
         image: ['', Validators.required],
+        environment: ['', Validators.required],
         version: ['', Validators.required],
         command: ['', Validators.required],
         parameters: [[]],

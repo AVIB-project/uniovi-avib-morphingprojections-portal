@@ -9,13 +9,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppLayoutModule } from './layout/app.layout.module';
 
+import { environment } from '../environments/environment';
+
 import { NgEventBus } from 'ng-event-bus'
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
         config: {
-            url: 'http://localhost:8088',
+            url: environment.URL_IAM,
             realm: 'avib',
             clientId: 'portal-cli'
         },

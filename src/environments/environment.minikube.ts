@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
+  production: false,
   
   URL: 'http://minikube.io/morphingprojections-backend',  
   URL_WS: 'wss://minikube.io/morphingprojections-backend/ws',

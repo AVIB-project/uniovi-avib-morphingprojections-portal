@@ -137,51 +137,11 @@ export class AppTopBarComponent implements OnInit {
         
         this.subscriptionAddCaseEvents = this.eventBus.on(this.eventType.APP_ADD_CASE)
             .subscribe((meta: MetaData) => {                
-                /*const caseItem: CaseItem = {
-                    label: meta.data.name, value: {
-                        caseId: meta.data.caseId, name: meta.data.name, description: meta.data.description, type: "PRIVATE", resources: []
-                    }
-                };
-
-                const result = this.projectList.map((projectItem: ProjectItem) => {
-                    if (projectItem.projectId === meta.data.projectId) {
-                        return { ...projectItem, items: [caseItem, ...projectItem.items] };
-                    } else {
-                        return projectItem;
-                    }
-                });
-
-                this.projectList = result;*/
-
                 this.getUserCases();
             });
         
         this.subscriptionEditCaseEvents = this.eventBus.on(this.eventType.APP_EDIT_CASE)
-            .subscribe((meta: MetaData) => {
-                /*const projectItem: ProjectItem = this.projectList.find((projectItem: ProjectItem) => {
-                    if (projectItem.projectId == meta.data.projectId)
-                        return projectItem;
-                    
-                    return null;
-                });
-
-                if (projectItem) {
-                    const caseItem: CaseItem = projectItem.items.find((caseItem: CaseItem) => {
-                        if (caseItem.value.caseId == meta.data.caseId)
-                            return caseItem;
-                    
-                        return null;
-                    });
-
-                    if (caseItem) {
-                        caseItem.label = meta.data.name;
-                        caseItem.value.name = meta.data.name;
-                        caseItem.value.description = meta.data.description;  
-                    }
-
-                    this.selectedCase = caseItem.value;
-                }*/
-                
+            .subscribe((meta: MetaData) => {         
                 this.getUserCases();
             });
         
@@ -365,15 +325,13 @@ export class AppTopBarComponent implements OnInit {
     onChangeCase() {
         // context organizations selectd
         this.contextService.getContext().organizationId = this.selectedOrganization.organizationId;
-
-        // context project selectd
-        if ( this.selectedProject)
-            this.contextService.getContext().projectId = this.selectedProject.projectId;        
-        else
-            this.contextService.getContext().projectId = null;        
         
         // context case and resources selectd
         if (this.selectedCase) {
+            // context project selected
+            this.contextService.getContext().projectId = this.selectedCase.projectId;
+
+            // context case selected with resources
             this.contextService.getContext().caseId = this.selectedCase.caseId;
 
             this.contextService.getContext().bucketDataMatrix = this.selectedCase.resources.find((resource: Resource) => resource.type == this.resourceTypeEnum.DATAMATRIX)?.bucket!;

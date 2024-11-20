@@ -2,6 +2,7 @@ import { Resource } from "./resource.model";
 
 export interface Case {
     caseId: string;
+    projectId: string;
     name: string;
     description?: string;
     type?: string;

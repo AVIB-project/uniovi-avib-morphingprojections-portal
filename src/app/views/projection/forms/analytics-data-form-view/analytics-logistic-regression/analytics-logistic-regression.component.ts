@@ -182,7 +182,8 @@ export class AnalyticsLogisticRegressionComponent implements OnInit {
     this.dataChart.labels = this.responseAnalytics.map(a => a.attribute);
     this.dataChart.datasets = [
       {
-        label: 'mi-RNA Relevance',
+        //label: 'mi-RNA Relevance',
+        label: 'Relevance',
         data: this.responseAnalytics.map(a => a.value),
         fill: false,
         borderColor: this.documentStyle.getPropertyValue('--blue-500'),
@@ -198,8 +199,15 @@ export class AnalyticsLogisticRegressionComponent implements OnInit {
   onCalculateClick(event) {    
     this.requestAnalytics = this.analyticsFormViewGroup.value;    
     this.requestAnalytics.attributes = this.attributeAnnotations;
-    //this.requestAnalytics.indexDataMatrix = this.contextService.getContext().indexDataMatrix //TODO
-    
+   
+    // add resource request metadata
+    this.requestAnalytics.bucketDataMatrix = this.contextService.getContext().bucketDataMatrix;
+    this.requestAnalytics.fileDataMatrix = this.contextService.getContext().fileDataMatrix;
+    this.requestAnalytics.bucketSampleAnnotation = this.contextService.getContext().bucketSampleAnnotation;
+    this.requestAnalytics.fileSampleAnnotation = this.contextService.getContext().fileSampleAnnotation;
+    this.requestAnalytics.bucketAttributeAnnotation = this.contextService.getContext().bucketAttributeAnnotation;
+    this.requestAnalytics.fileAttributeAnnotation = this.contextService.getContext().fileAttributeAnnotation;
+
     // set Chart title
     this.chartAnalytics.chart.config.options.plugins.title.text = this.analyticsFormViewGroup.get('title').value;
     

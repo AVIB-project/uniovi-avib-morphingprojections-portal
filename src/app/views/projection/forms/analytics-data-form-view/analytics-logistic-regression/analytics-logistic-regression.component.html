@@ -34,7 +34,7 @@
             <p-table [value]="dataTable" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm" scrollHeight="400px">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th>Gen</th>
+                        <th>Attribute</th>
                         <th>Group A(μ ± σ)</th>
                         <th>Group B(μ ± σ)</th>
                         <th>Relevancia</th>
@@ -42,7 +42,7 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-expression>
                     <tr>
-                        <td>{{expression.attributeId}}</td>
+                        <td>{{expression.attribute}}</td>
                         <td>{{expression.analytics_a}}</td>
                         <td>{{expression.analytics_b}}</td>
                         <td>{{expression.value}}</td>                        

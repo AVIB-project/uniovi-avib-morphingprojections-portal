@@ -15,8 +15,8 @@ export class AnalyticsDataFormViewComponent {
   readonly analytics = [
     { key: "histogram", name: "Histogram" },
     { key: "logistic_regression", name: "Logistic regression" },
-    { key: "anova", name: "ANOVA" },
-    { key: "pearson_correlation", name: "Pearson correlation" },    
+    /*{ key: "anova", name: "ANOVA" },
+    { key: "pearson_correlation", name: "Pearson correlation" },*/    
   ];
 
   selectedAnalyticsKey: any = "histogram";

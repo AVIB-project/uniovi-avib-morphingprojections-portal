@@ -62,7 +62,6 @@ export class AnalyticsHistogramComponent implements OnInit {
     name: ['Histogram Name', Validators.required],      
     title: ['Histogram Title', Validators.required],
     view: new FormControl<string | null>(null),
-    //filterType: new FormControl<string | null>('filter_sample'),
     filterType: ['filter_sample'],
     filterSampleAnnotation: [null, [sampleAnnotationValidator]],
     filterAttributeAnnotation: [null, [attributeAnnotationValidator]],
@@ -206,6 +205,16 @@ export class AnalyticsHistogramComponent implements OnInit {
     if (this.data == undefined || this.responseAnalytics.length == 0)
         return;
     
+    // create labels chart
+    if (this.responseAnalytics.length > 0) {
+      for (const key in this.responseAnalytics[0]) {
+        if (['group', 'color'].indexOf(key) === -1) {
+          this.data.labels.push(key);
+        }
+      }
+    }
+      
+    // create bins chart
     let groupAnalytics = this.responseAnalytics.reduce((x, y) => {
             (x[y.group] = x[y.group] || []).push(y);
 
@@ -219,12 +228,13 @@ export class AnalyticsHistogramComponent implements OnInit {
         borderColor: groupAnalytics[group][0].color,
         data: []
       }
-      
-      groupAnalytics[group].forEach((item) => {                
-        if (this.data.labels.indexOf(item.annotation) === -1)
-          this.data.labels.push(item.annotation)                
-
-        bin.data.push(item.value)
+            
+      groupAnalytics[group].forEach((item) => {
+        for (const key in item) {
+          if (['group', 'color'].indexOf(key) === -1) {
+            bin.data.push(item[key]);            
+          }
+        }
       });
 
       this.data.datasets.push(bin);                       
@@ -261,7 +271,6 @@ export class AnalyticsHistogramComponent implements OnInit {
     this.analyticsService.executeHistogram(this.requestAnalytics)
       .subscribe({
         next: responseAnalytics => {
-          // recover results and paint histogram chart
           this.responseAnalytics = responseAnalytics;
 
           this.fillDataChart();

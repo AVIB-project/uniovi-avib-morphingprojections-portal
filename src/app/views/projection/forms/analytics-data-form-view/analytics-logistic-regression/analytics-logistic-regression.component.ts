@@ -196,7 +196,8 @@ export class AnalyticsLogisticRegressionComponent implements OnInit {
     this.dataTable = this.responseAnalytics;
   }
 
-  onCalculateClick(event) {    
+  onCalculateClick(event) {  
+    // get analytics request parameters
     this.requestAnalytics = this.analyticsFormViewGroup.value;    
     this.requestAnalytics.attributes = this.attributeAnnotations;
    

@@ -7,6 +7,7 @@ import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 import { User } from '../models/user.model';
+import { UserSession } from '../models/user-session.model';
 import { UserCase } from '../models/user-case.model';
 
 @Injectable({ providedIn: 'root' })
@@ -105,4 +106,11 @@ export class UserService {
                 catchError(this.handleError)
             );
     } 
+
+    getUserSessions(realm: String): Observable<UserSession[]> {       
+        return this.http.get<UserSession[]>(`${this.baseUrl}` + "/realms/" + realm + "/sessions")
+            .pipe(
+                catchError(this.handleError)
+            ); 
+    }     
 }

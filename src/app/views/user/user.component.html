@@ -15,10 +15,10 @@
                         (click)="onAddUser($event)"
                         *ngIf="contextService.getContext().user && contextService.getContext().user.role != 'GUEST'">
                     </button>
-                    <button pButton class="w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-user" label="Invite User"
+                    <!--<button pButton class="w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-user" label="Invite User"
                         (click)="onInviteUser($event)"
                         *ngIf="contextService.getContext().user && contextService.getContext().user.role != 'GUEST'">
-                    </button>
+                    </button>-->
                     <button (click)="onRefreshUsers($event)" pButton class=" w-full sm:w-auto flex-order-0 sm:flex-order-1"
                         icon="pi pi-sync" label="Refresh Users"></button>
                 </div>

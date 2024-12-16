@@ -59,8 +59,16 @@
     <div class="col-12 lg:col-6 xl:col-3">
         <div class="card h-full">
             <h5>Users Logged</h5>
-            <ul class="list-none p-0 m-0">
+            <ul class="list-none p-0 m-0" *ngFor="let userSession of userSessions">
                 <li class="mb-4 flex align-items-center">
+                    <p-avatar label="US" size="large" shape="circle" styleClass="text-base font-bold"
+                        [style]="{'background-color':'rgba(94, 208, 250, 0.1)', 'color': '#1992D4', 'border': '1px solid #5ED0FA'}">
+                    </p-avatar>
+                    <div class="ml-3">
+                        <span class="block">{{userSession.username}}</span>                        
+                    </div>
+                </li>
+                <!--<li class="mb-4 flex align-items-center">
                     <p-avatar label="US" size="large" shape="circle" styleClass="text-base font-bold"
                               [style]="{'background-color':'rgba(94, 208, 250, 0.1)', 'color': '#1992D4', 'border': '1px solid #5ED0FA'}"></p-avatar>
                     <div class="ml-3">
@@ -100,7 +108,7 @@
                         <span class="block">Abel Alberto Cuadrado Vega</span>
                         <span class="text-color-secondary block">cuadradoabel&#64;uniovi.es'</span>
                     </div>
-                </li>
+                </li>-->
             </ul>
             <button type="button" pButton pRipple class="w-full mt-3 " label="View All" icon="pi pi-arrow-right" iconPos="right"
                 (click)="onUsersViewClick()">

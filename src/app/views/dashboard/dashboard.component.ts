@@ -6,8 +6,11 @@ import { NgEventBus, MetaData } from 'ng-event-bus';
 
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
+import { UserSession } from '../../shared/models/user-session.model';
+
 import { DashboardService } from '../../shared/services/dashboard.service';
 import { ContextService } from '../../shared/services/context.service';
+import { UserService } from '../../shared/services/user.service';
 
 import { EventType } from '../../shared/enum/event-type.enum';
 
@@ -34,8 +37,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     dashboardResources: any = {};
 
-    constructor(public layoutService: LayoutService, private dashboardService: DashboardService, private eventBus: NgEventBus,
-        private contextService: ContextService, private router: Router,) { 
+    userSessions: UserSession[] = [];
+
+    constructor(public layoutService: LayoutService, private dashboardService: DashboardService,
+        private userService: UserService, private eventBus: NgEventBus, private contextService: ContextService, private router: Router,) { 
         this.subscription = this.layoutService.configUpdate$
             .pipe(debounceTime(25))
             .subscribe((config) => {
@@ -57,6 +62,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
             });
     }
     
+    private getUserSessions() {
+        this.userService.getUserSessions('avib')
+            .subscribe({
+                next: (userSessions: UserSession[]) => {
+                    this.userSessions = userSessions; 
+                    
+                    console.log(this.userSessions);
+                },
+                error: error => {
+                    console.error(error.message);
+                }
+            });
+    }
+
     ngOnInit() {
         this.initCharts();
 
@@ -77,7 +96,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
         // From menu item
         if (this.contextService.getContext().organizationId && this.contextService.getContext().user.userId) {
             this.loadDashboardResources(this.contextService.getContext().organizationId, this.contextService.getContext().user.userId);
-        }        
+        }  
+        
+        // get User Sessions
+        this.getUserSessions();
     }
 
     onUsersViewClick() {

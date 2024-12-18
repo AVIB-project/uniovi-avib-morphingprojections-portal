@@ -1,14 +1,26 @@
 import { Component, OnInit, Input,  ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { UIChart } from 'primeng/chart';
 
 import { ContextService } from '../../../../../shared/services/context.service';
-
 import { AnalyticsService } from '../../../../../shared/services/analytics.service';
 
 import { ViewTypeEnum } from '../../../../../shared/enum/view-type.enum';
-import { UIChart } from 'primeng/chart';
+
+export function groupsValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+
+    // Check if the value is an array and its length is 2
+    if (Array.isArray(value) && value.length === 2) {
+      return null; // Valid
+    }
+
+    // Return an error if invalid
+    return { arrayLengthTwo: { valid: false, actualLength: Array.isArray(value) ? value.length : 'not exist 2 groups' } };
+  };
+}
 
 @Component({
   selector: 'analytics-logistic-regression',
@@ -18,8 +30,8 @@ import { UIChart } from 'primeng/chart';
 export class AnalyticsLogisticRegressionComponent implements OnInit {
   readonly LANGUAGE_ID = "us"; // English: us; Spanish: es
   
-  @Input() viewInput: ViewTypeEnum;
-  @Input() groupsInput: any;
+  @Input() viewInput: ViewTypeEnum = ViewTypeEnum.SAMPLE_VIEW;
+  @Input() groupsInput: any[];
   @Input() samplesInput: any[] = [];
   @Input() sampleAnnotationsInput: any[] = [];
   @Input() attributesInput: any[] = [];
@@ -39,14 +51,8 @@ export class AnalyticsLogisticRegressionComponent implements OnInit {
   analyticsFormViewGroup = this.fb.group({
     name: ['Logistic Regression Name', Validators.required],      
     title: ['Logistic Regression Description', Validators.required],
-    view: new FormControl<string | null>(null),
-    groups: this.fb.array([
-      this.fb.group({
-        name: new FormControl<string | null>(null),
-        color: new FormControl<string | null>(null),
-        values: this.fb.array([]),
-      })
-    ])
+    view: [this.viewInput, Validators.required],
+    groups: new FormControl<any[] | null>([], [groupsValidator()]),
   });
 
   readonly documentStyle = getComputedStyle(document.documentElement);
@@ -63,8 +69,6 @@ export class AnalyticsLogisticRegressionComponent implements OnInit {
   hiddenSpinner: boolean = true;
 
   constructor(private contextService: ContextService,
-              private dialog: DynamicDialogRef,
-              private config: DynamicDialogConfig,
               private fb: FormBuilder,
               private analyticsService: AnalyticsService) { }
 
@@ -76,7 +80,6 @@ export class AnalyticsLogisticRegressionComponent implements OnInit {
     this.fillAttributeAnnotations();
 
     // initialize filter and chart components
-    this.initFilterComponent();
     this.initChartComponent();
   }
 
@@ -109,29 +112,6 @@ export class AnalyticsLogisticRegressionComponent implements OnInit {
       this.attributeAnnotations.push({ key: attributeAnnotation.attributeId, value: attributeAnnotation.attributeId })
     );
   }
- 
-  private initFilterComponent() {
-    this.analyticsFormViewGroup.controls.view.setValue(this.viewInput);
-
-    let groups: FormArray = this.analyticsFormViewGroup.get('groups') as FormArray;
-    groups.clear();
-    
-    this.groupsInput.forEach((group) => {
-      if (this.viewInput == this.viewTypeEnum.SAMPLE_VIEW) {
-        let groupSamples = this.fb.array([]);
-        
-        for (let i = 0; i < group.samples.length; i++) {
-          groupSamples.push(new FormControl(group.samples[i].sample_id));
-        };
-         
-        groups.push(new FormGroup({
-            name: new FormControl(group.name),
-            color: new FormControl(group.color),
-            values: groupSamples
-        }));                
-      }
-    })
-  }  
   
   private initChartComponent() {    
     this.options = {
@@ -196,9 +176,26 @@ export class AnalyticsLogisticRegressionComponent implements OnInit {
     this.dataTable = this.responseAnalytics;
   }
 
+  private parseGroups() {
+    let groups: any[] = [];
+
+    this.analyticsFormViewGroup.get('groups').value.forEach(group => {
+      groups.push({
+        name: group.name,
+        color: group.color,
+        values: group.samples.map(sample => sample.sample_id)
+      })      
+    });
+
+    this.analyticsFormViewGroup.get('groups').setValue(groups);
+  }
+
   onCalculateClick(event) {  
+    // parse groups
+    this.parseGroups();
+    
     // get analytics request parameters
-    this.requestAnalytics = this.analyticsFormViewGroup.value;    
+    this.requestAnalytics = this.analyticsFormViewGroup.value;      
     this.requestAnalytics.attributes = this.attributeAnnotations;
    
     // add resource request metadata
@@ -220,6 +217,8 @@ export class AnalyticsLogisticRegressionComponent implements OnInit {
 
           this.fillDataChart();
           this.fillDataTable();
+
+          this.analyticsFormViewGroup.get('groups').setValue([]);
 
           this.hiddenSpinner = true;
         },

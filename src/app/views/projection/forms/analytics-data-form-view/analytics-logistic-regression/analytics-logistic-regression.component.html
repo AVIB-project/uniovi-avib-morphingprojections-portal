@@ -2,13 +2,17 @@
     <!-- Filter component-->
     <div class="flex flex-column">
         <div>
-            <form class="flex align-items-center gap-1" [formGroup]="analyticsFormViewGroup">
-                <div class="flex flex-column">
+            <form class="flex align-items-center gap-2" [formGroup]="analyticsFormViewGroup">
+                <div class="flex flex-column gap-1">
                     <label for="name" class="control-label required">Chart Name:</label>
                     <input type="text" pInputText inputId="name" formControlName="name"/>        
 
                     <label for="title" class="control-label required">Chart Title:</label>
                     <input type="text" pInputText inputId="title" formControlName="title" />                   
+
+                    <label for="groups" class="control-label required">Groups (Max 2):</label>
+                    <p-multiSelect inputId="groups" [options]="groupsInput" formControlName="groups" 
+                        optionLabel="name" [maxSelectedLabels]="2" styleClass="w-full md:w-80" />
                 </div>
             </form>
         </div>

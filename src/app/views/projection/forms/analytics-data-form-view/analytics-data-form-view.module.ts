@@ -15,6 +15,7 @@ import { DividerModule } from 'primeng/divider';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TabViewModule } from 'primeng/tabview';
 import { TableModule } from 'primeng/table';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 import { AnalyticsDataFormViewComponent } from './analytics-data-form-view.component';
 
@@ -31,6 +32,7 @@ import { AnalyticsLogisticRegressionComponent } from './analytics-logistic-regre
     InputNumberModule,
     ButtonModule,
     DropdownModule,
+    MultiSelectModule,
     SplitButtonModule,
     RadioButtonModule,
     ToolbarModule,

@@ -92,13 +92,7 @@
                     "configurations": {
                         "production": {
                             "buildTarget": "uniovi-avib-morphingprojections-portal:build:production"
-                        },
-                        "minikube": {
-                            "buildTarget": "uniovi-avib-morphingprojections-frontend:build:minikube"
-                        }, 
-                        "avib-local": {
-                            "buildTarget": "uniovi-avib-morphingprojections-frontend:build:avib-local"
-                        },                             
+                        },                          
                         "development": {
                             "buildTarget": "uniovi-avib-morphingprojections-portal:build:development"
                         }

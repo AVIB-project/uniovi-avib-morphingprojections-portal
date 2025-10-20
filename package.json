@@ -4,12 +4,9 @@
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
-        "minikube": "ng serve --configuration minikube",
-        "avib-local": "ng serve --configuration avib-local",
         "production": "ng serve --configuration production",
-        "build-minikube": "ng build --configuration minikube --base-href '/morphingprojections-portal/' --deploy-url '/morphingprojections-portal/'",
-        "build-avib": "ng build --configuration avib --base-href '/morphingprojections-portal/' --deploy-url '/morphingprojections-portal/'",
         "build": "ng build",
+        "avib": "ng build --configuration avib",        
         "watch": "ng build --watch --configuration development",
         "test": "ng test",
         "lint": "ng lint"

@@ -4,6 +4,7 @@ FROM node:20-alpine as build
 
 # spring boot profile
 ARG ARG_ANGULAR_PROFILES_ACTIVE
+ENV ANGULAR_PROFILES_ACTIVE=${ARG_ANGULAR_PROFILES_ACTIVE}
 
 # Set the working directory
 WORKDIR /usr/local/app
@@ -15,7 +16,7 @@ COPY ./ /usr/local/app/
 RUN npm install
 
 # Generate the build of the application
-RUN npm run $ARG_ANGULAR_PROFILES_ACTIVE
+RUN npm run $ANGULAR_PROFILES_ACTIVE
 
 # Stage 2: Serve app with nginx server
 # Use official nginx image as the base image

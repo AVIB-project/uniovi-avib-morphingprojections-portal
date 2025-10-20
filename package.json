@@ -5,8 +5,9 @@
         "ng": "ng",
         "start": "ng serve",
         "production": "ng serve --configuration production",
+        "scss": "sass src/assets:src/assets --no-source-map",        
         "build": "ng build",
-        "avib": "ng build --configuration avib",        
+        "avib": "npm run scss && ng build --configuration avib",        
         "watch": "ng build --watch --configuration development",
         "test": "ng test",
         "lint": "ng lint"

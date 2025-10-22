@@ -2,7 +2,7 @@
 # Use official node image as the base image
 FROM node:20-alpine as build
 
-# spring boot profile
+# Angular boot profile
 ARG ARG_ANGULAR_PROFILES_ACTIVE
 ENV ANGULAR_PROFILES_ACTIVE=${ARG_ANGULAR_PROFILES_ACTIVE}
 
